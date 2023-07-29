@@ -8,18 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.0.0/intro/intro/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/features/ingestion/">
       
       
+        <link rel="prev" href="../streaming/">
       
-        <link rel="next" href="../../features/rbac/">
+      
+        <link rel="next" href="../trino-gw/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Introduction - Chango Private</title>
+        <title>Chango Private Data Ingestion - Chango Private</title>
       
     
     
@@ -71,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introduction" class="md-skip">
+        <a href="#chango-private-data-ingestion" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              Chango Private Data Ingestion
             
           </span>
         </div>
@@ -195,15 +197,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="./" class="md-tabs__link md-tabs__link--active">
+      <a href="../../intro/intro/" class="md-tabs__link">
         Introduction
       </a>
     </li>
@@ -213,13 +213,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../features/rbac/" class="md-tabs__link">
+      <a href="../rbac/" class="md-tabs__link md-tabs__link--active">
         Features
       </a>
     </li>
@@ -265,6 +267,55 @@
 
   
   
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/intro/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -274,21 +325,49 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
       
       
       
-        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
-          Introduction
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Features
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          Introduction
+          Features
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rbac/" class="md-nav__link">
+        Chango Private Storage Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streaming/" class="md-nav__link">
+        Chango Private Streaming
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -306,12 +385,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Introduction
+          Chango Private Data Ingestion
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Introduction
+        Chango Private Data Ingestion
       </a>
       
         
@@ -330,15 +409,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-chango-private" class="md-nav__link">
-    What is Chango Private?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chango-private-data-lakehouse-platform" class="md-nav__link">
-    Chango Private Data Lakehouse Platform
+  <a href="#insert-external-data-sources-to-chango" class="md-nav__link">
+    Insert External Data Sources to Chango
   </a>
   
 </li>
@@ -352,90 +424,13 @@
 
             
           
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-          Features
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          Features
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
             
               
   
   
   
     <li class="md-nav__item">
-      <a href="../../features/rbac/" class="md-nav__link">
-        Chango Private Storage Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../features/streaming/" class="md-nav__link">
-        Chango Private Streaming
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../features/ingestion/" class="md-nav__link">
-        Chango Private Data Ingestion
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../features/trino-gw/" class="md-nav__link">
+      <a href="../trino-gw/" class="md-nav__link">
         Chango Private Trino Gateway
       </a>
     </li>
@@ -478,28 +473,13 @@
                   
 
 
-<h1 id="introduction">Introduction</h1>
-<h2 id="what-is-chango-private">What is Chango Private?</h2>
-<p><img width="700" height="450" src="../../images/chango-overview.png" /></p>
-<p>Chango Private is a Data Lakehouse Platform for offline / disconnected environment. 
-All the data will be saved into iceberg tables on Ozone as s3 compatible object storage.</p>
-<h2 id="chango-private-data-lakehouse-platform">Chango Private Data Lakehouse Platform</h2>
-<p><img width="700" height="450" src="../../images/chango-private-platform.png" /></p>
-<p>Chango Private provides most popular open source tools for data lake and data lakehouse with chango private specific tools.</p>
-<ul>
-<li><code>Ingestion</code>: spark and trino are used to insert external data sources to iceberg in apache ozone object storage. Kafka is used for external streaming events which will be inserted into iceberg in ozone.</li>
-<li><code>Storage</code>: apache ozone is used as s3 compatible object storage on which iceberg tables will be created.</li>
-<li><code>Transformation</code>: spark and trino are used to execute etl jobs which will read iceberg tables and write data to iceberg tables on ozone.</li>
-<li><code>Workflow</code>: azkaban orchestrates all data pipelines in ingestion and transformation layers.</li>
-<li><code>Analytics</code>: superset is used as bi tool with connecting to trino directly or through chango private trino gateway. Trino is used to read all iceberg tables on ozone.</li>
-</ul>
-<p>Chango Private also provides the following features.</p>
-<ul>
-<li><code>Chango Private Storage Security</code>: RBAC to control fine-grained data access(catalog, schema and table level control) to chango storage. </li>
-<li><code>Chango Private Trino Gateway</code>: chango private trino gateway routes trino queries to upstream backend trino clusters dynamically.</li>
-<li><code>Chango Private Streaming</code>: streaming events are saved to iceberg tables without streaming platform and streaming job.</li>
-<li><code>Chango Private Data Ingestion</code>: external data like csv, json and excel are inserted into iceberg tables with ease.</li>
-</ul>
+<h1 id="chango-private-data-ingestion">Chango Private Data Ingestion</h1>
+<p>External data sources like CSV, JSON, Excel can be inserted into iceberg tables in chango directly.</p>
+<h2 id="insert-external-data-sources-to-chango">Insert External Data Sources to Chango</h2>
+<p><img width="400" height="300" src="../../images/chango-ingestion.png" /></p>
+<p>As data analytics engineer, you don’t have to struggle with long row Excel to analyze data. SQL is better to analyze data. 
+External data like CSV, Excel, JSON can be inserted directly to iceberg table in chango, 
+then you can explore and analyze iceberg tables with trino queries.</p>
 
 
 

@@ -16,6 +16,26 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cloudcheflabs.github.io/chango-private-docs/features/ingestion/</loc>
+         <lastmod>2023-07-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cloudcheflabs.github.io/chango-private-docs/features/rbac/</loc>
+         <lastmod>2023-07-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cloudcheflabs.github.io/chango-private-docs/features/streaming/</loc>
+         <lastmod>2023-07-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cloudcheflabs.github.io/chango-private-docs/features/trino-gw/</loc>
+         <lastmod>2023-07-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/intro/intro/</loc>
          <lastmod>2023-07-29</lastmod>
          <changefreq>daily</changefreq>
