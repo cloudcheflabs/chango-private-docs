@@ -1,4 +1,12 @@
-# Home
+---
+hide:
+- navigation
+- toc
+---
+
+<h1 align="center">Welcome to Chango Private!</h1>
 
 
-![Chango Logo](./images/chango-logo.png)
+<p align="center">
+  <img src="./images/chango-logo.png">
+</p>
