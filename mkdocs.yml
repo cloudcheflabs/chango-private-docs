@@ -38,7 +38,7 @@ nav:
      - "Chango Private Streaming": features/streaming.md
      - "Chango Private Data Ingestion": features/ingestion.md
      - "Chango Private Trino Gateway": features/trino-gw.md
-  - "Chango Private Components":
+  - "Components":
      - "Chango Private Components": components/components.md
 
 
