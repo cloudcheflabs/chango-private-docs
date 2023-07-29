@@ -2,12 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://james-willett.github.io/mkdocs-material-youtube-tutorial/</loc>
-         <lastmod>2023-07-28</lastmod>
+         <lastmod>2023-07-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://james-willett.github.io/mkdocs-material-youtube-tutorial/page2/</loc>
-         <lastmod>2023-07-28</lastmod>
+         <lastmod>2023-07-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://james-willett.github.io/mkdocs-material-youtube-tutorial/page3/</loc>
+         <lastmod>2023-07-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
