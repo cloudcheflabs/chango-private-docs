@@ -32,11 +32,9 @@ theme:
 
 nav:
   - Home: index.md
-  - "User Guide":
-     - "Test 1": test/page2.md
-     - "Test 3": test/page3.md
-  - "Bug Tracker": "/bugs/"
-
+  - "Getting Started":
+     - "Introduction": intro/intro.md
+     - "Chango Private Components": components/components.md
 
 
 extra:
