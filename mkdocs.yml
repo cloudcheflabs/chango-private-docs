@@ -35,6 +35,9 @@ extra:
       link: https://twitter.com/TheJamesWillett
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/willettjames/
+  version:
+    provider: mike
+    default: latest
 
 markdown_extensions:
   - pymdownx.highlight:
