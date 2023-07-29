@@ -45,7 +45,7 @@ extra:
   generator: false
   version:
     provider: mike
-    default: latest
+    default: 2.0.0
 
 
 
