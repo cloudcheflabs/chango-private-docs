@@ -1,5 +1,5 @@
-site_name: MkDocs YouTube Tutorial
-site_url: https://james-willett.github.io/mkdocs-material-youtube-tutorial/
+site_name: Chango Private
+site_url: https://cloudcheflabs.github.io/chango-private-docs
 theme:
   name: material
   features:
@@ -12,20 +12,32 @@ theme:
     - content.tabs.link
     - content.code.annotation
     - content.code.copy
+    - header.autohide
   language: en
   palette:
     - scheme: default
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
-      primary: teal
+      primary: custom
       accent: purple
     - scheme: slate
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
-      primary: teal
+      primary: custom
       accent: lime
+  logo: images/chango-logo.png
+
+
+nav:
+  - Home: index.md
+  - "User Guide":
+     - "Test 1": test/page2.md
+     - "Test 3": test/page3.md
+  - "Bug Tracker": "/bugs/"
+
+
 
 extra:
   social:
