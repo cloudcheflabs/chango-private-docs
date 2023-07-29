@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="test/page2/">
+        <link rel="next" href="intro/intro/">
       
       <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
@@ -215,23 +215,11 @@
   
   
     <li class="md-tabs__item">
-      <a href="test/page2/" class="md-tabs__link">
-        User Guide
+      <a href="intro/intro/" class="md-tabs__link">
+        Getting Started
       </a>
     </li>
   
-
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="/bugs/" class="md-tabs__link">
-      Bug Tracker
-    </a>
-  </li>
 
       
     </ul>
@@ -284,67 +272,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="." class="md-nav__link md-nav__link--active">
         Home
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#code-blocks" class="md-nav__link">
-    Code Blocks
-  </a>
-  
-    <nav class="md-nav" aria-label="Code Blocks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code-blocks-example" class="md-nav__link">
-    Code Blocks Example
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#code-blocks-example2" class="md-nav__link">
-    Code Blocks Example2
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#code-blocks-example3" class="md-nav__link">
-    Code Blocks Example3
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -368,14 +298,14 @@
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-          User Guide
+          Getting Started
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          User Guide
+          Getting Started
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -385,8 +315,8 @@
   
   
     <li class="md-nav__item">
-      <a href="test/page2/" class="md-nav__link">
-        Test 1
+      <a href="intro/intro/" class="md-nav__link">
+        Introduction
       </a>
     </li>
   
@@ -399,8 +329,8 @@
   
   
     <li class="md-nav__item">
-      <a href="test/page3/" class="md-nav__link">
-        Test 3
+      <a href="components/components/" class="md-nav__link">
+        Chango Private Components
       </a>
     </li>
   
@@ -409,21 +339,6 @@
           
         </ul>
       </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="/bugs/" class="md-nav__link">
-        Bug Tracker
-      </a>
     </li>
   
 
@@ -444,125 +359,7 @@
 
 
 <h1 id="home">Home</h1>
-<p>New Version For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="code-blocks">Code Blocks</h2>
-<h3 id="code-blocks-example">Code Blocks Example</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">     </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">callGetRestAPI</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="n">LOG</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ready to call [{}]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="p">);</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">                </span><span class="p">.</span><span class="na">url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="p">.</span><span class="na">addHeader</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Bearer &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">accessToken</span><span class="p">)</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="n">RestResponse</span><span class="w"> </span><span class="n">restResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResponseHandler</span><span class="p">.</span><span class="na">doCall</span><span class="p">(</span><span class="n">simpleHttpClient</span><span class="p">.</span><span class="na">getClient</span><span class="p">(),</span><span class="w"> </span><span class="n">request</span><span class="p">);</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">restResponse</span><span class="p">.</span><span class="na">getStatusCode</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">STATUS_OK</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">restResponse</span><span class="p">.</span><span class="na">getSuccessMessage</span><span class="p">();</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">            </span><span class="n">LOG</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;response for [{}]: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">restResponse</span><span class="p">.</span><span class="na">getErrorMessage</span><span class="p">());</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">restResponse</span><span class="p">.</span><span class="na">getErrorMessage</span><span class="p">());</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="p">}</span>
-</code></pre></div>
-<h3 id="code-blocks-example2">Code Blocks Example2</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">AnyClass.java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span>
-<span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span>
-<span class="normal"><a href="#__codelineno-1-13">13</a></span>
-<span class="normal"><a href="#__codelineno-1-14">14</a></span>
-<span class="normal"><a href="#__codelineno-1-15">15</a></span>
-<span class="normal"><a href="#__codelineno-1-16">16</a></span>
-<span class="normal"><a href="#__codelineno-1-17">17</a></span>
-<span class="normal"><a href="#__codelineno-1-18">18</a></span>
-<span class="normal"><a href="#__codelineno-1-19">19</a></span>
-<span class="normal"><a href="#__codelineno-1-20">20</a></span>
-<span class="normal"><a href="#__codelineno-1-21">21</a></span>
-<span class="normal"><a href="#__codelineno-1-22">22</a></span>
-<span class="normal"><a href="#__codelineno-1-23">23</a></span>
-<span class="normal"><a href="#__codelineno-1-24">24</a></span>
-<span class="normal"><a href="#__codelineno-1-25">25</a></span>
-<span class="normal"><a href="#__codelineno-1-26">26</a></span>
-<span class="normal"><a href="#__codelineno-1-27">27</a></span>
-<span class="normal"><a href="#__codelineno-1-28">28</a></span>
-<span class="normal"><a href="#__codelineno-1-29">29</a></span>
-<span class="normal"><a href="#__codelineno-1-30">30</a></span>
-<span class="normal"><a href="#__codelineno-1-31">31</a></span>
-<span class="normal"><a href="#__codelineno-1-32">32</a></span>
-<span class="normal"><a href="#__codelineno-1-33">33</a></span>
-<span class="normal"><a href="#__codelineno-1-34">34</a></span>
-<span class="normal"><a href="#__codelineno-1-35">35</a></span>
-<span class="normal"><a href="#__codelineno-1-36">36</a></span>
-<span class="normal"><a href="#__codelineno-1-37">37</a></span>
-<span class="normal"><a href="#__codelineno-1-38">38</a></span>
-<span class="normal"><a href="#__codelineno-1-39">39</a></span>
-<span class="normal"><a href="#__codelineno-1-40">40</a></span>
-<span class="normal"><a href="#__codelineno-1-41">41</a></span>
-<span class="normal"><a href="#__codelineno-1-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="w">     </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">SparkStreamingInstance</span><span class="w"> </span><span class="nf">streamingContext</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">metastoreUrl</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">bucket</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accessKey</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">secretKey</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">endpoint</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">region</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="hll"><span class="w">        </span><span class="n">SparkConf</span><span class="w"> </span><span class="n">sparkConf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkConf</span><span class="p">().</span><span class="na">setAppName</span><span class="p">(</span><span class="s">&quot;disruptor streaming context&quot;</span><span class="p">);</span>
-</span><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="hll"><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">setMaster</span><span class="p">(</span><span class="s">&quot;local[2]&quot;</span><span class="p">);</span>
-</span><a id="__codelineno-1-4" name="__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">        </span><span class="n">SparkSession</span><span class="w"> </span><span class="n">sparkSession</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">spark</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">SparkSession</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span><span class="p">.</span><span class="na">config</span><span class="p">(</span><span class="n">sparkConf</span><span class="p">)</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">        </span><span class="p">.</span><span class="na">enableHiveSupport</span><span class="p">()</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">        </span><span class="p">.</span><span class="na">getOrCreate</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">spark</span><span class="p">;</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">        </span><span class="n">spark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparkSession</span><span class="p">;</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">        </span><span class="c1">// iceberg catalog from hive metastore.</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">        </span><span class="n">sparkConf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparkSession</span><span class="p">.</span><span class="na">sparkContext</span><span class="p">().</span><span class="na">conf</span><span class="p">();</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.hive_prod&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.iceberg.spark.SparkCatalog&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.hive_prod.type&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hive&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.hive_prod.uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;thrift://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">metastoreUrl</span><span class="p">);</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.hive_prod.warehouse&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;s3a://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bucket</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/warehouse&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a>
-<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">        </span><span class="n">JavaStreamingContext</span><span class="w"> </span><span class="n">scc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JavaStreamingContext</span><span class="p">(</span><span class="n">JavaSparkContext</span><span class="p">.</span><span class="na">fromSparkContext</span><span class="p">(</span><span class="n">spark</span><span class="p">.</span><span class="na">sparkContext</span><span class="p">()),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Duration</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22"></a>
-<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">        </span><span class="n">org</span><span class="p">.</span><span class="na">apache</span><span class="p">.</span><span class="na">hadoop</span><span class="p">.</span><span class="na">conf</span><span class="p">.</span><span class="na">Configuration</span><span class="w"> </span><span class="n">hadoopConfiguration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scc</span><span class="p">.</span><span class="na">sparkContext</span><span class="p">().</span><span class="na">hadoopConfiguration</span><span class="p">();</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.defaultFS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;s3a://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bucket</span><span class="p">);</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.endpoint.region&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">region</span><span class="p">);</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.endpoint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">endpoint</span><span class="p">);</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.access.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">accessKey</span><span class="p">);</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.secret.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">secretKey</span><span class="p">);</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.path.style.access&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.change.detection.mode&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;warn&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.change.detection.version.required&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.multiobjectdelete.enable&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.impl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.S3AFileSystem&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.aws.credentials.provider&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-35" name="__codelineno-1-35"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;hive.metastore.uris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;thrift://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">metastoreUrl</span><span class="p">);</span>
-<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;hive.server2.enable.doAs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;hive.metastore.client.socket.timeout&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1800&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;hive.execution.engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spark&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-39" name="__codelineno-1-39"></a>
-<a id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkStreamingInstance</span><span class="p">(</span><span class="n">scc</span><span class="p">,</span><span class="w"> </span><span class="n">sparkSession</span><span class="p">);</span>
-<a id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="w">    </span><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="code-blocks-example3">Code Blocks Example3</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">     </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">callGetRestAPI</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="hll"><span class="w">        </span><span class="n">LOG</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ready to call [{}]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="p">);</span>
-</span><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="hll"><span class="w">        </span><span class="n">Request</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-</span><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="hll"><span class="w">                </span><span class="p">.</span><span class="na">url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</span><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="hll"><span class="w">                </span><span class="p">.</span><span class="na">addHeader</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Bearer &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">accessToken</span><span class="p">)</span>
-</span><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="n">RestResponse</span><span class="w"> </span><span class="n">restResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResponseHandler</span><span class="p">.</span><span class="na">doCall</span><span class="p">(</span><span class="n">simpleHttpClient</span><span class="p">.</span><span class="na">getClient</span><span class="p">(),</span><span class="w"> </span><span class="n">request</span><span class="p">);</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">restResponse</span><span class="p">.</span><span class="na">getStatusCode</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">STATUS_OK</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">restResponse</span><span class="p">.</span><span class="na">getSuccessMessage</span><span class="p">();</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">            </span><span class="n">LOG</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;response for [{}]: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">restResponse</span><span class="p">.</span><span class="na">getErrorMessage</span><span class="p">());</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">restResponse</span><span class="p">.</span><span class="na">getErrorMessage</span><span class="p">());</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="p">}</span>
-</code></pre></div>
+<p><img alt="Chango Logo" src="images/chango-logo.png" /></p>
 
 
 
