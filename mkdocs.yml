@@ -28,6 +28,7 @@ theme:
       primary: custom
       accent: lime
   logo: images/chango-logo.png
+  favicon: images/chango-logo.png
 
 
 nav:
