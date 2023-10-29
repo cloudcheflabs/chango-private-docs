@@ -36,6 +36,8 @@ nav:
       - "Install Chango Admin": install/install-admin.md
       - "Install Chango Components": install/install-component.md
       - "Run First Trino Query": install/run-first-ctas.md
+  - "User Guide":
+      - "Send Streaming Events": ingest/streaming.md
   - "Introduction":
      - "Introduction": intro/intro.md
   - "Features":
