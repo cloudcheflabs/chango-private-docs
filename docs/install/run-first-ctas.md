@@ -9,7 +9,7 @@ Go to `Settings` -> `Trino Gateway`. Click `Create Cluster Group` in `Cluster Gr
 
 <img width="900" src="../../images/run-first/create-cg.png" />
 
-And, enter cluster group name.
+And, enter cluster group name `bi`.
 <img width="900" src="../../images/run-first/create-cg-2.png" />
 
 ## Create Trino User and Register Trino Cluster
