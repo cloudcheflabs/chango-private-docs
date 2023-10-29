@@ -449,6 +449,36 @@ If you entered wrong values for the prompts which affects installation failure a
 
 , and then, install Chango Admin again with running `start-chango-private.sh`.
 
+If you changed the host and port of NGINX for `Chango Admin` after adding TLS configuration to NGINX, 
+then, add the variables to `--extra-vars` in `restart-admin.sh`, for example.
+
+```agsl
+cpadmin_nginx_scheme=https \
+cpadmin_nginx_host=[your-nginx-host] \
+cpadmin_nginx_port=[your-nginx-port] \
+```
+
+The revised `restart-admin.sh` looks like this, for example.
+```agsl
+python3 -m venv venv;
+source /home/opc/venv/bin/activate;
+
+ansible-playbook -i admin.inv run.yml \
+--extra-vars "\
+exec_user=opc \
+target_hosts=changoprivate-admin-hosts \
+role_name=changoprivate-admin \
+cpadmin_ansible_path=/data/opc/cp-dist/chango-private-2.1.0/ansible \
+run_option=restart \
+cpadmin_nginx_scheme=https \
+cpadmin_nginx_host=[your-nginx-host] \
+cpadmin_nginx_port=[your-nginx-port] \
+"
+```
+
+Run the revised `restart-admin.sh`.
+
+
 
 
 
