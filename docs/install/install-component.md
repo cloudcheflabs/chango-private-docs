@@ -245,6 +245,20 @@ You can scale out and unscale trino workers.
 <img width="900" src="../../images/trino/scale-worker.png" />
 
 
+### Configure Trino
+
+You can update trino memory configurations and catalogs.
+
+To update memory properties in trino, select trino cluster.
+<img width="900" src="../../images/trino/configure.png" />
+
+Update catalogs in trino.
+<img width="900" src="../../images/trino/update-catalog.png" />
+
+You can also add catalogs.
+<img width="900" src="../../images/trino/add-catalog.png" />
+
+
 ### UI
 
 You can get Trino UI clicking link in `UI` of the selected trino cluster.
