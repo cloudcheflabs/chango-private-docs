@@ -35,6 +35,7 @@ nav:
   - "Getting Started":
       - "Install Chango Admin": install/install-admin.md
       - "Install Chango Components": install/install-component.md
+      - "Run First Trino Query": install/run-first-ctas.md
   - "Introduction":
      - "Introduction": intro/intro.md
   - "Features":
