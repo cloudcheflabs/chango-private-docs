@@ -427,7 +427,7 @@ The URL of Chango Admin UI is.
 http://[chango-admin-host]:8123/
 ```
 
-Login as `admin` and the randomly generated password.
+Login as `admin` with the randomly generated password. You can change the password of `admin` in Chango Admin UI.
 
 ## After installing Chango Admin
 
@@ -439,8 +439,12 @@ After installing Chango Admin, several shell files will be created which can be 
 - `uninstall-lvm.sh`: Unmount LVM on the host of PostgreSQL database.
 - `uninstall-postgresql.sh`: Uninstall PostgreSQL database.
 
-When the installation of Chango Admin failed with some reasons, you need to run the above shell.
+> If you have installed `Chango Components` by `Chango Admin` later, 
+> **DO NOT** use `reinstall-admin.sh`, `uninstall-lvm.sh`, and `uninstall-postgresql.sh` 
+> which will destroy all the installation of Chango Private!
 
+
+When the installation of Chango Admin failed with some reasons, you need to run the above shell.
 If you entered wrong values for the prompts which affects installation failure and want to install Chango Admin again, then run the following sequence.
 
 - `uninstall-admin.sh`
@@ -461,14 +465,14 @@ cpadmin_nginx_port=[your-nginx-port] \
 The revised `restart-admin.sh` looks like this, for example.
 ```agsl
 python3 -m venv venv;
-source /home/opc/venv/bin/activate;
+source /home/chango/venv/bin/activate;
 
 ansible-playbook -i admin.inv run.yml \
 --extra-vars "\
-exec_user=opc \
+exec_user=chango \
 target_hosts=changoprivate-admin-hosts \
 role_name=changoprivate-admin \
-cpadmin_ansible_path=/data/opc/cp-dist/chango-private-2.1.0/ansible \
+cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.1.0/ansible \
 run_option=restart \
 cpadmin_nginx_scheme=https \
 cpadmin_nginx_host=[your-nginx-host] \
