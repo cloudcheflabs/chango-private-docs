@@ -24,7 +24,7 @@ You can also download Chango Client jar file to add it to your application class
 curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.0/chango-client-2.0.0-executable.jar;
 ```
 
-## Create Iceberg Table before Sending Json Events
+## Create Iceberg Table before Sending JSON Events
 
 Before sending json as streaming events to `Chango Data API` server, Iceberg table needs to be created beforehand, for example.
 
@@ -51,7 +51,7 @@ WITH (
 > **_NOTE:_** The sequence  of table column names in lower case must be alphanumeric in ascending order.
 
 
-## Send Json Events to Chango Data API Server
+## Send JSON Events to Chango Data API Server
 
 It is very simple to use Chango Client API in your code. Just add the following to send json events.
 
@@ -84,12 +84,7 @@ changoClient.add(json);
 - `batchSize` : The size of json list which will be sent to chango in batch mode and in gzip format.
 - `interval` : Json data will be queued internally in chango client. The queued json list will be sent in this period whose unit is milliseconds.
 
-In order to get `token`, go to `Settings` -> `Security`. 
-
-- Create role.
-- Create credential. The created credential will be used as `token` in your codes.
-- Create privileges of `iceberg.*` for READ and WRITE type.
-
+In order to get `token`, see <a href="../../user-guide/cred">Get Credential</a>.
 
 To get the endpoint of `Chango Data API`, go to `Components` -> `Chango Data API`.
 

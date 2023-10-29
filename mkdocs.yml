@@ -37,7 +37,8 @@ nav:
       - "Install Chango Components": install/install-component.md
       - "Run First Trino Query": install/run-first-ctas.md
   - "User Guide":
-      - "Send Streaming Events": ingest/streaming.md
+      - "Get Credential": user-guide/cred.md
+      - "Send Streaming Events": user-guide/streaming.md
   - "Introduction":
      - "Introduction": intro/intro.md
   - "Features":
