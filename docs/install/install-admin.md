@@ -26,7 +26,7 @@ Chango Components will be installed.
 
 First, you will install `Chango Admin`, and then all the components will be installed by `Chango Admin` through ansible playbook using SSH.
 So, you need to prepare `at least 4` nodes to install Chango Private.
-> 1 node for `Chango Admin Node` and `at least 3` nodes for `Chango Comonent Nodes`.
+> **_NOTE:_** 1 node for `Chango Admin Node` and `at least 3` nodes for `Chango Comonent Nodes`.
 > That is, you need to have `at least 4 `nodes to install Chango Private.
 
 ### Open Ports
@@ -78,7 +78,7 @@ And add the following.
 chango   ALL=(ALL) NOPASSWD: ALL
 ```
 
-> You need to create such `sudo` user on all the nodes of `Chango Admin Node` and `Chango Component Nodes`.
+> **_NOTE:_** You need to create such `sudo` user on all the nodes of `Chango Admin Node` and `Chango Component Nodes`.
 
 
 #### Create SSH Keys
@@ -118,7 +118,7 @@ Open `authorized_keys` on the nodes of `Chango Component Nodes` and the self hos
 vi ~/.ssh/authorized_keys
 ```
 
-> Take a note that you also need to add public key to the self of `Chango Admin Node`.
+> **_NOTE:_** Take a note that you also need to add public key to the self of `Chango Admin Node`.
 
 
 And add permission.
@@ -145,7 +145,7 @@ ssh chango-admin.chango.private
 
 As depicted in the above picture, several Raw Disks must be attached to `Chango Component Nodes`. But you don’t have to attache any disks to `Chango Admin Node`.
 
-> Raw disks attached to `Chango Component Nodes` **MUST NOT** be mounted!
+> **_NOTE:_** Raw disks attached to `Chango Component Nodes` **MUST NOT** be mounted!
 > Chango will mount attached disks as logical volume by installing Chango Components later.
 
 ### Local Yum Repository
@@ -351,7 +351,7 @@ Download all Chango Components.
 ./download-component-files.sh
 ```
 
-> For installing Chango Private in disconnected environment, after downloading chango component files, 
+> **_NOTE:_** For installing Chango Private in disconnected environment, after downloading chango component files, 
 > you need to package the whole distribution directory with downloaded component files to the file(for example, tar.gz) which needs to be transferred
 > to your node in which internet is not available.
 
@@ -360,7 +360,7 @@ Download all Chango Components.
 
 Now, you are logged in as `sudo` user on `Chango Admin Node`.
 
-> Make sure that current user is `sudo` user created before to access `Chango Component Nodes` and the self host of `Chango Admin Node` with password-less SSH connection.
+> **_NOTE:_** Make sure that current user is `sudo` user created before to access `Chango Component Nodes` and the self host of `Chango Admin Node` with password-less SSH connection.
 
 Run the following to install Chango Admin.
 
@@ -439,7 +439,7 @@ After installing Chango Admin, several shell files will be created which can be 
 - `uninstall-lvm.sh`: Unmount LVM on the host of PostgreSQL database.
 - `uninstall-postgresql.sh`: Uninstall PostgreSQL database.
 
-> If you have installed `Chango Components` by `Chango Admin` later, 
+> **_NOTE:_** If you have installed `Chango Components` by `Chango Admin` later, 
 > **DO NOT** use `reinstall-admin.sh`, `uninstall-lvm.sh`, and `uninstall-postgresql.sh` 
 > which will destroy all the installation of Chango Private!
 

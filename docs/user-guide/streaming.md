@@ -3,7 +3,7 @@
 `Chango Data API` server will collect all the incoming streaming events and produce them to kafka. 
 `Chango Streaming` will consume events from kafka and save events to Iceberg table in Chango directly. 
 
-That is, if you send streaming events to `Chango Data API` server, then all the streaming events will be inserted to Chango directly.
+That is, if you send streaming events to `Chango Data API` server, then all the streaming events will be inserted to Chango automatically.
 `Chango Client` is used to send streaming events to `Chango Data API` server with ease.
 
 ## Add Chango Client Library to Classpath

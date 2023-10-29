@@ -47,7 +47,7 @@ The other optional compoents can be installed after Chango Private initializatio
 All the `Chango Component Nodes` need to be registered, and SSH private key need to be added to access `Chango Component Nodes` from 
 the host of `Chango Admin Node`.
 
-> Take a note that you need to register all the nodes of `Chango Component Nodes` **except** `Chango Admin Node`.
+> **_NOTE:_** Take a note that you need to register all the nodes of `Chango Component Nodes` **except** `Chango Admin Node`.
 
 <img width="900" src="../../images/init/hosts-ssh-key.png" />
 
@@ -144,7 +144,7 @@ Multiple Kafka clusters are supported by Chango, that is, you can install kafka 
 
 If you want to install `Apache Kafka`, press `Go to Install` button.
 
-> If you have not installed any kafka cluster, then, enter `default` for the cluster name.
+> **_NOTE:_** If you have not installed any kafka cluster, then, enter `default` for the cluster name.
 
 <img width="900" src="../../images/kafka/install.png" />
 
@@ -156,7 +156,7 @@ After installing kafka, you will see kafka page like this.
 
 Because Chango Private supports multiple kafka clusters, you can install another kafka cluster.
 
-> Because you have already installed default kafka cluster, you can enter anything for the cluster name.
+> **_NOTE:_** Because you have already installed default kafka cluster, you can enter anything for the cluster name.
 
 <img width="900" src="../../images/kafka/install-another.png" />
 

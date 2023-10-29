@@ -39,6 +39,7 @@ nav:
   - "User Guide":
       - "Get Credential": user-guide/cred.md
       - "Send Streaming Events": user-guide/streaming.md
+      - "Upload Files": user-guide/upload.md
   - "Introduction":
      - "Introduction": intro/intro.md
   - "Features":
