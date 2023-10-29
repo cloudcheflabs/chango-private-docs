@@ -29,6 +29,11 @@ So, you need to prepare `at least 4` nodes to install Chango Private.
 > 1 node for `Chango Admin Node` and `at least 3` nodes for `Chango Comonent Nodes`.
 > That is, you need to have `at least 4 `nodes to install Chango Private.
 
+### Open Ports
+
+You need to open ports in your subnet of `Chango Nodes`. See the details of [TODO: Chango Private Ports].
+
+
 ### Password-less SSH Connection
 
 From the node of `Chango Admin Node`, `sudo` user must access to `Chango Component Nodes` with password-less SSH connection.
