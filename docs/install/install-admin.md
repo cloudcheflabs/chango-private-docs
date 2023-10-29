@@ -31,7 +31,7 @@ So, you need to prepare `at least 4` nodes to install Chango Private.
 
 ### Open Ports
 
-You need to open ports in your subnet of `Chango Nodes`. See the details of [TODO: Chango Private Ports].
+You need to open ports in your subnet of `Chango Nodes`. See the details of <a href="../../components/components/#component-ports">Chango Private Ports</a>.
 
 
 ### Password-less SSH Connection
