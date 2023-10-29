@@ -33,7 +33,8 @@ theme:
 
 nav:
   - "Getting Started":
-      - "Install Chango Private": install/install.md
+      - "Install Chango Admin": install/install-admin.md
+      - "Install Chango Components": install/install-component.md
   - "Introduction":
      - "Introduction": intro/intro.md
   - "Features":
