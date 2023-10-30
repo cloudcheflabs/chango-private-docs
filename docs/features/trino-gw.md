@@ -1,6 +1,6 @@
-# Chango Private Trino Gateway
+# Chango Trino Gateway
 
-Trino queries will be routed to the backend trino clusters by Chango Private Trino Gateway dynamically.
+`Chango Trino Gateway` is an implementation of trino gateway concept.
 
 
 ## Understand Trino Gateway Concept
@@ -25,4 +25,51 @@ to be added to this trino cluster for new external data sources, or the trino cl
 then  first just deactivate this trino cluster to which the queries will not be routed without down time problem of trino query execution. 
 After finishing scaling workers ,updating catalogs or reinstalling the trino cluster, activate this trino cluster to which the queries 
 will be routed again. With trino gateway, the activation and deactivation of backend trino clusters can be done with ease. 
+
+## Chango Trino Gateway Features
+
+`Chango Trino Gateway` provides several critical functions of trino gateway.
+
+### Trino User Authentication and Authorization
+
+If trino user sends trino queries to `Chango Trino Gateway`, `Chango Trino Gateway` authenticates trino user and 
+authorize trino queries if trino user is allowed to access data in Chango or not. 
+
+For authorization, `Chango Trino Gateway` works with `Chango Authorizer` which is central to authorize all credentials used by all chango components.
+So, `Chango Trino Gateway` controls the data access of trino user to Chango with RBAC in the fine-grained manner like catalog, schema and table level.
+
+Especially, RBAC to `Cluster Group` can be configured without restarting backend trino clusters.
+
+
+### Route Trino Queries to Trino Clusters
+
+Routing trino queries to the backend trino clusters is fundamental function of `Chango Trino Gateway`.
+Let's see the following picture how `Chango Trino Gateway` will route.
+
+<img width="900" src="../../images/trino-gw-concept/chango-trino-gw-1.png" />
+
+Trino queries which trino users run who belong to the `Cluster Group` will be routed to the backend trino clusters which belong to the `Cluster Group`.
+`Chango Trino Gateway` detects exhausted trino clusters, and will route trino queries to less exhausted trino clusters in smart way.
+
+From the point of the storage security in Chango, `Cluster Group` is equivalent to `Role` in `Chango Security` model. 
+`Chango Trino Gateway` will check if trino queries are allowed to run according to privileges of `Cluster Group` or not.
+
+Even if you have just one trino cluster as backend trino cluster, you can create several `Cluster Groups` 
+as many as you need, and you can control data access of `Cluster Groups` as usual in `Chango Security` model.
+<img width="900" src="../../images/trino-gw-concept/chango-trino-gw-2.png" />
+
+### Activate and Deactivate Trino Clusters
+
+`Chango Trino Gateway` provides the feature of activation and deactivation of trino clusters.
+
+If the configuration of backend trino clusters is updated, the backend trino clusters need to be restarted.
+In order to provide `Zero Downtime to Run Trino Queries`, `Chanog Trino Gateway` provides such feature of activation and deactivation of trino clusters.
+
+Do the following steps for every trino clusters in order to accomplish `Zero Downtime to Run Trino Queries`.
+
+- deactivate the trino cluster whose configuration needs to be updated.
+- update configuration.
+- restart that trino cluster. 
+- activate that trino cluster again. 
+
 

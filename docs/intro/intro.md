@@ -1,33 +1,40 @@
-# Introduction
+# What is Chango Private?
 
 
-## What is Chango Private?
+<img width="800" src="../../images/chango-overview.png" />
 
-<img width="700" height="450" src="../../images/chango-overview.png" />
-
-Chango Private is a Data Lakehouse Platform for offline / disconnected environment. 
-All the data will be saved into iceberg tables on Ozone as s3 compatible object storage.
+Chango Private is a Data Lakehouse Platform for both online and disconnected environment.
 
 
 ## Chango Private Data Lakehouse Platform
 
-<img width="700" height="450" src="../../images/chango-private-platform.png" />
+<img width="900" src="../../images/architecture/lakehouse-platform.png" />
 
-Chango Private provides most popular open source tools for data lake and data lakehouse with chango private specific tools.
+In `Ingestion` layer:
 
-- `Ingestion`: spark and trino are used to insert external data sources to iceberg in apache ozone object storage. Kafka is used for external streaming events which will be inserted into iceberg in ozone.
-- `Storage`: apache ozone is used as s3 compatible object storage on which iceberg tables will be created.
-- `Transformation`: spark and trino are used to execute etl jobs which will read iceberg tables and write data to iceberg tables on ozone.
-- `Workflow`: azkaban orchestrates all data pipelines in ingestion and transformation layers.
-- `Analytics`: superset is used as bi tool with connecting to trino directly or through chango private trino gateway. Trino is used to read all iceberg tables on ozone.
+- `Spark` and `Trino` with `dbt` will be used as data integration tool.
+- `Kafka` is used as event streaming platform to handle streaming events.
+- `Chango Data API` and `Chango Streaming` will be used to insert incoming streaming events to Chango directly.
 
+In `Storage` layer:
 
+- Chango Private supports Apache Ozone as object storage by default and external S3 compatible object storage like AWS S3, MinIO, OCI Object Storage.
+- Default storage format is `Iceberg` table format used for data warehousing in Chango.
 
-Chango Private also provides the following features.
+In `Transformation` layer:
 
-- `Chango Private Storage Security`: RBAC to control fine-grained data access(catalog, schema and table level control) to chango storage. 
-- `Chango Private Trino Gateway`: chango private trino gateway routes trino queries to upstream backend trino clusters dynamically.
-- `Chango Private Streaming`: streaming events are saved to iceberg tables without streaming platform and streaming job.
-- `Chango Private Data Ingestion`: external data like csv, json and excel are inserted into iceberg tables with ease.
+- `Spark` and `Trino` with `dbt` will be used to run ETL jobs.
+
+In `Analytics` layer:
+
+- `Trino` will be used as query engine to explore all the data in Chango.
+- `BI` tools like `Apache Superset` will connect to `Trino` to run queries through `Chango Trino Gateway`.
+
+In `Management` layer:
+
+- `Azkaban` will be used as workflow. All the batch jobs like ETL will be integrated with `Azkaban`.
+- `Chango REST Catalog` will be used as data catalog in Chango.
+- Chango Private supports storage security to control data access based on RBAC in Chango. `Chango Authorizer` will be used for it.
+- `Chango Trino Gateway` is an implementation of Trino Gateway concept. `Chango Trino Gateway` provides several features like authentication, authorization, smart query routing(routing to less exhausted trino clusters), trino cluster activation/deactivation. For more details, see <a href="../../features/trino-gw/">Chango Trino Gateway</a>.
 
  

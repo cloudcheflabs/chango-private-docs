@@ -1,25 +1,21 @@
-# Chango Private Storage Security
+# Chango Storage Security
 
-Fine-grained data access control using RBAC to chango storage.
+Chango Private provides fine-grained data access control using RBAC to Chango storage.
 
-## Overview
+## Data Access in Secure Way
 
-<img width="700" height="450" src="../../images/chango-rbac.png" />
+<img width="900" src="../../images/security/storage-sec.png" />
 
-There are several ways to access data in chango storage. For example,
+Chango Authorizer controls all the data access to Chango Data Lakehouse. 
+So all the chango components which want to access data in Chango Data Lakehouse need to be authenticated and authorized by Chango Authorizer.
 
-- External streaming applications want to produce streaming events to chango.
-- Spark jobs want to read / write data in iceberg tables in chango.
-- Trino wants to read / write data in iceberg tables in chango.
-
-Such data accesses to chango need to be controlled by Chango Storage RBAC.
-With Chango Storage RBAC, all data accesses will be controlled in the fine-grained manner like catalog level, schema level and table level. 
+All data accesses are controlled in the fine-grained manner like catalog, schema and table level. 
 
 
 ## Credential, Role and Privileges
 
-A role can have many credentials and many privileges. There are `READ` and `WRITE` type in privilege. 
-Each privilege has storage access path with the convention of `<catalog>`.`<schema>`.`<table>`.
+A `Role` can have many `Credentials` and many `Privileges`. There are `READ` and `WRITE` type in privilege. 
+Each privilege has storage access path with the convention of `<catalog>`.`<schema>`.`<table>`, for example.
 
 - `iceberg.events.behavior` with `WRITE` : user / credential has the `WRITE` privilege to table behavior in `events` schema of `iceberg` catalog.
 - `iceberg.events.*` with `READ`: user / credential has the `READ` privilege to all the tables in `events` schema of `iceberg` catalog.
