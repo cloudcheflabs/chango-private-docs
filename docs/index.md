@@ -16,7 +16,7 @@ hide:
       Chango Private is Data Lakehouse Platform for both online and disconnected environment.
     </p>
     <p>
-      Let's get started <a href="./intro/intro">Chango Private</a>.
+      Let's get started with <a href="./intro/intro">Chango Private</a>.
     </p>
     <p>
       Join <a href="https://github.com/cloudcheflabs/chango-discussion/discussions">Chango Discussion</a> to discuss Chango Private.
