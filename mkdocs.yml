@@ -37,9 +37,12 @@ nav:
       - "Install Chango Components": install/install-component.md
       - "Run First Trino Query": install/run-first-ctas.md
   - "User Guide":
-      - "Get Credential": user-guide/cred.md
+      - "Get Chango Credential": user-guide/cred.md
+      - "Get S3 Credential": user-guide/s3-cred.md
       - "Send Streaming Events": user-guide/streaming.md
       - "Upload Files": user-guide/upload.md
+      - "Create Iceberg REST Catalog in Spark": user-guide/rest-in-spark.md
+      - "Run dbt Model": user-guide/dbt.md
   - "Introduction":
      - "Introduction": intro/intro.md
   - "Features":

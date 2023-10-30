@@ -1,6 +1,6 @@
-# Get Credential
+# Get Chango Credential
 
-To get credential, you need to create new role with proper privileges for credentials in most cases.
+To get Chango Credential, you need to create new role with proper privileges for credentials in most cases.
 
 Go to `Settings` -> `Security`.
 

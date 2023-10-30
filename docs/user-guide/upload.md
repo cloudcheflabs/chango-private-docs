@@ -14,7 +14,7 @@ chmod +x ~/bin/chango;
 ## Initialize Chango CLI
 
 Credential needs to be entered when Chango CLI is initialized.
-To get credential, see <a href="../../user-guide/cred">Get Credential</a>.
+To Get Chango Credential, see <a href="../../user-guide/cred">Get Chango Credential</a>.
 ```agsl
 chango init
 ```

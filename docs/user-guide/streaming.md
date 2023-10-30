@@ -56,25 +56,25 @@ WITH (
 It is very simple to use Chango Client API in your code. Just add the following to send json events.
 
 ```java
-String token = "...";
-String dataApiServer = "...";
-int batchSize = 10000; 
-long interval = 1000;
-String schema = "iceberg_db";
-String table = "test_iceberg";
-
-ChangoClient changoClient = new ChangoClient(
-        token,
-        dataApiServer,
-        schema,
-        table,
-        batchSize,
-        interval
-);
-
-String json = "...";
-
-changoClient.add(json);
+        String token = "...";
+        String dataApiServer = "...";
+        int batchSize = 10000; 
+        long interval = 1000;
+        String schema = "iceberg_db";
+        String table = "test_iceberg";
+        
+        ChangoClient changoClient = new ChangoClient(
+                token,
+                dataApiServer,
+                schema,
+                table,
+                batchSize,
+                interval
+        );
+        
+        String json = "...";
+        
+        changoClient.add(json);
 ```
 
 - `token` : Data access credential issued by `Chango Authorizer`.
@@ -84,7 +84,7 @@ changoClient.add(json);
 - `batchSize` : The size of json list which will be sent to chango in batch mode and in gzip format.
 - `interval` : Json data will be queued internally in chango client. The queued json list will be sent in this period whose unit is milliseconds.
 
-In order to get `token`, see <a href="../../user-guide/cred">Get Credential</a>.
+In order to get `token`, see <a href="../../user-guide/cred">Get Chango Credential</a>.
 
 To get the endpoint of `Chango Data API`, go to `Components` -> `Chango Data API`.
 
