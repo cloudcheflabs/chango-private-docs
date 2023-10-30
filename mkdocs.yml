@@ -43,6 +43,7 @@ nav:
       - "Upload Files": user-guide/upload.md
       - "Create Iceberg REST Catalog in Spark": user-guide/rest-in-spark.md
       - "Run dbt Model": user-guide/dbt.md
+      - "Create Azkaban Project using CLI": user-guide/azkaban-cli.md
   - "Introduction":
      - "Introduction": intro/intro.md
   - "Features":
