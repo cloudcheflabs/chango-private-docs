@@ -8,5 +8,19 @@ hide:
 
 
 <p align="center">
-  <img src="./images/chango-logo.png">
+  <img width="150" src="./images/chango-logo.png">
 </p>
+
+<div align="center">
+    <p>
+      Chango Private is Data Lakehouse Platform for both online and disconnected environment.
+    </p>
+    <p>
+      Let's get started <a href="./intro/intro">Chango Private</a>.
+    </p>
+    <p>
+      Join <a href="https://github.com/cloudcheflabs/chango-discussion/discussions">Chango Discussion</a> to discuss Chango Private.
+    </p>
+</div>
+
+
