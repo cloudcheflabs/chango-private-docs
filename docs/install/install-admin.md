@@ -10,10 +10,12 @@ so you need to install `Chango Admin` before installing `Chango Components`.
 There are several things to prepare before proceeding to install Chango Private.
 
 
-### Supported OS
-OS supported by Chango Private.
+### Supported OS and Python
+
+Supported OS and Python Version are:
 
 - `CentOS 7.9`
+- `Python 3.6.8`
 
 
 ### Prepare Chango Nodes
