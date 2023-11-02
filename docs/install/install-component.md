@@ -16,10 +16,16 @@ The other optional compoents can be installed after Chango Private initializatio
 
 ### Configure Hosts and SSH Private Key
 
-All the `Chango Component Nodes` need to be registered, and SSH private key need to be added to access `Chango Component Nodes` from 
+All the `Chango Component Nodes` need to be registered, and SSH private key on `Chango Admin Node` need to be added to access `Chango Component Nodes` from 
 the host of `Chango Admin Node`.
 
 > **_NOTE:_** Take a note that you need to register all the nodes of `Chango Component Nodes` **except** `Chango Admin Node`.
+
+Get SSH private key on `Chango Admin Node` with the following command, and paste it to the text box `SSH Private Key`.
+
+```agsl
+cat ~/.ssh/id_rsa
+```
 
 <img width="900" src="../../images/init/hosts-ssh-key.png" />
 
