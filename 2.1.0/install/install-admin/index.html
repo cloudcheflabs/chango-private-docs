@@ -1138,11 +1138,14 @@ to your node in which internet is not available.</p>
 </code></pre></div>
 <p>For example, <code>b3b3c51fde594d7abdd38fbc3eb2a581</code> is the password of <code>admin</code>.</p>
 <p>The URL of Chango Admin UI is.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>http://[chango-admin-host]:8123/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>http://[chango-admin-host-name]:8123/
 </code></pre></div></p>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> <code>8123</code> for Admin UI and <code>8080</code> for NGINX proxy to Admin on <code>Chango Admin Node</code> need to be open.</p>
 </blockquote>
+<p>Make sure that the host DNS entry for <code>Chango Admin Node</code> is added to the host file(for example, <code>/etc/hosts</code>) on your local PC.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>[chango-admin-host-public-ip]  [chango-admin-host-name]
+</code></pre></div></p>
 <p>Login as <code>admin</code> with the randomly generated password. You can change the password of <code>admin</code> in Chango Admin UI.</p>
 <h2 id="after-installing-chango-admin">After installing Chango Admin</h2>
 <p>After installing Chango Admin, several shell files will be created which can be used for your need later.</p>
@@ -1168,25 +1171,25 @@ If you entered wrong values for the prompts which affects installation failure a
 <p>, and then, install Chango Admin again with running <code>start-chango-private.sh</code>.</p>
 <p>If you changed the host and port of NGINX for <code>Chango Admin</code> after adding TLS configuration to NGINX, 
 then, add the variables to <code>--extra-vars</code> in <code>restart-admin.sh</code>, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>cpadmin_nginx_scheme=https \
-<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>cpadmin_nginx_host=[your-nginx-host] \
-<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>cpadmin_nginx_port=[your-nginx-port] \
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>cpadmin_nginx_scheme=https \
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>cpadmin_nginx_host=[your-nginx-host] \
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>cpadmin_nginx_port=[your-nginx-port] \
 </code></pre></div>
 <p>The revised <code>restart-admin.sh</code> looks like this, for example.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>python3 -m venv venv;
-<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>source /home/chango/venv/bin/activate;
-<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>
-<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>ansible-playbook -i admin.inv run.yml \
-<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>--extra-vars &quot;\
-<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>exec_user=chango \
-<a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>target_hosts=changoprivate-admin-hosts \
-<a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>role_name=changoprivate-admin \
-<a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.1.0/ansible \
-<a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>run_option=restart \
-<a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>cpadmin_nginx_scheme=https \
-<a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a>cpadmin_nginx_host=[your-nginx-host] \
-<a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a>cpadmin_nginx_port=[your-nginx-port] \
-<a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a>&quot;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>python3 -m venv venv;
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>source /home/chango/venv/bin/activate;
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>ansible-playbook -i admin.inv run.yml \
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>--extra-vars &quot;\
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>exec_user=chango \
+<a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>target_hosts=changoprivate-admin-hosts \
+<a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>role_name=changoprivate-admin \
+<a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.1.0/ansible \
+<a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>run_option=restart \
+<a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>cpadmin_nginx_scheme=https \
+<a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>cpadmin_nginx_host=[your-nginx-host] \
+<a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a>cpadmin_nginx_port=[your-nginx-port] \
+<a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>&quot;
 </code></pre></div></p>
 <p>Run the revised <code>restart-admin.sh</code>.</p>
 
