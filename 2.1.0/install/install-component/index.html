@@ -1071,11 +1071,14 @@
 <code>Chango REST Catalog</code> which must be installed when Chango Private is initialized. 
 The other optional compoents can be installed after Chango Private initialization.</p>
 <h3 id="configure-hosts-and-ssh-private-key">Configure Hosts and SSH Private Key</h3>
-<p>All the <code>Chango Component Nodes</code> need to be registered, and SSH private key need to be added to access <code>Chango Component Nodes</code> from 
+<p>All the <code>Chango Component Nodes</code> need to be registered, and SSH private key on <code>Chango Admin Node</code> need to be added to access <code>Chango Component Nodes</code> from 
 the host of <code>Chango Admin Node</code>.</p>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> Take a note that you need to register all the nodes of <code>Chango Component Nodes</code> <strong>except</strong> <code>Chango Admin Node</code>.</p>
 </blockquote>
+<p>Get SSH private key on <code>Chango Admin Node</code> with the following command, and paste it to the text box <code>SSH Private Key</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cat ~/.ssh/id_rsa
+</code></pre></div>
 <p><img width="900" src="../../images/init/hosts-ssh-key.png" /></p>
 <h3 id="configure-lvm">Configure LVM</h3>
 <p>Raw disks attached to the <code>Chango Component Nodes</code> in comma separated list need to be added to mount as logical volume.</p>
