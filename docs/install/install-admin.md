@@ -434,14 +434,14 @@ http://chango-admin.chango.private:8123/
 Make sure that the host DNS entries for `Chango Admin Node` and `Chango Component Nodes` are added to the host file(for example, `/etc/hosts`) on your local PC, 
 for example.
 ```agsl
-[public-ip]  chango-admin.chango.private
+[ip-address]  chango-admin.chango.private
 
-[public-ip]  chango-comp-1.chango.private
-[public-ip]  chango-comp-2.chango.private
-[public-ip]  chango-comp-3.chango.private
-[public-ip]  chango-comp-4.chango.private
+[ip-address]  chango-comp-1.chango.private
+[ip-address]  chango-comp-2.chango.private
+[ip-address]  chango-comp-3.chango.private
+[ip-address]  chango-comp-4.chango.private
 ```
-, where `[public-ip]` is public IP address of individual nodes.
+, where `[ip-address]` can be public IP address for online environment or private IP address for offline environment.
 
  
 
