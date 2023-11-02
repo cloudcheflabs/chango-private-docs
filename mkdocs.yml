@@ -81,4 +81,4 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
 copyright: |
-  © <script>document.write(new Date().getFullYear())</script> Cloud Chef Labs, Inc. All rights reserved.
+  © <script>document.write(new Date().getFullYear())</script> Cloud Chef Labs, Inc. All rights reserved. admin@cloudchef-labs.com
