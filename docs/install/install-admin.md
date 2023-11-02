@@ -429,6 +429,8 @@ The URL of Chango Admin UI is.
 http://[chango-admin-host]:8123/
 ```
 
+> **_NOTE:_** `8123` for Admin UI and `8080` for NGINX proxy to Admin on `Chango Admin Node` need to be open.
+
 Login as `admin` with the randomly generated password. You can change the password of `admin` in Chango Admin UI.
 
 ## After installing Chango Admin
