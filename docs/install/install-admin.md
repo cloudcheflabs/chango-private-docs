@@ -424,17 +424,24 @@ Output looks like this.
 For example, `b3b3c51fde594d7abdd38fbc3eb2a581` is the password of `admin`.
 
 
-The URL of Chango Admin UI is.
+The URL of Chango Admin UI is, for example.
 ```agsl
-http://[chango-admin-host-name]:8123/
+http://chango-admin.chango.private:8123/
 ```
 
 > **_NOTE:_** `8123` for Admin UI and `8080` for NGINX proxy to Admin on `Chango Admin Node` need to be open.
 
-Make sure that the host DNS entry for `Chango Admin Node` is added to the host file(for example, `/etc/hosts`) on your local PC.
+Make sure that the host DNS entries for `Chango Admin Node` and `Chango Component Nodes` are added to the host file(for example, `/etc/hosts`) on your local PC, 
+for example.
 ```agsl
-[chango-admin-host-public-ip]  [chango-admin-host-name]
+[public-ip]  chango-admin.chango.private
+
+[public-ip]  chango-comp-1.chango.private
+[public-ip]  chango-comp-2.chango.private
+[public-ip]  chango-comp-3.chango.private
+[public-ip]  chango-comp-4.chango.private
 ```
+, where `[public-ip]` is public IP address of individual nodes.
 
  
 
