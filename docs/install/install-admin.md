@@ -426,10 +426,17 @@ For example, `b3b3c51fde594d7abdd38fbc3eb2a581` is the password of `admin`.
 
 The URL of Chango Admin UI is.
 ```agsl
-http://[chango-admin-host]:8123/
+http://[chango-admin-host-name]:8123/
 ```
 
 > **_NOTE:_** `8123` for Admin UI and `8080` for NGINX proxy to Admin on `Chango Admin Node` need to be open.
+
+Make sure that the host DNS entry for `Chango Admin Node` is added to the host file(for example, `/etc/hosts`) on your local PC.
+```agsl
+[chango-admin-host-public-ip]  [chango-admin-host-name]
+```
+
+ 
 
 Login as `admin` with the randomly generated password. You can change the password of `admin` in Chango Admin UI.
 
