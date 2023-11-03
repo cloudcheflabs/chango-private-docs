@@ -962,6 +962,7 @@ Chango will mount attached disks as logical volume by installing Chango Componen
 <p>You need to set selinux to <code>permissive</code> on all <code>Chango Nodes</code> with the following command.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo setenforce 0
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sudo sed -i &#39;s/SELINUX=enforcing/SELINUX=permissive/g&#39; /etc/selinux/config
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>sudo sed -i &#39;s/SELINUX=disabled/SELINUX=permissive/g&#39; /etc/selinux/config
 </code></pre></div>
 <h3 id="add-yum-repositories">Add Yum Repositories</h3>
 <p>For online environment, add the following yum repository on all the <code>Chango Nodes</code>.</p>
