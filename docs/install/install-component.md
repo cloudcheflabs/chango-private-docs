@@ -4,6 +4,9 @@ There are several components supported by Chango Private.
 
 See <a href="../../intro/intro">What is Chango Private?</a> for more details.
 
+> **_NOTE:_** If Chango Private initialization failed or you want to reset Chango Private, then you need to move to 
+> `http://[admin-host]:8123/cp-reset.html` to reset Chango Private.
+
 ## Initialize Chango Private
 
 If you have not initialized Chango Private, you will get the following picture to initialze Chango Private.
