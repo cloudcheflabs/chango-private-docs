@@ -448,6 +448,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#set-selinux-to-permissive" class="md-nav__link">
+    Set Selinux to Permissive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#add-yum-repositories" class="md-nav__link">
     Add Yum Repositories
   </a>
@@ -951,9 +958,14 @@ Add the following.
 <p><strong><em>NOTE:</em></strong> Raw disks attached to <code>Chango Component Nodes</code> <strong>MUST NOT</strong> be mounted!
 Chango will mount attached disks as logical volume by installing Chango Components later.</p>
 </blockquote>
+<h3 id="set-selinux-to-permissive">Set Selinux to Permissive</h3>
+<p>You need to set selinux to <code>permissive</code> on all <code>Chango Nodes</code> with the following command.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo setenforce 0
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sudo sed -i &#39;s/SELINUX=enforcing/SELINUX=permissive/g&#39; /etc/selinux/config
+</code></pre></div>
 <h3 id="add-yum-repositories">Add Yum Repositories</h3>
 <p>For online environment, add the following yum repository on all the <code>Chango Nodes</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo yum install epel-release -y
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo yum install epel-release -y
 </code></pre></div>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> For offline and disconnected environment, you don't have to do it.</p>
@@ -966,136 +978,136 @@ Chango will mount attached disks as logical volume by installing Chango Componen
 <h4 id="on-the-node-of-local-yum-repository">On the Node of Local Yum Repository</h4>
 <p>On the host of local yum repository, you need to follow the below instructions.</p>
 <p>Install NGINX proxy.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/nginx-1.14.0-1.el7_4.ngx.x86_64.rpm
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>sudo rpm -Uvh nginx-1.14.0-1.el7_4.ngx.x86_64.rpm
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/nginx-1.14.0-1.el7_4.ngx.x86_64.rpm
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>sudo rpm -Uvh nginx-1.14.0-1.el7_4.ngx.x86_64.rpm
 </code></pre></div>
 <p>Open port of <code>80</code>.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo firewall-cmd --zone=public --add-port=80/tcp --permanent;
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>sudo firewall-cmd --reload;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo firewall-cmd --zone=public --add-port=80/tcp --permanent;
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>sudo firewall-cmd --reload;
 </code></pre></div></p>
 <p>Install yum utils.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo yum install createrepo  yum-utils -y;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo yum install createrepo  yum-utils -y;
 </code></pre></div></p>
 <p>Create directories of local yum repository.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a># local repo directory.
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>export LOCAL_REPO_BASE=/data/var/www/html
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>export LOCAL_REPO_DIR=${LOCAL_REPO_BASE}/repos;
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a># create repo directories.
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>sudo mkdir -p ${LOCAL_REPO_DIR}/{base,epel,extras,updates};
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># local repo directory.
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>export LOCAL_REPO_BASE=/data/var/www/html
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>export LOCAL_REPO_DIR=${LOCAL_REPO_BASE}/repos;
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a># create repo directories.
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>sudo mkdir -p ${LOCAL_REPO_DIR}/{base,epel,extras,updates};
 </code></pre></div></p>
 <p>Synchronize Yum Repos to Local Repo.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># synchronize repositories to local.
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>sudo reposync -g -l -d -m --repoid=base --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>sudo reposync -g -l -d -m --repoid=epel --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>sudo reposync -g -l -d -m --repoid=extras --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>sudo reposync -g -l -d -m --repoid=updates --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
-<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
-<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a># create new repo for local.
-<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/base/  
-<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/epel/    
-<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
-<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/extras/  
-<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>sudo createrepo ${LOCAL_REPO_DIR}/extras/
-<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/updates/  
-<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>sudo createrepo ${LOCAL_REPO_DIR}/updates/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># synchronize repositories to local.
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>sudo reposync -g -l -d -m --repoid=base --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>sudo reposync -g -l -d -m --repoid=epel --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>sudo reposync -g -l -d -m --repoid=extras --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>sudo reposync -g -l -d -m --repoid=updates --newest-only --download-metadata --download_path=${LOCAL_REPO_DIR}/
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a># create new repo for local.
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/base/  
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/epel/    
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/extras/  
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>sudo createrepo ${LOCAL_REPO_DIR}/extras/
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>sudo createrepo -g comps.xml ${LOCAL_REPO_DIR}/updates/  
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>sudo createrepo ${LOCAL_REPO_DIR}/updates/
 </code></pre></div></p>
 <p>Create NGINX configuration.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>sudo vi /etc/nginx/conf.d/repos.conf 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>sudo vi /etc/nginx/conf.d/repos.conf 
 </code></pre></div></p>
 <p>, and add the following configuration.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>server {
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>        listen   80;
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>        server_name  chango-private-yum-local-repo.chango.private;
-<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>        root   /data/var/www/html/repos;
-<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>        location / {
-<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>                index  index.php index.html index.htm;
-<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>                autoindex on;
-<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>        }
-<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>}
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>server {
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>        listen   80;
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>        server_name  chango-private-yum-local-repo.chango.private;
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>        root   /data/var/www/html/repos;
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>        location / {
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>                index  index.php index.html index.htm;
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>                autoindex on;
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>        }
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>}
 </code></pre></div></p>
 <p>Remove NGINX default configuration.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo rm -rf /etc/nginx/conf.d/default.conf;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo rm -rf /etc/nginx/conf.d/default.conf;
 </code></pre></div></p>
 <p>Start NGINX.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo systemctl start nginx;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>sudo systemctl start nginx;
 </code></pre></div></p>
 <p>Now, you can see the list of RPMs.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>http://[local-yum-repo-ip]/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>http://[local-yum-repo-ip]/
 </code></pre></div></p>
 <p>If internet is available to the host of local yum repository, create crontab to update local yum repository.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>sudo vi /etc/cron.daily/update-localrepos
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo vi /etc/cron.daily/update-localrepos
 </code></pre></div>
 <p>Add the following job.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>#!/bin/bash
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>##specify all local repositories in a single variable
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>LOCAL_REPOS=”base epel extras updates”
-<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>##a loop to update repos one at a time 
-<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>for REPO in ${LOCAL_REPOS}; do
-<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>reposync -g -l -d -m --repoid=$REPO --newest-only --download-metadata --download_path=/data/var/www/html/repos/
-<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>createrepo -g comps.xml /data/var/www/html/repos/$REPO/  
-<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>createrepo /data/var/www/html/repos/$REPO/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>#!/bin/bash
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>##specify all local repositories in a single variable
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>LOCAL_REPOS=”base epel extras updates”
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>##a loop to update repos one at a time 
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>for REPO in ${LOCAL_REPOS}; do
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>reposync -g -l -d -m --repoid=$REPO --newest-only --download-metadata --download_path=/data/var/www/html/repos/
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>createrepo -g comps.xml /data/var/www/html/repos/$REPO/  
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>createrepo /data/var/www/html/repos/$REPO/
 </code></pre></div></p>
 <p>, and add permission.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo chmod 755 /etc/cron.daily/update-localrepos
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>sudo chmod 755 /etc/cron.daily/update-localrepos
 </code></pre></div></p>
 <h4 id="on-the-nodes-of-chango-admin-node-and-chango-component-nodes">On the Nodes of <code>Chango Admin Node</code> and <code>Chango Component Nodes</code></h4>
 <p>As yum client nodes to local yum repository, you need to configure the followings on the nodes of <code>Chango Admin Node</code> and <code>Chango Component Nodes</code> 
 to look up remote local yum repository server.</p>
 <p>Move current yum repo configurations.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>sudo mkdir -p ~/old-repos
-<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>sudo mv /etc/yum.repos.d/*.repo ~/old-repos/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>sudo mkdir -p ~/old-repos
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>sudo mv /etc/yum.repos.d/*.repo ~/old-repos/
 </code></pre></div>
 <p>Create configuration of local yum repository.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>sudo vi /etc/yum.repos.d/local-repos.repo
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>sudo vi /etc/yum.repos.d/local-repos.repo
 </code></pre></div>
 <p>Add the following configuration.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>[local-base]
-<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>name=CentOS Base
-<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>baseurl=http://[local-yum-repo-ip]/base/
-<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>gpgcheck=0
-<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>enabled=1
-<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>
-<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>[local-epel]
-<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>name=CentOS Epel
-<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>baseurl=http://[local-yum-repo-ip]/epel/
-<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>gpgcheck=0
-<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>enabled=1
-<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>
-<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>[local-extras]
-<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>name=CentOS Extras
-<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>baseurl=http://[local-yum-repo-ip]/extras/
-<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>gpgcheck=0
-<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>enabled=1
-<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>
-<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>[local-updates]
-<a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>name=CentOS Updates
-<a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a>baseurl=http://[local-yum-repo-ip]/updates/
-<a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a>gpgcheck=0
-<a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a>enabled=1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>[local-base]
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>name=CentOS Base
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>baseurl=http://[local-yum-repo-ip]/base/
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>gpgcheck=0
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>enabled=1
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>[local-epel]
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>name=CentOS Epel
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>baseurl=http://[local-yum-repo-ip]/epel/
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>gpgcheck=0
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>enabled=1
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>[local-extras]
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a>name=CentOS Extras
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a>baseurl=http://[local-yum-repo-ip]/extras/
+<a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a>gpgcheck=0
+<a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a>enabled=1
+<a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a>
+<a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a>[local-updates]
+<a id="__codelineno-31-20" name="__codelineno-31-20" href="#__codelineno-31-20"></a>name=CentOS Updates
+<a id="__codelineno-31-21" name="__codelineno-31-21" href="#__codelineno-31-21"></a>baseurl=http://[local-yum-repo-ip]/updates/
+<a id="__codelineno-31-22" name="__codelineno-31-22" href="#__codelineno-31-22"></a>gpgcheck=0
+<a id="__codelineno-31-23" name="__codelineno-31-23" href="#__codelineno-31-23"></a>enabled=1
 </code></pre></div></p>
 <p>Replace <code>[local-yum-repo-ip]</code> with the ip address of local yum repository.</p>
 <p>Refresh yum repository.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>sudo yum repolist all
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>sudo yum repolist all
 </code></pre></div>
 <p>Test yum install, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>sudo yum install nginx
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sudo yum install nginx
 </code></pre></div>
 <h2 id="download-chango-private-distribution">Download Chango Private Distribution</h2>
 <p>If you want to install Chango Private in public, then, before downloading Chango Private distribution, 
 you need to be logged in as <code>sudo</code> user created before on <code>Chango Admin Node</code>, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sudo su - chango;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>sudo su - chango;
 </code></pre></div>
 <p>Download Chango Private distribution.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-private-2.1.0.tar.gz
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-private-2.1.0.tar.gz
 </code></pre></div></p>
 <p>And tar the file and move to the installation directory of Chango Private.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>tar zxvf chango-private-2.1.0.tar.gz 
-<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>cd chango-private-2.1.0/ansible/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>tar zxvf chango-private-2.1.0.tar.gz 
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>cd chango-private-2.1.0/ansible/
 </code></pre></div>
 <p>Download all Chango Components.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>./download-component-files.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>./download-component-files.sh
 </code></pre></div>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> For installing Chango Private in disconnected environment, after downloading chango component files, 
@@ -1108,7 +1120,7 @@ to your node in which internet is not available.</p>
 <p><strong><em>NOTE:</em></strong> Make sure that current user is <code>sudo</code> user created before to access <code>Chango Component Nodes</code> and the self host of <code>Chango Admin Node</code> with password-less SSH connection.</p>
 </blockquote>
 <p>Run the following to install Chango Admin.</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>./start-chango-private.sh;
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>./start-chango-private.sh;
 </code></pre></div>
 , which will </p>
 <ul>
@@ -1117,17 +1129,17 @@ to your node in which internet is not available.</p>
 <li>install Chango Admin on the current host.</li>
 </ul>
 <p>Enter values for the prompts, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Installing ansible in virtual environment...
-<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>Ansible installed...
-<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>Ready to install Chango Admin...
-<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>Enter FQDN of the target host name on which PostgreSQL database will be installed: 
-<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>chango-comp-3.chango.private
-<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
-<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>Enter comma-separated disk paths for LVM mount on the target host of PostgreSQL database (for example, &#39;/dev/sdb,/dev/sdc&#39;): 
-<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>/dev/sdb,/dev/sdc
-<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>
-<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>Enter current host name on which Chango Admin will be installed: 
-<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a>chango-admin.chango.private
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>Installing ansible in virtual environment...
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>Ansible installed...
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>Ready to install Chango Admin...
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>Enter FQDN of the target host name on which PostgreSQL database will be installed: 
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>chango-comp-3.chango.private
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>Enter comma-separated disk paths for LVM mount on the target host of PostgreSQL database (for example, &#39;/dev/sdb,/dev/sdc&#39;): 
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>/dev/sdb,/dev/sdc
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>
+<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>Enter current host name on which Chango Admin will be installed: 
+<a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>chango-admin.chango.private
 </code></pre></div>
 <ul>
 <li><code>chango-comp-3.chango.private</code> is for PostgreSQL database host.</li>
@@ -1135,36 +1147,36 @@ to your node in which internet is not available.</p>
 <li><code>chango-admin.chango.private</code> is for current host name.</li>
 </ul>
 <p>To enter the raw disks, run <code>lsblk</code> for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>lsblk;
-<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>
-<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>
-<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>...
-<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>
-<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>sdb      8:16   0   512G  0 disk 
-<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>sdc      8:32   0   512G  0 disk 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>lsblk;
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>...
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>sdb      8:16   0   512G  0 disk 
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>sdc      8:32   0   512G  0 disk 
 </code></pre></div>
 <p>After installing Chango Admin successfully, you need to get randomly genterated password of <code>admin</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>cat /export/chango-private-admin-logs/admin.log | grep &quot;randomly generated password&quot;;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>cat /export/chango-private-admin-logs/admin.log | grep &quot;randomly generated password&quot;;
 </code></pre></div>
 <p>Output looks like this.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>2023-10-27 03:53:59,863 INFO com.cloudcheflabs.changoprivate.admin.config.AdminUserConfigurer:32 [main] randomly generated password for user &#39;admin&#39;: b3b3c51fde594d7abdd38fbc3eb2a581
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>2023-10-27 03:53:59,863 INFO com.cloudcheflabs.changoprivate.admin.config.AdminUserConfigurer:32 [main] randomly generated password for user &#39;admin&#39;: b3b3c51fde594d7abdd38fbc3eb2a581
 </code></pre></div>
 <p>For example, <code>b3b3c51fde594d7abdd38fbc3eb2a581</code> is the password of <code>admin</code>.</p>
 <p>The URL of Chango Admin UI is, for example.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>http://chango-admin.chango.private:8123/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>http://chango-admin.chango.private:8123/
 </code></pre></div></p>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> <code>8123</code> for Admin UI and <code>8080</code> for NGINX proxy to Admin on <code>Chango Admin Node</code> need to be open.</p>
 </blockquote>
 <p>Make sure that the host DNS entries for <code>Chango Admin Node</code> and <code>Chango Component Nodes</code> are added to the host file(for example, <code>/etc/hosts</code>) on your local PC, 
 for example.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>[ip-address]  chango-admin.chango.private
-<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>
-<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>[ip-address]  chango-comp-1.chango.private
-<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>[ip-address]  chango-comp-2.chango.private
-<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>[ip-address]  chango-comp-3.chango.private
-<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>[ip-address]  chango-comp-4.chango.private
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>[ip-address]  chango-admin.chango.private
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>[ip-address]  chango-comp-1.chango.private
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>[ip-address]  chango-comp-2.chango.private
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>[ip-address]  chango-comp-3.chango.private
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>[ip-address]  chango-comp-4.chango.private
 </code></pre></div>
 , where <code>[ip-address]</code> can be public IP address for online environment or private IP address for offline environment.</p>
 <p>Login as <code>admin</code> with the randomly generated password. You can change the password of <code>admin</code> in Chango Admin UI.</p>
@@ -1192,25 +1204,25 @@ If you entered wrong values for the prompts which affects installation failure a
 <p>, and then, install Chango Admin again with running <code>start-chango-private.sh</code>.</p>
 <p>If you changed the host and port of NGINX for <code>Chango Admin</code> after adding TLS configuration to NGINX, 
 then, add the variables to <code>--extra-vars</code> in <code>restart-admin.sh</code>, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>cpadmin_nginx_scheme=https \
-<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>cpadmin_nginx_host=[your-nginx-host] \
-<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>cpadmin_nginx_port=[your-nginx-port] \
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>cpadmin_nginx_scheme=https \
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>cpadmin_nginx_host=[your-nginx-host] \
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>cpadmin_nginx_port=[your-nginx-port] \
 </code></pre></div>
 <p>The revised <code>restart-admin.sh</code> looks like this, for example.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>python3 -m venv venv;
-<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>source /home/chango/venv/bin/activate;
-<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>
-<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>ansible-playbook -i admin.inv run.yml \
-<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>--extra-vars &quot;\
-<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>exec_user=chango \
-<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>target_hosts=changoprivate-admin-hosts \
-<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>role_name=changoprivate-admin \
-<a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.1.0/ansible \
-<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>run_option=restart \
-<a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>cpadmin_nginx_scheme=https \
-<a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>cpadmin_nginx_host=[your-nginx-host] \
-<a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>cpadmin_nginx_port=[your-nginx-port] \
-<a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>&quot;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>python3 -m venv venv;
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>source /home/chango/venv/bin/activate;
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>ansible-playbook -i admin.inv run.yml \
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>--extra-vars &quot;\
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>exec_user=chango \
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>target_hosts=changoprivate-admin-hosts \
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>role_name=changoprivate-admin \
+<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.1.0/ansible \
+<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>run_option=restart \
+<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>cpadmin_nginx_scheme=https \
+<a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a>cpadmin_nginx_host=[your-nginx-host] \
+<a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a>cpadmin_nginx_port=[your-nginx-port] \
+<a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a>&quot;
 </code></pre></div></p>
 <p>Run the revised <code>restart-admin.sh</code>.</p>
 
