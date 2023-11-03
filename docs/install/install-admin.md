@@ -150,6 +150,17 @@ As depicted in the above picture, several Raw Disks must be attached to `Chango 
 > **_NOTE:_** Raw disks attached to `Chango Component Nodes` **MUST NOT** be mounted!
 > Chango will mount attached disks as logical volume by installing Chango Components later.
 
+
+### Set Selinux to Permissive
+
+You need to set selinux to `permissive` on all `Chango Nodes` with the following command.
+
+```agsl
+sudo setenforce 0
+sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+```
+
+
 ### Add Yum Repositories
 
 For online environment, add the following yum repository on all the `Chango Nodes`.
