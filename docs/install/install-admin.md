@@ -158,6 +158,7 @@ You need to set selinux to `permissive` on all `Chango Nodes` with the following
 ```agsl
 sudo setenforce 0
 sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+sudo sed -i 's/SELINUX=disabled/SELINUX=permissive/g' /etc/selinux/config
 ```
 
 
