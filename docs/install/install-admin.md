@@ -152,7 +152,7 @@ As depicted in the above picture, several Raw Disks must be attached to `Chango 
 
 ### Add Yum Repositories
 
-For online environment, add the following yum repository.
+For online environment, add the following yum repository on all the `Chango Nodes`.
 
 ```agsl
 sudo yum install epel-release -y
