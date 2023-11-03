@@ -150,11 +150,22 @@ As depicted in the above picture, several Raw Disks must be attached to `Chango 
 > **_NOTE:_** Raw disks attached to `Chango Component Nodes` **MUST NOT** be mounted!
 > Chango will mount attached disks as logical volume by installing Chango Components later.
 
+### Add Yum Repositories
+
+For online environment, add the following yum repository.
+
+```agsl
+sudo yum install epel-release -y
+```
+
+> **_NOTE:_** For offline and disconnected environment, you don't have to do it.
+
+
 ### Local Yum Repository
 
 If you want to install Chango Private in disconnected environment, you need to install local yum repository which all the `Chango Nodes` will look up.
 
-> If you want to install Chango Private in network connected environment, skip this instruction.
+> **_NOTE:_** If you want to install Chango Private in connected environment, skip this instruction.
 
 
 #### On the Node of Local Yum Repository
@@ -322,7 +333,7 @@ sudo yum repolist all
 Test yum install, for example.
 
 ```agsl
-sudo yum install httpd
+sudo yum install nginx
 ```
 
 
