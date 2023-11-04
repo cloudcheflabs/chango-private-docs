@@ -425,9 +425,9 @@ Enter current host name on which Chango Admin will be installed:
 chango-admin.chango.private
 ```
 
-- `chango-comp-3.chango.private` is for PostgreSQL database host.
-- `/dev/sdb,/dev/sdc` is for LVM raw disks in comma separated list.
-- `chango-admin.chango.private` is for current host name.
+- `chango-comp-3.chango.private` is for PostgreSQL database host which **MUST BE** one of `Chango Component Nodes`, **NOT** `Chango Admin Node`.
+- `/dev/sdb,/dev/sdc` is for LVM raw disks in comma separated list on PostgreSQL database host.
+- `chango-admin.chango.private` is for current host name of `Chango Admin Node`.
 
 To enter the raw disks, run `lsblk` for example.
 
