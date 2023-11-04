@@ -478,7 +478,7 @@ for example.
 
  
 
-Login as `admin` with the randomly generated password. You can change the password of `admin` in Chango Admin UI.
+Login as `admin` with the randomly generated password. You can change the password of `admin` in Chango Admin UI `Account` -> `Profile` later.
 
 ## After installing Chango Admin
 
