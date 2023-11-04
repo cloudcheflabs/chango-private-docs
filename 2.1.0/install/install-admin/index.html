@@ -1152,9 +1152,9 @@ to your node in which internet is not available.</p>
 <a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>chango-admin.chango.private
 </code></pre></div>
 <ul>
-<li><code>chango-comp-3.chango.private</code> is for PostgreSQL database host.</li>
-<li><code>/dev/sdb,/dev/sdc</code> is for LVM raw disks in comma separated list.</li>
-<li><code>chango-admin.chango.private</code> is for current host name.</li>
+<li><code>chango-comp-3.chango.private</code> is for PostgreSQL database host which <strong>MUST BE</strong> one of <code>Chango Component Nodes</code>, <strong>NOT</strong> <code>Chango Admin Node</code>.</li>
+<li><code>/dev/sdb,/dev/sdc</code> is for LVM raw disks in comma separated list on PostgreSQL database host.</li>
+<li><code>chango-admin.chango.private</code> is for current host name of <code>Chango Admin Node</code>.</li>
 </ul>
 <p>To enter the raw disks, run <code>lsblk</code> for example.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>lsblk;
