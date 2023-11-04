@@ -36,7 +36,7 @@ there are many variations to determine how much capacity you need for `Chango Co
 The following components provided by Chango Private are the components which can affect the determination of hardware capacity.
 
 - <a href="https://trino.io/docs/current/installation/deployment.html">Trino</a>
-- <a href="https://spark.apache.org/docs/latest/hardware-provisioning.html">Spark</a>
+- <a href="https://spark.apache.org/docs/latest/hardware-provisioning.html">Apache Spark</a>
 - <a href="https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html">Apache Ozone</a>
 - <a href="https://docs.confluent.io/platform/current/installation/system-requirements.html">Apache Kafka</a>
 
