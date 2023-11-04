@@ -882,6 +882,15 @@ So, you need to prepare <code>at least 4</code> nodes to install Chango Private.
 <p><strong><em>NOTE:</em></strong> 1 node for <code>Chango Admin Node</code> and <code>at least 3</code> nodes for <code>Chango Comonent Nodes</code>.
 That is, you need to have <code>at least 4</code>nodes to install Chango Private.</p>
 </blockquote>
+<p>With respect to hardware requirement, 2 cores and 4GB memory is good for <code>Chango Admin Node</code>, but for <code>Chango Component Nodes</code>, 
+there are many variations to determine how much capacity you need for <code>Chango Component Nodes</code>. 
+The following components provided by Chango Private are the components which can affect the determination of hardware capacity.</p>
+<ul>
+<li><a href="https://trino.io/docs/current/installation/deployment.html">Trino</a></li>
+<li><a href="https://spark.apache.org/docs/latest/hardware-provisioning.html">Spark</a></li>
+<li><a href="https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html">Apache Ozone</a></li>
+<li><a href="https://docs.confluent.io/platform/current/installation/system-requirements.html">Apache Kafka</a></li>
+</ul>
 <h3 id="open-ports">Open Ports</h3>
 <p>You need to open ports in your subnet of <code>Chango Nodes</code>. See the details of <a href="../../components/components/#component-ports">Chango Private Ports</a>.</p>
 <h3 id="password-less-ssh-connection">Password-less SSH Connection</h3>
