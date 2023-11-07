@@ -503,6 +503,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#run-query-in-iceberg-table-for-streaming-events" class="md-nav__link">
+    Run Query in Iceberg Table for Streaming Events
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -902,6 +909,12 @@ Column names <code>year</code>, <code>month</code>, <code>day</code> will be use
 <blockquote>
 <p>Take a look at the value of <code>ts</code> must be the number of <strong>milliseconds</strong> since 1970-01-01 00:00:00.</p>
 </blockquote>
+<h2 id="run-query-in-iceberg-table-for-streaming-events">Run Query in Iceberg Table for Streaming Events</h2>
+<p>You can run queries in iceberg table <code>logs</code> to which streaming events are inserted.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>-- select with partitioning columns.
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>select *, from_unixtime(ts/1000) from iceberg.iceberg_db.logs where year = &#39;2023&#39; and month = &#39;11&#39; and day = &#39;07&#39; limit 1000;
+</code></pre></div>
+<p><img width="900" src="../../images/user-guide/select-logs.png" /></p>
 
 
 
