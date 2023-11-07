@@ -185,3 +185,15 @@ public class SendLogsToDataAPI {
 ```
 
 > Take a look at the value of `ts` must be the number of **milliseconds** since 1970-01-01 00:00:00.
+
+## Run Query in Iceberg Table for Streaming Events
+
+You can run queries in iceberg table `logs` to which streaming events are inserted.
+
+```agsl
+-- select with partitioning columns.
+select *, from_unixtime(ts/1000) from iceberg.iceberg_db.logs where year = '2023' and month = '11' and day = '07' limit 1000;
+```
+
+<img width="900" src="../../images/user-guide/select-logs.png" />
+
