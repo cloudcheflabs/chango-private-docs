@@ -19,7 +19,7 @@ nodes:
   - name: SparkPi
     type: command
     config:
-      command: sshpass -p "xxx" ssh spark@chango-private-3 "/home/spark/run-spark-pi-client.sh"
+      command: ssh spark@chango-private-3.chango.private "/home/spark/spark-pi-client.flow"
     dependsOn:
       - Start
 
