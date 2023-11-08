@@ -4,7 +4,7 @@ Chango Private provides fine-grained data access control using RBAC to Chango st
 
 ## Data Access in Secure Way
 
-<img width="900" src="../../images/security/storage-sec.png" />
+<img width="700" src="../../images/security/storage-sec.png" />
 
 Chango Authorizer controls all the data access to Chango Data Lakehouse. 
 So all the chango components which want to access data in Chango Data Lakehouse need to be authenticated and authorized by Chango Authorizer.
