@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.1/user-guide/schema-reg/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.1/user-guide/connect-trino-gw/">
       
       
-        <link rel="prev" href="../kafka-topic/">
+        <link rel="prev" href="../upload/">
       
       
-        <link rel="next" href="../../features/rbac/">
+        <link rel="next" href="../rest-in-spark/">
       
       <link rel="icon" href="../../images/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Configure Schema Registry URL - Chango Private</title>
+        <title>Connect to Chango Trino Gateway with Trino Clients - Chango Private</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configure-schema-registry-url" class="md-skip">
+        <a href="#connect-to-chango-trino-gateway-with-trino-clients" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Configure Schema Registry URL
+              Connect to Chango Trino Gateway with Trino Clients
             
           </span>
         </div>
@@ -475,11 +475,79 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../connect-trino-gw/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Connect to Chango Trino Gateway with Trino Clients
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Connect to Chango Trino Gateway with Trino Clients
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conect-to-chango-trino-gateway-with-apache-superset" class="md-nav__link">
+    Conect to Chango Trino Gateway with Apache Superset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-to-chango-trino-gateway-with-trino-cli" class="md-nav__link">
+    Connect to Chango Trino Gateway with Trino CLI
+  </a>
+  
+    <nav class="md-nav" aria-label="Connect to Chango Trino Gateway with Trino CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-trino-cli" class="md-nav__link">
+    Install Trino CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-chango-trino-gateway" class="md-nav__link">
+    Connect to Chango Trino Gateway
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -559,21 +627,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../schema-reg/" class="md-nav__link">
         Configure Schema Registry URL
       </a>
-      
     </li>
   
 
@@ -726,15 +784,50 @@
                   
 
 
-<h1 id="configure-schema-registry-url">Configure Schema Registry URL</h1>
-<p>Schema Registry is schema registry server for kafka to handle schemas of kafka messages. 
-For example, if you want to send Avro messages to kafka, then first, you need to register Avro schema to Schema Registry.</p>
-<p>To send Avro messages to Kafka using Schema Registry, see <a href="https://itnext.io/howto-produce-avro-messages-to-kafka-ec0b770e1f54">here</a> for more details.</p>
-<p>The following property needs to be configured to Kafka producer and consumer.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>schema.registry.url=http://[schema-registry-host]:8081
+<h1 id="connect-to-chango-trino-gateway-with-trino-clients">Connect to Chango Trino Gateway with Trino Clients</h1>
+<p>Using Trino Clients like Trino CLI and Apache Superset, you can connect to <code>Chango Trino Gateway</code>.</p>
+<p>Before proceeding to this example, you need to see <a href="../../install/run-first-ctas/" >Run First Trino Query</a> 
+how to create <code>Cluster Group</code> in <code>Chango Trino Gateway</code> with storage security.</p>
+<h2 id="conect-to-chango-trino-gateway-with-apache-superset">Conect to Chango Trino Gateway with Apache Superset</h2>
+<p>You need to follow the instruction shown in <a href="../../install/run-first-ctas/" >Run First Trino Query</a> to 
+connect to <code>Chango Trino Gateway</code> using Apache Superset.</p>
+<h2 id="connect-to-chango-trino-gateway-with-trino-cli">Connect to Chango Trino Gateway with Trino CLI</h2>
+<h3 id="install-trino-cli">Install Trino CLI</h3>
+<p>Run the following to install Trino CLI.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir -p ~/trino-cli;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd ~/trino-cli;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>export TRINO_VERSION=422
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>curl -L -O https://repo1.maven.org/maven2/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar;
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>mv trino-cli-${TRINO_VERSION}-executable.jar trino
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>chmod +x trino
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>./trino --version;
 </code></pre></div>
-<p>To find the host of Schema Registry, go to <code>Components</code> -&gt; <code>Apache Kafka</code>. 
-The host name will be found in <code>Schema Registry Host</code> of <code>Status</code> section.</p>
+<h3 id="connect-to-chango-trino-gateway">Connect to Chango Trino Gateway</h3>
+<p>Let's say you have created trino user <code>trino</code> with proper password in the previous section, and the endpoint of 
+<code>Chango Trino Gateway</code> is <code>https://chango-private-1.chango.private:443</code>. 
+Run the following to connect to <code>Chango Trino Gateway</code>, and enter the password for the user <code>trino</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./trino --server https://chango-private-1.chango.private \
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>--user trino \
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>--insecure \
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>--password;
+</code></pre></div>
+<p>If there is no problem occurred to connect, then you will get the following with running <code>show catalogs</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trino&gt; show catalogs;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a> Catalog 
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>---------
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a> iceberg 
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a> jmx     
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a> system  
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a> tpcds   
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a> tpch    
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>(5 rows)
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Query 20231108_052020_00744_pdmmv, FINISHED, 1 node
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>Splits: 1 total, 1 done (100.00%)
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>0.04 [0 rows, 0B] [0 rows/s, 0B/s]
+</code></pre></div>
 
 
 
