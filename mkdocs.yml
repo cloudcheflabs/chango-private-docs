@@ -42,6 +42,7 @@ nav:
       - "Get S3 Credential": user-guide/s3-cred.md
       - "Send Streaming Events": user-guide/streaming.md
       - "Upload Files": user-guide/upload.md
+      - "Connect to Chango Trino Gateway with Trino Clients": user-guide/connect-trino-gw.md
       - "Create Iceberg REST Catalog in Spark": user-guide/rest-in-spark.md
       - "Run dbt Model": user-guide/dbt.md
       - "Create Azkaban Project using CLI": user-guide/azkaban-cli.md
