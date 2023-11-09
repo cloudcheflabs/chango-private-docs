@@ -2,6 +2,8 @@
 
 Using `Chango CLI`, CSV, JSON, and Excel Files can be uploaded whose data will be inserted to Iceberg table in Chango automatically.
 
+> **_NOTE:_** Before uploading files, make sure that `Chango Data API` and `Chango Straming` are installed.
+
 ## Install Chango CLI
 
 Download chango client jar and install it as Chango CLI.
