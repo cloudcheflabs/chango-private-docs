@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.1/user-guide/rest-in-spark/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.1/user-guide/upload-excel/">
       
       
-        <link rel="prev" href="../connect-trino-gw/">
+        <link rel="prev" href="../upload/">
       
       
-        <link rel="next" href="../dbt/">
+        <link rel="next" href="../connect-trino-gw/">
       
       <link rel="icon" href="../../images/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Create Iceberg REST Catalog in Spark - Chango Private</title>
+        <title>Upload Excel - Chango Private</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#create-iceberg-rest-catalog-in-spark" class="md-skip">
+        <a href="#upload-excel" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Create Iceberg REST Catalog in Spark
+              Upload Excel
             
           </span>
         </div>
@@ -475,11 +475,66 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../upload-excel/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Upload Excel
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Upload Excel
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#get-chango-data-api-endpoint" class="md-nav__link">
+    Get Chango Data API Endpoint
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-chango-credential" class="md-nav__link">
+    Get Chango Credential
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upload-excel-file" class="md-nav__link">
+    Upload Excel File
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -503,21 +558,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../rest-in-spark/" class="md-nav__link">
         Create Iceberg REST Catalog in Spark
       </a>
-      
     </li>
   
 
@@ -740,71 +785,34 @@
                   
 
 
-<h1 id="create-iceberg-rest-catalog-in-spark">Create Iceberg REST Catalog in Spark</h1>
-<p>This shows how to create Iceberg REST catalog in spark applications in Chango Private.</p>
-<p>If spark applications need to access Iceberg tables using <code>Chango REST Catalog</code>, Chango credential and S3 credential are necessary.</p>
-<p>Let's see the following codes to create Iceberg REST Catalog in Spark.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">s3AccessKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">s3SecretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">s3Endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">;</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">s3Region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">restUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">warehouse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">;</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="n">SparkConf</span><span class="w"> </span><span class="n">sparkConf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SparkConf</span><span class="p">().</span><span class="na">setAppName</span><span class="p">(</span><span class="s">&quot;Run Spark with Iceberg REST Catalog&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="c1">// set aws system properties.</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;aws.region&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">s3Region</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">s3Region</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">&quot;us-east-1&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;aws.accessKeyId&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s3AccessKey</span><span class="p">);</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;aws.secretAccessKey&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s3SecretKey</span><span class="p">);</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="c1">// iceberg rest catalog.</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.extensions&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.iceberg.spark.SparkCatalog&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest.catalog-impl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.iceberg.rest.RESTCatalog&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest.io-impl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.iceberg.aws.s3.S3FileIO&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest.uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">restUrl</span><span class="p">);</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest.warehouse&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">warehouse</span><span class="p">);</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest.token&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">token</span><span class="p">);</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest.s3.endpoint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s3Endpoint</span><span class="p">);</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.catalog.rest.s3.path-style-access&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="n">sparkConf</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;spark.sql.defaultCatalog&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;rest&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">        </span><span class="n">SparkSession</span><span class="w"> </span><span class="n">spark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SparkSession</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">                </span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">                </span><span class="p">.</span><span class="na">config</span><span class="p">(</span><span class="n">sparkConf</span><span class="p">)</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">                </span><span class="p">.</span><span class="na">enableHiveSupport</span><span class="p">()</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">                </span><span class="p">.</span><span class="na">getOrCreate</span><span class="p">();</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">        </span><span class="n">Configuration</span><span class="w"> </span><span class="n">hadoopConfiguration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spark</span><span class="p">.</span><span class="na">sparkContext</span><span class="p">().</span><span class="na">hadoopConfiguration</span><span class="p">();</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.endpoint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s3Endpoint</span><span class="p">);</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">s3Region</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">            </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.endpoint.region&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s3Region</span><span class="p">);</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.access.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s3AccessKey</span><span class="p">);</span>
-<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.secret.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">s3SecretKey</span><span class="p">);</span>
-<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.path.style.access&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.change.detection.mode&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;warn&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.change.detection.version.required&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.multiobjectdelete.enable&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.impl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.S3AFileSystem&quot;</span><span class="p">);</span>
-<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">        </span><span class="n">hadoopConfiguration</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;fs.s3a.aws.credentials.provider&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider&quot;</span><span class="p">);</span>
-</code></pre></div></p>
-<ul>
-<li><code>s3AccessKey</code>: S3 Access Key.</li>
-<li><code>s3SecretKey</code>: S3 Secret Key.</li>
-<li><code>s3Endpoint</code>: S3 Endpoint.</li>
-<li><code>s3Region</code>: S3 Region.</li>
-<li><code>restUrl</code>: Endpoint of <code>Chango REST Catalog</code>.</li>
-<li><code>warehouse</code>: Warehouse Path.</li>
-<li><code>token</code>: Chango Credential. </li>
-</ul>
-<p>To get S3 Credential, see <a href="../../user-guide/s3-cred">Get S3 Credential</a>. 
-For the value of <code>warehouse</code>, it can be <code>s3a://[bucket]/warehouse-rest</code> where <code>[bucket]</code> is found in your S3 credential list.</p>
-<p>To get Endpoint URL of <code>Chango REST Catalog</code>, go to <code>Components</code> -&gt; <code>Chango REST Catalog</code>. 
-The URL will be shown in <code>Endpoint</code> section.</p>
-<p>To get Chango Credential, see <a href="../../user-guide/cred">Get Chango Credential</a>.</p>
+<h1 id="upload-excel">Upload Excel</h1>
+<p>You can upload Excel files with either Chango CLI or Admin UI.</p>
+<p>This example will show how to upload Excel files with Admin UI.</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> Before uploading Excel, make sure that <code>Chango Data API</code> and <code>Chango Straming</code> are installed.</p>
+</blockquote>
+<h2 id="get-chango-data-api-endpoint">Get Chango Data API Endpoint</h2>
+<p>You need to get the endpoint of <code>Chango Data API</code> in <code>Components</code> -&gt; <code>Chango Data API</code>. </p>
+<p><img width="900" src="../../images/user-guide/data-api-endpoint.png" /></p>
+<h2 id="get-chango-credential">Get Chango Credential</h2>
+<p>You need to get Chango Credential to have privileges to upload Excel file. Go to <code>Settings</code> -&gt; <code>Security</code>.</p>
+<p>First, create a role <code>upload-excel</code>.</p>
+<p><img width="900" src="../../images/user-guide/role-upload-excel.png" /></p>
+<p>Crate a credential for the role <code>upload-excel</code>.</p>
+<p><img width="900" src="../../images/user-guide/cred-upload-excel.png" /></p>
+<p>Create privileges with storage path <code>iceberg.excel_db.*</code> for the role <code>upload-excel</code>.</p>
+<p><img width="900" src="../../images/user-guide/read-priv-upload-excel.png" />
+<img width="900" src="../../images/user-guide/write-priv-upload-excel.png" /></p>
+<h2 id="upload-excel-file">Upload Excel File</h2>
+<p>Before uploading Excel file, make sure that the header columns exist in the Excel file.</p>
+<p>Assumed that you want to insert uploaded Excel rows into the table <code>test_excel</code> in schema <code>excel_db</code> of catalog <code>iceberg</code>, 
+Enter the values as follows.</p>
+<p><img width="900" src="../../images/user-guide/upload-excel.png" /></p>
+<p>To select rows of uploaded Excel, run the query with Superset like this.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-- select rows in uploaded excel.
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>select * from iceberg.excel_db.test_excel;
+</code></pre></div>
+<p><img width="900" src="../../images/user-guide/select-upload-excel.png" /></p>
 
 
 

@@ -539,6 +539,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../upload-excel/" class="md-nav__link">
+        Upload Excel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../connect-trino-gw/" class="md-nav__link">
         Connect to Chango Trino Gateway with Trino Clients
       </a>
@@ -783,6 +797,9 @@
 <code>Chango Streaming</code> will consume events from kafka and save events to Iceberg table in Chango directly. </p>
 <p>That is, if you send streaming events to <code>Chango Data API</code> server, then all the streaming events will be inserted to Chango automatically.
 <code>Chango Client</code> is used to send streaming events to <code>Chango Data API</code> server with ease.</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> Before sending streaming events, make sure that <code>Chango Data API</code> and <code>Chango Straming</code> are installed.</p>
+</blockquote>
 <h2 id="add-chango-client-library-to-classpath">Add Chango Client Library to Classpath</h2>
 <p>You can add the following maven dependency to your project.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;dependency&gt;
