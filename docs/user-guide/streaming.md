@@ -6,6 +6,8 @@
 That is, if you send streaming events to `Chango Data API` server, then all the streaming events will be inserted to Chango automatically.
 `Chango Client` is used to send streaming events to `Chango Data API` server with ease.
 
+> **_NOTE:_** Before sending streaming events, make sure that `Chango Data API` and `Chango Straming` are installed.
+
 ## Add Chango Client Library to Classpath
 
 You can add the following maven dependency to your project.
