@@ -119,11 +119,15 @@ import co.cloudcheflabs.chango.client.component.ChangoClient;
 import com.cloudcheflabs.changoprivate.example.util.JsonUtils;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SendLogsToDataAPI {
+
+    private static Logger LOG = LoggerFactory.getLogger(SendLogsToDataAPI.class);
 
     @Test
     public void sendLogs() throws Exception {
@@ -166,13 +170,28 @@ public class SendLogsToDataAPI {
 
                 String json = JsonUtils.toJson(map);
 
-                // send json.
-                changoClient.add(json);
+                try {
+                    // send json.
+                    changoClient.add(json);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    LOG.error(e.getMessage());
+
+                    // reconstruct chango client.
+                    changoClient = new ChangoClient(
+                            token,
+                            dataApiServer,
+                            schema,
+                            table,
+                            batchSize,
+                            interval
+                    );
+                }
 
                 count++;
             }
             Thread.sleep(10 * 1000);
-            System.out.println("log [" + count +"] sent...");
+            LOG.info("log [{}] sent...", count);
         }
     }
 
