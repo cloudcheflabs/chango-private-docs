@@ -32,7 +32,7 @@ Create privileges with storage path `iceberg.excel_db.*` for the role `upload-ex
 
 ## Upload Excel File
 
-Before uploading Excel file, make sure that the header columns exist in the Excel file.
+Before uploading Excel file, make sure that the header columns exist in the Excel file. Go to `Upload Files` -> `Upload Excel`.
 
 Assumed that you want to insert uploaded Excel rows into the table `test_excel` in schema `excel_db` of catalog `iceberg`, 
 Enter the values as follows.
