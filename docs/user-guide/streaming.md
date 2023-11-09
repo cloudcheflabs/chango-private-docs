@@ -16,14 +16,14 @@ You can add the following maven dependency to your project.
 <dependency>
   <groupId>co.cloudcheflabs.chango</groupId>
   <artifactId>chango-client</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
 </dependency>
 ```
 
 You can also download Chango Client jar file to add it to your application classpath.
 
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.0/chango-client-2.0.0-executable.jar;
+curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.1/chango-client-2.0.1-executable.jar;
 ```
 
 ## Create Iceberg Table before Sending JSON Events
@@ -116,7 +116,7 @@ Let's see the full codes to send JSON events.
 
 ```java
 import co.cloudcheflabs.chango.client.component.ChangoClient;
-import com.cloudcheflabs.changoprivate.example.util.JsonUtils;
+import co.cloudcheflabs.chango.client.util.JsonUtils;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -151,7 +151,7 @@ public class SendLogsToDataAPI {
         long count = 0;
         while (true) {
             int MAX = 50 * 1000;
-            for(int i = 0; i < MAX; i++) {
+            for (int i = 0; i < MAX; i++) {
                 Map<String, Object> map = new HashMap<>();
 
                 DateTime dt = DateTime.now();
@@ -173,8 +173,9 @@ public class SendLogsToDataAPI {
                 try {
                     // send json.
                     changoClient.add(json);
+
+                    count++;
                 } catch (Exception e) {
-                    e.printStackTrace();
                     LOG.error(e.getMessage());
 
                     // reconstruct chango client.
@@ -186,9 +187,9 @@ public class SendLogsToDataAPI {
                             batchSize,
                             interval
                     );
+                    LOG.info("Chango client reconstructed.");
+                    Thread.sleep(1000);
                 }
-
-                count++;
             }
             Thread.sleep(10 * 1000);
             LOG.info("log [{}] sent...", count);
