@@ -4,17 +4,15 @@ hide:
 - toc
 ---
 
-<h1 align="center">Welcome to Chango Private!</h1>
+<h1 align="center">Chango Makes Your Life Simpler</h1>
 
 
 <p align="center">
-  <img width="150" src="./images/chango-logo.png">
+  <img width="800" src="./images/index/what-is-chango.png">
 </p>
 
+
 <div align="center">
-    <p>
-      Chango Private is Data Lakehouse Platform for both online and disconnected environment.
-    </p>
     <p>
       Let's get started with <a href="./intro/intro">Chango Private</a>.
     </p>
