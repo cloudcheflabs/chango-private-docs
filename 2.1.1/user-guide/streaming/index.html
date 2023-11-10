@@ -815,7 +815,8 @@
 <p>Before sending json as streaming events to <code>Chango Data API</code> server, Iceberg table needs to be created beforehand with 
 trino clients like Trino CLI and Apache Superset.</p>
 <p>It is good practice that Iceberg table for streaming events needs to be partitioned with date, for example, <code>year</code>, <code>month</code> and <code>day</code>.
-In addition, timestamp column like <code>ts</code> also needs to be added to Iceberg table for compacting small files.</p>
+In addition, timestamp column like <code>ts</code> also needs to be added to Iceberg table. 
+Actually, with <code>ts</code> column, Chango Private will compact small data, manifest, and position delete files and expire snapshots to improve query performance.</p>
 <p>Especially, in order to compact small files and add partitioning in Iceberg table in Chango, you need to follow the rules.</p>
 <blockquote>
 <p>The name of timestamp column must be <code>ts</code> whose type is <code>bigint</code> which is equivalent to <code>long</code> in java. 
