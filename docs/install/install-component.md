@@ -116,6 +116,31 @@ Click the host name of components in `Status` to show log.
 <img width="900" src="../../images/navi/show-log.png" />
 
 
+## Chango Authorizer
+
+### Scale Server
+
+Chango Authorizer can be scaled out or unscaled.
+
+<img width="900" src="../../images/authorizer/scale.png" />
+
+First, select hosts for scaling out or unscaling Authorizer servers, and then, press the button of `Scale Out Server` to scale out Authorizer servers
+or press the button of `Unscale Server` to unscale Authorizer servers.
+
+
+## Chango REST Catalog
+
+### Scale Server
+
+Chango REST Catalog can be scaled out or unscaled.
+
+<img width="900" src="../../images/rest-catalog/scale.png" />
+
+First, select hosts for scaling out or unscaling REST Catalog servers, and then, press the button of `Scale Out Server` to scale out REST Catalog servers
+or press the button of `Unscale Server` to unscale REST Catalog servers.
+
+
+
 ## Apache Kafka
 
 `Apache Kafka` is used as event streaming platform in Chango Private.
@@ -262,6 +287,15 @@ Select hosts for `Chango Trino Gateway` servers, host for NGINX proxy, and host 
 
 It looks as below after installing it.
 <img width="900" src="../../images/trino-gw/after-install.png" />
+
+### Scale Server
+
+Chango Trino Gateway can be scaled out or unscaled.
+
+<img width="900" src="../../images/trino-gw/scale.png" />
+
+First, select hosts for scaling out or unscaling Trino Gateway servers, and then, press the button of `Scale Out Server` to scale out Trino Gateway servers
+or press the button of `Unscale Server` to unscale Trino Gateway servers.
 
 
 ## Apache Superset
