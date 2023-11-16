@@ -60,7 +60,9 @@ as many as you need, and you can control data access of `Cluster Groups` as usua
 
 ### Activate and Deactivate Trino Clusters
 
-`Chango Trino Gateway` provides the feature of activation and deactivation of trino clusters.
+`Chango Trino Gateway` provides the feature of activation and deactivation of trino clusters. If one of the backend trino clusters 
+is deactivated, trino queries will not be routed to this trino cluster. If the trino cluster is activated, then trino queries will be routed to this 
+trino cluster.
 
 If the configuration of backend trino clusters is updated, the backend trino clusters need to be restarted.
 In order to provide `Zero Downtime to Run Trino Queries`, `Chanog Trino Gateway` provides such feature of activation and deactivation of trino clusters.
