@@ -836,14 +836,14 @@ So, <code>Chango Trino Gateway</code> controls the data access of trino user to 
 <h3 id="route-trino-queries-to-trino-clusters">Route Trino Queries to Trino Clusters</h3>
 <p>Routing trino queries to the backend trino clusters is fundamental function of <code>Chango Trino Gateway</code>.
 Let's see the following picture how <code>Chango Trino Gateway</code> will route.</p>
-<p><img width="900" src="../../images/trino-gw-concept/chango-trino-gw-1.png" /></p>
+<p><img width="900" src="../../images/trino-gw-concept/trino-gw-1.png" /></p>
 <p>Trino queries which trino users run who belong to the <code>Cluster Group</code> will be routed to the backend trino clusters which belong to the <code>Cluster Group</code>.
 <code>Chango Trino Gateway</code> detects exhausted trino clusters, and will route trino queries to less exhausted trino clusters in smart way.</p>
 <p>From the point of the storage security in Chango, <code>Cluster Group</code> is equivalent to <code>Role</code> in <code>Chango Security</code> model. 
 <code>Chango Trino Gateway</code> will check if trino queries are allowed to run according to privileges of <code>Cluster Group</code> or not.</p>
 <p>Even if you have just one trino cluster as backend trino cluster, you can create several <code>Cluster Groups</code> 
 as many as you need, and you can control data access of <code>Cluster Groups</code> as usual in <code>Chango Security</code> model.
-<img width="900" src="../../images/trino-gw-concept/chango-trino-gw-2.png" /></p>
+<img width="900" src="../../images/trino-gw-concept/trino-gw-2.png" /></p>
 <h3 id="activate-and-deactivate-trino-clusters">Activate and Deactivate Trino Clusters</h3>
 <p><code>Chango Trino Gateway</code> provides the feature of activation and deactivation of trino clusters. If one of the backend trino clusters 
 is deactivated, trino queries will not be routed to this trino cluster. If the trino cluster is activated, then trino queries will be routed to this 
