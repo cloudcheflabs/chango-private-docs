@@ -46,7 +46,7 @@ Especially, RBAC to `Cluster Group` can be configured without restarting backend
 Routing trino queries to the backend trino clusters is fundamental function of `Chango Trino Gateway`.
 Let's see the following picture how `Chango Trino Gateway` will route.
 
-<img width="900" src="../../images/trino-gw-concept/chango-trino-gw-1.png" />
+<img width="900" src="../../images/trino-gw-concept/trino-gw-1.png" />
 
 Trino queries which trino users run who belong to the `Cluster Group` will be routed to the backend trino clusters which belong to the `Cluster Group`.
 `Chango Trino Gateway` detects exhausted trino clusters, and will route trino queries to less exhausted trino clusters in smart way.
@@ -56,7 +56,7 @@ From the point of the storage security in Chango, `Cluster Group` is equivalent 
 
 Even if you have just one trino cluster as backend trino cluster, you can create several `Cluster Groups` 
 as many as you need, and you can control data access of `Cluster Groups` as usual in `Chango Security` model.
-<img width="900" src="../../images/trino-gw-concept/chango-trino-gw-2.png" />
+<img width="900" src="../../images/trino-gw-concept/trino-gw-2.png" />
 
 ### Activate and Deactivate Trino Clusters
 
