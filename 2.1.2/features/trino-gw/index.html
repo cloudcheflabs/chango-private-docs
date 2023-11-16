@@ -845,7 +845,9 @@ Let's see the following picture how <code>Chango Trino Gateway</code> will route
 as many as you need, and you can control data access of <code>Cluster Groups</code> as usual in <code>Chango Security</code> model.
 <img width="900" src="../../images/trino-gw-concept/chango-trino-gw-2.png" /></p>
 <h3 id="activate-and-deactivate-trino-clusters">Activate and Deactivate Trino Clusters</h3>
-<p><code>Chango Trino Gateway</code> provides the feature of activation and deactivation of trino clusters.</p>
+<p><code>Chango Trino Gateway</code> provides the feature of activation and deactivation of trino clusters. If one of the backend trino clusters 
+is deactivated, trino queries will not be routed to this trino cluster. If the trino cluster is activated, then trino queries will be routed to this 
+trino cluster.</p>
 <p>If the configuration of backend trino clusters is updated, the backend trino clusters need to be restarted.
 In order to provide <code>Zero Downtime to Run Trino Queries</code>, <code>Chanog Trino Gateway</code> provides such feature of activation and deactivation of trino clusters.</p>
 <p>Do the following steps for every trino clusters in order to accomplish <code>Zero Downtime to Run Trino Queries</code>.</p>
