@@ -18,12 +18,12 @@
 | Azkaban CLI                   | 0.9.14                            |
 | Superset                      | 0.38.1                            | 
 | dbt                           | dbt-core: 1.2.1, dbt-trino: 1.2.2 |
-| Chango Private Admin          | 2.1.2                             | 
-| Chango Private Streaming      | 2.1.2                             | 
-| Chango Private Data API       | 2.1.2                             | 
-| Chango Private Trino Gateway  | 2.1.2                             | 
-| Chango Private Authorizer     | 2.1.2                             | 
-| Chango Private REST Catalog   | 2.1.2                             |
+| Chango Private Admin          | 2.1.3                             | 
+| Chango Private Streaming      | 2.1.3                             | 
+| Chango Private Data API       | 2.1.3                             | 
+| Chango Private Trino Gateway  | 2.1.3                             | 
+| Chango Private Authorizer     | 2.1.3                             | 
+| Chango Private REST Catalog   | 2.1.3                             |
 
 ## Component Ports
 
