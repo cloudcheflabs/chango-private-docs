@@ -111,7 +111,10 @@
 - 28096: Server 
 - 27081: Management Server 
 - 27788: Jetty Proxy Server 
-- 6379: Redis 
+- 6379: Redis Master
+- 6380: Redis Slave
+- 16379: Redis Master Cluster
+- 16380: Redis Slave Cluster
 - 443: NGINX SSL
 
 ### Chango Private Authorizer
