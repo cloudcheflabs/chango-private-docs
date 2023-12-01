@@ -167,6 +167,8 @@ WITH (
 In addition to the original fields of PostgreSQL table, fields `year`, `month`, `day`, `ts` and `op` are required for partitioning and small files compaction.
 If fields `year`, `month`, `day`, `ts` and `op` exist in the original PostgreSQL table, then `_` will be appended to the original fields of PostgreSQL table.
 
+Take a note that the type of field `id` in original PostgreSQL table is `integer`, but the type of field `id` in Iceberg table in Chango is `bigint`.
+
 > **_NOTE:_** The sequence  of table column names in **lower case** must be **alphanumeric in ascending order**.
 
 
