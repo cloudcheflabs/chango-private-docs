@@ -1,4 +1,4 @@
-# Chango Data Capture Using Chango CDC
+# Change Data Capture Using Chango CDC
 
 [Chango CDC](https://github.com/cloudcheflabs/chango-cdc) is Change Data Capture application to catch CDC data of database 
 and send CDC data to Chango.
