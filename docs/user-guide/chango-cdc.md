@@ -191,7 +191,7 @@ bin/stop-chango-cdc.sh
 
 ## Run PostgreSQL CUD Queries
 
-In PostgreSQL docker container, run the CDU queries.
+In PostgreSQL docker container, run the CUD queries.
 
 ```agsl
 INSERT INTO STUDENT(ID, NAME, ADDRESS, EMAIL) VALUES('1','Kidong Lee','Seoul','kidong@example.com');
