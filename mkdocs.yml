@@ -51,7 +51,7 @@ nav:
       - "Create Kafka Topic": user-guide/kafka-topic.md
       - "Configure Schema Registry URL": user-guide/schema-reg.md
       - "Reading Log Files Using Chango Log": user-guide/chango-log.md
-      - "Chango Data Capture Using Chango CDC": user-guide/chango-cdc.md
+      - "Change Data Capture Using Chango CDC": user-guide/chango-cdc.md
   - "Features":
      - "Chango Storage Security": features/rbac.md
      - "Chango Data Ingestion": features/ingestion.md
