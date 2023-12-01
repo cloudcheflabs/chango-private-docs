@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.3/user-guide/connect-trino-gw/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.3/user-guide/chango-cdc/">
       
       
-        <link rel="prev" href="../upload-excel/">
+        <link rel="prev" href="../chango-log/">
       
       
-        <link rel="next" href="../rest-in-spark/">
+        <link rel="next" href="../../features/rbac/">
       
       <link rel="icon" href="../../images/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Connect to Chango Trino Gateway with Trino Clients - Chango Private</title>
+        <title>Chango Data Capture Using Chango CDC - Chango Private</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#connect-to-chango-trino-gateway-with-trino-clients" class="md-skip">
+        <a href="#chango-data-capture-using-chango-cdc" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Connect to Chango Trino Gateway with Trino Clients
+              Chango Data Capture Using Chango CDC
             
           </span>
         </div>
@@ -489,79 +489,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Connect to Chango Trino Gateway with Trino Clients
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../connect-trino-gw/" class="md-nav__link">
         Connect to Chango Trino Gateway with Trino Clients
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#conect-to-chango-trino-gateway-with-apache-superset" class="md-nav__link">
-    Conect to Chango Trino Gateway with Apache Superset
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#connect-to-chango-trino-gateway-with-trino-cli" class="md-nav__link">
-    Connect to Chango Trino Gateway with Trino CLI
-  </a>
-  
-    <nav class="md-nav" aria-label="Connect to Chango Trino Gateway with Trino CLI">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-trino-cli" class="md-nav__link">
-    Install Trino CLI
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#connect-to-chango-trino-gateway" class="md-nav__link">
-    Connect to Chango Trino Gateway
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -669,11 +601,94 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../chango-cdc/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Chango Data Capture Using Chango CDC
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Chango Data Capture Using Chango CDC
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#build-and-package-chango-cdc" class="md-nav__link">
+    Build and Package Chango CDC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-chango-cdc" class="md-nav__link">
+    Install Chango CDC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-chango-cdc" class="md-nav__link">
+    Configure Chango CDC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-postgresql" class="md-nav__link">
+    Install PostgreSQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-iceberg-table" class="md-nav__link">
+    Create Iceberg Table
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-chango-cdc" class="md-nav__link">
+    Run Chango CDC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-postgresql-cud-queries" class="md-nav__link">
+    Run PostgreSQL CUD Queries
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -826,50 +841,159 @@
                   
 
 
-<h1 id="connect-to-chango-trino-gateway-with-trino-clients">Connect to Chango Trino Gateway with Trino Clients</h1>
-<p>Using Trino Clients like Trino CLI and Apache Superset, you can connect to <code>Chango Trino Gateway</code>.</p>
-<p>Before proceeding to this example, you need to see <a href="../../install/run-first-ctas/" >Run First Trino Query</a> 
-how to create <code>Cluster Group</code> in <code>Chango Trino Gateway</code> with storage security.</p>
-<h2 id="conect-to-chango-trino-gateway-with-apache-superset">Conect to Chango Trino Gateway with Apache Superset</h2>
-<p>You need to follow the instruction shown in <a href="../../install/run-first-ctas/" >Run First Trino Query</a> to 
-connect to <code>Chango Trino Gateway</code> using Apache Superset.</p>
-<h2 id="connect-to-chango-trino-gateway-with-trino-cli">Connect to Chango Trino Gateway with Trino CLI</h2>
-<h3 id="install-trino-cli">Install Trino CLI</h3>
-<p>Run the following to install Trino CLI.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir -p ~/trino-cli;
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd ~/trino-cli;
+<h1 id="chango-data-capture-using-chango-cdc">Chango Data Capture Using Chango CDC</h1>
+<p><a href="https://github.com/cloudcheflabs/chango-cdc">Chango CDC</a> is Change Data Capture application to catch CDC data of database 
+and send CDC data to Chango.</p>
+<h2 id="build-and-package-chango-cdc">Build and Package Chango CDC</h2>
+<p>Embedded Debezium is used by <code>Chango CDC</code>. So you need to choose which Debezium version will be used for your database, see the <a href="https://debezium.io/releases/">release notice of Debezium</a>.
+After that, choose the concrete maven dependency version of Debezium connector.
+For example, maven dependency version of Debezium connector for PostgreSQL can be found <a href="https://mvnrepository.com/artifact/io.debezium/debezium-connector-postgres">here</a>.</p>
+<p>Package <code>Chango CDC</code> distribution with Debezium maven dependency version. Please note that Java 11 and Maven 3 are required to build <code>Chango CDC</code>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone -b branch-1.0.0 https://github.com/cloudcheflabs/chango-cdc.git
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd chango-cdc;
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>export TRINO_VERSION=422
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>curl -L -O https://repo1.maven.org/maven2/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar;
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>mv trino-cli-${TRINO_VERSION}-executable.jar trino
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>chmod +x trino
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>./trino --version;
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>export CHANGO_CDC_VERSION=1.0.0
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>export DEBEZIUM_VERSION=1.9.7.Final
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>./package-dist.sh \
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>--version=${CHANGO_CDC_VERSION} \
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>--debezium.version=${DEBEZIUM_VERSION} \
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>;
+</code></pre></div></p>
+<h2 id="install-chango-cdc">Install Chango CDC</h2>
+<p>You may use <code>Chango CDC</code> package which was built for yourself previously. 
+For this example, the pre-built <code>Chango CDC</code> will be used. Download Chango CDC.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-cdc/releases/download/1.0.0/chango-cdc-1.0.0-debezium-1.9.7.Final-linux-x64.tar.gz
 </code></pre></div>
-<h3 id="connect-to-chango-trino-gateway">Connect to Chango Trino Gateway</h3>
-<p>Let's say you have created trino user <code>trino</code> with proper password in the previous section, and the endpoint of 
-<code>Chango Trino Gateway</code> is <code>https://chango-private-1.chango.private:443</code>. 
-Run the following to connect to <code>Chango Trino Gateway</code>, and enter the password for the user <code>trino</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./trino --server https://chango-private-1.chango.private \
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>--user trino \
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>--insecure \
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>--password;
+<p>Untar and move to Chango CDC directory.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>tar zxvf chango-cdc-1.0.0-debezium-1.9.7.Final-linux-x64.tar.gz
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cd chango-cdc-1.0.0-debezium-1.9.7.Final-linux-x64/
 </code></pre></div>
-<p>If there is no problem occurred to connect, then you will get the following with running <code>show catalogs</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trino&gt; show catalogs;
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a> Catalog 
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>---------
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a> iceberg 
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a> jmx     
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a> system  
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a> tpcds   
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a> tpch    
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>(5 rows)
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Query 20231108_052020_00744_pdmmv, FINISHED, 1 node
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>Splits: 1 total, 1 done (100.00%)
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>0.04 [0 rows, 0B] [0 rows/s, 0B/s]
+<h2 id="configure-chango-cdc">Configure Chango CDC</h2>
+<p>Modify <code>conf/configuation.yml</code>. For example, it looks like this.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>chango:
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZGM0MTFkYzIzMzg2NjU0ZGZkYTdjYjk4OTMzNjA1NWNiNyIsImV4cCI6MTcwNjY1OTE5OSwiaWF0IjoxNzAxMzU2NDEyfQ.-WjO6mpNV5QM5t1jwLmBD8tBuRNOxrzcREU6RqLJtHGD0u_TGi28NWG9lFYA-ZKQ-nDwGbr6Nf_MXaUeeO2VAw
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  dataApiUrl: http://chango-private-1.chango.private:80
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  schema: cdc_db
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  table: student
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  batchSize: 10000
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  interval: 1000
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>debezium:
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>  connector: |-
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    name=postgres-connector
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    connector.class=io.debezium.connector.postgresql.PostgresConnector
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    offset.storage=org.apache.kafka.connect.storage.FileOffsetBackingStore
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    offset.storage.file.filename=/tmp/chango-cdc/offset-student.dat
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    offset.flush.interval.ms=60000
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    topic.prefix=cdc
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    schema.history.internal=io.debezium.storage.file.history.FileSchemaHistory
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    schema.history.internal.file.filename=/tmp/chango-cdc/schemahistory-student.dat
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    database.server.name=postgresql-server
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>    database.server.id=pg-1
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    database.hostname=localhost
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    database.port=5432
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    database.user=anyuser
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    database.password=anypassword
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    database.dbname=studentdb
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>    table.include.list=public.student
 </code></pre></div>
+<ul>
+<li><code>chango.token</code>: Chango Credential which is necessary to access <code>Chango Data API</code>. See <a href="../../user-guide/cred">Get Chango Credential</a>.</li>
+<li><code>chango.dataApiUrl</code>: <code>Chango Data API</code> endpoint URL.</li>
+<li><code>chango.schema</code>: Schema of Iceberg catalog in Chango.</li>
+<li><code>chango.table</code>: Iceberg Table in Chango.</li>
+</ul>
+<p>In this example, we will use PostgreSQL from which CDC data will be caught and sent to Chango.</p>
+<ul>
+<li><code>debezium.connector</code>: Properties of Debezium connector for PostgreSQL.</li>
+</ul>
+<p>If you want to use another database, consult <a href="https://debezium.io/documentation/reference/stable/connectors/index.html">Debezium Connectors</a>.</p>
+<h2 id="install-postgresql">Install PostgreSQL</h2>
+<p>PostgreSQL will be installed as docker container.</p>
+<p>Assumed that docker and docker compose are installed on your machine, create docker compose file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>cat &lt;&lt;EOF &gt; docker-compose.yml
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>version: &quot;3.5&quot;
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>services:
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  postgres:
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    container_name: postgres
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    image: debezium/postgres:9.6
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    ports:
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>      - 5432:5432
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    environment:
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>      - POSTGRES_DB=studentdb
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>      - POSTGRES_USER=anyuser
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>      - POSTGRES_PASSWORD=anypassword
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>EOF
+</code></pre></div>
+<p>Run docker compose.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker-compose up -d;
+</code></pre></div>
+<p>And then, enter the docker container of PostgreSQL to create a table.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker exec -it postgres sh;
+</code></pre></div>
+<p>Connect PostgreSQL database in it.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>psql -U anyuser -d studentdb;
+</code></pre></div>
+<p>Create table <code>student</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>CREATE TABLE public.student
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>(
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    id integer NOT NULL,
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    address character varying(255),
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    email character varying(255),
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    name character varying(255),
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    CONSTRAINT student_pkey PRIMARY KEY (id)
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>);
+</code></pre></div>
+<h2 id="create-iceberg-table">Create Iceberg Table</h2>
+<p>You need to create Iceberg table in Chango using trino clients like <code>Superset</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>-- create iceberg schema.
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>CREATE SCHEMA IF NOT EXISTS iceberg.cdc_db;
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>-- create iceberg table.
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>CREATE TABLE iceberg.cdc_db.student (
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    address varchar,
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    day varchar,
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    email varchar,
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    id bigint,
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    month varchar,
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    name varchar,
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>    op varchar,
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>    ts bigint,
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    year varchar 
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>)
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>WITH (
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>    partitioning=ARRAY[&#39;year&#39;, &#39;month&#39;, &#39;day&#39;],
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>    format = &#39;PARQUET&#39;
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>);
+</code></pre></div>
+<p>In addition to the original fields of PostgreSQL table, fields <code>year</code>, <code>month</code>, <code>day</code>, <code>ts</code> and <code>op</code> are required for partitioning and small files compaction.
+If fields <code>year</code>, <code>month</code>, <code>day</code>, <code>ts</code> and <code>op</code> exist in the original PostgreSQL table, then <code>_</code> will be appended to the original fields of PostgreSQL table.</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> The sequence  of table column names in <strong>lower case</strong> must be <strong>alphanumeric in ascending order</strong>.</p>
+</blockquote>
+<h2 id="run-chango-cdc">Run Chango CDC</h2>
+<p>Move to Chango CDC directory, and run Chango CDC.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>bin/start-chango-cdc.sh
+</code></pre></div>
+<p>You can check the log file <code>/tmp/chango-cdc/chango-cdc.log</code>.</p>
+<p>If you want to stop Chango CDC, run the following.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>bin/stop-chango-cdc.sh
+</code></pre></div>
+<h2 id="run-postgresql-cud-queries">Run PostgreSQL CUD Queries</h2>
+<p>In PostgreSQL docker container, run the CDU queries.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>INSERT INTO STUDENT(ID, NAME, ADDRESS, EMAIL) VALUES(&#39;1&#39;,&#39;Kidong Lee&#39;,&#39;Seoul&#39;,&#39;kidong@example.com&#39;);
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>UPDATE STUDENT SET EMAIL=&#39;kidong2@example.com&#39;, NAME=&#39;Kidong2 Lee&#39; WHERE ID = 1; 
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>DELETE FROM STUDENT WHERE ID = 1;
+</code></pre></div>
+<p>Let's check if CDC data has been saved in Iceberg table in Chango with running the following query in <code>Superset</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>select *, from_unixtime(ts/1000) from iceberg.cdc_db.student order by ts desc;
+</code></pre></div>
+<p><img width="900" src="../../images/user-guide/select-cdc.png" /></p>
 
 
 
