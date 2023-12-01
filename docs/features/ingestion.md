@@ -33,3 +33,19 @@ and write streaming jobs like spark streaming jobs in most cases. But in chango,
 
 External streaming application can insert streaming events to iceberg tables in chango directly without streaming platform and streaming jobs.
 
+## Analyze Logs
+
+[Chango Log](https://github.com/cloudcheflabs/chango-log) is a log agent to read local log files and send logs
+to Chango to analyze logs. 
+Using `Chango Log`, you can analyze logs from all your distributed logs joining different databases in richer manner realtimely in Chango.
+
+## Change Data Capture
+
+[Chango CDC](https://github.com/cloudcheflabs/chango-cdc) is Change Data Capture application to catch CDC data of database
+and send CDC data to Chango.
+You don't need such as Kafka and Kafka Connect cluster to accomplish CDC. Just using `Chango CDC`, you can achieve your goals to see and analyze 
+your distributed data in realtime in Chango.
+
+
+
+
