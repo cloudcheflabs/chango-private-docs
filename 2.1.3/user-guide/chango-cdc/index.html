@@ -984,7 +984,7 @@ If fields <code>year</code>, <code>month</code>, <code>day</code>, <code>ts</cod
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>bin/stop-chango-cdc.sh
 </code></pre></div>
 <h2 id="run-postgresql-cud-queries">Run PostgreSQL CUD Queries</h2>
-<p>In PostgreSQL docker container, run the CDU queries.</p>
+<p>In PostgreSQL docker container, run the CUD queries.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>INSERT INTO STUDENT(ID, NAME, ADDRESS, EMAIL) VALUES(&#39;1&#39;,&#39;Kidong Lee&#39;,&#39;Seoul&#39;,&#39;kidong@example.com&#39;);
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>UPDATE STUDENT SET EMAIL=&#39;kidong2@example.com&#39;, NAME=&#39;Kidong2 Lee&#39; WHERE ID = 1; 
