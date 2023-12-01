@@ -971,6 +971,7 @@ For this example, the pre-built <code>Chango CDC</code> will be used. Download C
 </code></pre></div>
 <p>In addition to the original fields of PostgreSQL table, fields <code>year</code>, <code>month</code>, <code>day</code>, <code>ts</code> and <code>op</code> are required for partitioning and small files compaction.
 If fields <code>year</code>, <code>month</code>, <code>day</code>, <code>ts</code> and <code>op</code> exist in the original PostgreSQL table, then <code>_</code> will be appended to the original fields of PostgreSQL table.</p>
+<p>Take a note that the type of field <code>id</code> in original PostgreSQL table is <code>integer</code>, but the type of field <code>id</code> in Iceberg table in Chango is <code>bigint</code>.</p>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> The sequence  of table column names in <strong>lower case</strong> must be <strong>alphanumeric in ascending order</strong>.</p>
 </blockquote>
