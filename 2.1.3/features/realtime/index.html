@@ -8,16 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.3/features/streaming/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.1.3/features/realtime/">
       
       
+        <link rel="prev" href="../ingestion/">
+      
+      
+        <link rel="next" href="../trino-gw/">
       
       <link rel="icon" href="../../images/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Chango Streaming - Chango Private</title>
+        <title>Realtime Analytics - Chango Private</title>
       
     
     
@@ -69,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chango-streaming" class="md-skip">
+        <a href="#realtime-analytics" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Chango Streaming
+              Realtime Analytics
             
           </span>
         </div>
@@ -209,14 +213,16 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../user-guide/cred/" class="md-tabs__link">
-        User Guide
+      <a href="../rbac/" class="md-tabs__link md-tabs__link--active">
+        Features
       </a>
     </li>
   
@@ -231,8 +237,8 @@
   
   
     <li class="md-tabs__item">
-      <a href="../rbac/" class="md-tabs__link">
-        Features
+      <a href="../../user-guide/cred/" class="md-tabs__link">
+        User Guide
       </a>
     </li>
   
@@ -384,6 +390,154 @@
 
   
   
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Features
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Features
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rbac/" class="md-nav__link">
+        Storage Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingestion/" class="md-nav__link">
+        Data Ingestion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Realtime Analytics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Realtime Analytics
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    Streaming
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregate-logs" class="md-nav__link">
+    Aggregate Logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#change-data-capture" class="md-nav__link">
+    Change Data Capture
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trino-gw/" class="md-nav__link">
+        Trino Gateway
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
   
     
     <li class="md-nav__item md-nav__item--nested">
@@ -391,17 +545,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
       
       
       
-        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
           User Guide
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_2">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           User Guide
         </label>
@@ -622,83 +776,6 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-          Features
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          Features
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../rbac/" class="md-nav__link">
-        Chango Storage Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ingestion/" class="md-nav__link">
-        Chango Data Ingestion
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../trino-gw/" class="md-nav__link">
-        Chango Trino Gateway
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-      
-      
       <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
       
       
@@ -750,14 +827,24 @@
                   
 
 
-<h1 id="chango-streaming">Chango Streaming</h1>
-<p>External event streaming application can insert streaming events into iceberg tables in chango without building streaming platform and writing streaming jobs.</p>
-<h2 id="no-streaming-platform-no-streaming-jobs">No Streaming Platform, No Streaming Jobs</h2>
-<p><img width="700" src="../../images/chango-streaming.png" /></p>
-<p>If you want to insert streaming events like user behavior events, logs, IoT events to data lakehouses, you need to build event streaming platform like kafka
-and write streaming jobs like spark streaming jobs in most cases. But in chango, you don't have to do so. </p>
+<h1 id="realtime-analytics">Realtime Analytics</h1>
+<p><img width="700" src="../../images/realtime/realtime-analytics.png" /></p>
+<p>Chango Private provides several solutions for realtime analytics. 
+Streaming events from external applications, distributed logs and CDC(Change Data Capture) data will be inserted to Iceberg tables 
+in Chango and will be analyzed in realtime for example using <code>Trino</code> provided by Chango.</p>
+<h2 id="streaming">Streaming</h2>
 <p><img width="400" src="../../images/chango-streaming2.png" /></p>
-<p>External streaming application can insert streaming events to iceberg tables in chango directly without streaming platform and streaming jobs.</p>
+<p>External streaming application can insert streaming events to Chango using <a href="https://github.com/cloudcheflabs/chango-client">Chango Client</a>.
+See <a href="../../user-guide/streaming/">Send Streaming Events</a> for more details.</p>
+<h2 id="aggregate-logs">Aggregate Logs</h2>
+<p><img width="700" src="../../images/realtime/log.png" /></p>
+<p><a href="https://github.com/cloudcheflabs/chango-log">Chango Log</a> is a log agent to read local log files and send logs
+to Chango to analyze logs. 
+See <a href="../../user-guide/chango-log/">Reading Log Files Using Chango Log</a> for more details.</p>
+<h2 id="change-data-capture">Change Data Capture</h2>
+<p><img width="700" src="../../images/realtime/cdc.png" /></p>
+<p><a href="https://github.com/cloudcheflabs/chango-cdc">Chango CDC</a> is Change Data Capture application to catch CDC data of database
+and send CDC data to Chango. See <a href="../../user-guide/chango-cdc/">Change Data Capture Using Chango CDC</a> for more details.</p>
 
 
 
