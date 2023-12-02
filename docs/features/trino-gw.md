@@ -1,4 +1,4 @@
-# Chango Trino Gateway
+# Trino Gateway
 
 `Chango Trino Gateway` is an implementation of trino gateway concept.
 

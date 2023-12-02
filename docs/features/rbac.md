@@ -1,4 +1,4 @@
-# Chango Storage Security
+# Storage Security
 
 Chango Private provides fine-grained data access control using RBAC to Chango storage.
 
