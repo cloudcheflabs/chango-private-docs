@@ -32,8 +32,9 @@ theme:
 
 
 nav:
-  - "Getting Started":
+  - "What is Chango Private?":
       - "What is Chango Private?": intro/intro.md
+  - "Getting Started":
       - "Install Chango Admin": install/install-admin.md
       - "Install Chango Components": install/install-component.md
       - "Run First Trino Query": install/run-first-ctas.md
