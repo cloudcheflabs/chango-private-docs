@@ -18,7 +18,7 @@ sudo su - spark;
 Run Spark PI example job.
 
 ```agsl
-export JAVA_HOME=/usr/lib/another-jdk/java-11
+export JAVA_HOME=/usr/lib/jdk
 export SPARK_VERSION=3.4.0
 export SPARK_HOME=/usr/lib/spark
 export SPARK_MASTER=spark://chango-private-1.chango.private:7777
@@ -91,7 +91,7 @@ sudo su - spark;
 Create file `run-spark-pi-client.sh`.
 
 ```agsl
-export JAVA_HOME=/usr/lib/another-jdk/java-11
+export JAVA_HOME=/usr/lib/jdk
 export SPARK_VERSION=3.4.0
 export SPARK_HOME=/usr/lib/spark
 export SPARK_MASTER=spark://chango-private-1.chango.private:7777
