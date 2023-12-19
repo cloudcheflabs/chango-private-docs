@@ -12,7 +12,7 @@
 | Schema Registry               | 7.4.0                             | 
 | Spark                         | 3.4.0 / Scala 2.12                | 
 | Trino                         | 435                               | 
-| Iceberg                       | 1.3.0                             | 
+| Iceberg                       | 1.4.2                             | 
 | Open JDK                      | 8 / 11 / 17                       | 
 | Azkaban                       | 3.69.0-8                          | 
 | Azkaban CLI                   | 0.9.14                            |
