@@ -11,7 +11,7 @@
 | Zookeeper                     | 3.6.4                             | 
 | Schema Registry               | 7.4.0                             | 
 | Spark                         | 3.4.0 / Scala 2.12                | 
-| Trino                         | 422                               | 
+| Trino                         | 435                               | 
 | Iceberg                       | 1.3.0                             | 
 | Open JDK                      | 8 / 11 / 17                       | 
 | Azkaban                       | 3.69.0-8                          | 

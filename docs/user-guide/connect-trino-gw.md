@@ -20,7 +20,7 @@ Run the following to install Trino CLI.
 mkdir -p ~/trino-cli;
 cd ~/trino-cli;
 
-export TRINO_VERSION=422
+export TRINO_VERSION=435
 curl -L -O https://repo1.maven.org/maven2/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar;
 mv trino-cli-${TRINO_VERSION}-executable.jar trino
 chmod +x trino
