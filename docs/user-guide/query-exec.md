@@ -140,10 +140,10 @@ http://<chango-query-exec-endpoint>/v1/trino/exec-query \
 ```
 
 - `<access-token>`: Chango Credential. See <a href="../../user-guide/cred">Get Chango Credential</a>.
-- `<trino-gateway-endpoint>`: Chango Trino Gateway Endpoint with https scheme.
+- `<trino-gateway-endpoint>`: Chango Trino Gateway Endpoint without https scheme.
 - `<trino-user>`: Trino User.
 - `<trino-password>`: Trino Password.
-- `<chango-query-exec-endpoint>`: Chango Query Exec Endpoint with http scheme.
+- `<chango-query-exec-endpoint>`: Chango Query Exec Endpoint without http scheme.
 
 
 ## Send Query Flow
