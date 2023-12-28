@@ -4,26 +4,27 @@
 ## Component Version
 
 
-| Component                     | Version                           | 
-|:------------------------------|:----------------------------------| 
-| Apache Ozone                  | 1.3.0                             | 
-| Kafka                         | 3.4.x                             | 
-| Zookeeper                     | 3.6.4                             | 
-| Schema Registry               | 7.4.0                             | 
-| Spark                         | 3.4.0 / Scala 2.12                | 
-| Trino                         | 435                               | 
-| Iceberg                       | 1.4.2                             | 
-| Open JDK                      | 8 / 11 / 17                       | 
-| Azkaban                       | 3.69.0-8                          | 
-| Azkaban CLI                   | 0.9.14                            |
-| Superset                      | 0.38.1                            | 
-| dbt                           | dbt-core: 1.2.1, dbt-trino: 1.2.2 |
-| Chango Private Admin          | 2.1.3                             | 
-| Chango Private Streaming      | 2.1.3                             | 
-| Chango Private Data API       | 2.1.3                             | 
-| Chango Private Trino Gateway  | 2.1.3                             | 
-| Chango Private Authorizer     | 2.1.3                             | 
-| Chango Private REST Catalog   | 2.1.3                             |
+| Component                    | Version                           | 
+|:-----------------------------|:----------------------------------| 
+| Apache Ozone                 | 1.3.0                             | 
+| Kafka                        | 3.4.x                             | 
+| Zookeeper                    | 3.6.4                             | 
+| Schema Registry              | 7.4.0                             | 
+| Spark                        | 3.4.0 / Scala 2.12                | 
+| Trino                        | 435                               | 
+| Iceberg                      | 1.4.2                             | 
+| Open JDK                     | 8 / 11 / 17                       | 
+| Azkaban                      | 3.69.0-8                          | 
+| Azkaban CLI                  | 0.9.14                            |
+| Superset                     | 0.38.1                            | 
+| dbt                          | dbt-core: 1.2.1, dbt-trino: 1.2.2 |
+| Chango Private Admin         | 2.2.0                             | 
+| Chango Private Streaming     | 2.2.0                             | 
+| Chango Private Data API      | 2.2.0                              | 
+| Chango Private Trino Gateway | 2.2.0                              | 
+| Chango Private Authorizer    | 2.2.0                              | 
+| Chango Private REST Catalog  | 2.2.0                              |
+| Chango Private Query Exec    | 2.2.0                              |
 
 ## Component Ports
 
@@ -127,5 +128,10 @@
 - 27182: Management Server 
 - 28297: Jetty Proxy Server 
 - 8008: NGINX
+
+### Chango Private Query Exec
+- 28291: Server
+- 27291: Management Server
+- 8009: NGINX
 
 
