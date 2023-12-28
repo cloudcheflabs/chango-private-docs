@@ -378,3 +378,19 @@ After installation, you will see the driver host of `Chango Streaming` spark job
 In spark master UI, `Chango Streaming` job will be found.
 <img width="900" src="../../images/streaming/in-spark-ui.png" />
 
+
+## Chango Query Exec
+
+`Chango Query Exec` is a REST application to execute trino ETL queries to transform data in Chango. 
+It may be used as alternative to dbt to transform data in Chango.
+
+### Install Chango Query Exec
+
+Select hosts for Chango Query Exec servers and host for NGINX proxy.
+<img width="900" src="../../images/query-exec/install.png" />
+
+### Scale Server
+
+You can scale out and unscale `Chango Query Exec` servers.
+<img width="900" src="../../images/query-exec/scale-server.png" />
+

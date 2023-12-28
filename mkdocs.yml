@@ -43,6 +43,7 @@ nav:
       - "Data Ingestion": features/ingestion.md
       - "Realtime Analytics": features/realtime.md
       - "Trino Gateway": features/trino-gw.md
+      - "Data Transformation": features/transform.md
   - "User Guide":
       - "Get Chango Credential": user-guide/cred.md
       - "Get S3 Credential": user-guide/s3-cred.md
@@ -58,6 +59,7 @@ nav:
       - "Configure Schema Registry URL": user-guide/schema-reg.md
       - "Reading Log Files Using Chango Log": user-guide/chango-log.md
       - "Change Data Capture Using Chango CDC": user-guide/chango-cdc.md
+      - "Data Transformation Using Chango Query Exec": user-guide/query-exec.md
   - "Components":
      - "Components": components/components.md
 

@@ -12,9 +12,9 @@ Chango Private is a Data Lakehouse Platform for both online and disconnected env
 
 In `Ingestion` layer:
 
-- `Spark` and `Trino` with `dbt` will be used as data integration tool.
+- `Spark` and `Trino` with `dbt` or `Chango Query Exec` will be used as data integration tool.
 - `Kafka` is used as event streaming platform to handle streaming events.
-- `Chango Data API` and `Chango Streaming` will be used to insert incoming streaming events to Chango directly.
+- `Chango Ingestion` will be used to insert incoming streaming events to Chango directly.
 
 In `Storage` layer:
 
@@ -23,7 +23,7 @@ In `Storage` layer:
 
 In `Transformation` layer:
 
-- `Spark` and `Trino` with `dbt` will be used to run ETL jobs.
+- `Spark` and `Trino` with `dbt` or `Chango Query Exec` will be used to run ETL jobs.
 
 In `Analytics` layer:
 
