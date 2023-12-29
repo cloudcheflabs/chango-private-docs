@@ -1123,7 +1123,7 @@ which will be replaced with the date before 10 minutes of current time by <code>
 <p>Send query flow to <code>Chango Query Exec</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl -XPOST -H &quot;Authorization: Bearer $ACCESS_TOKEN&quot; \
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>http://&lt;chango-query-exec-endpoint&gt;/v1/trino/exec-query-flow \
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>-d &quot;flow=$(base64 -w 0 ./exec-flow.sql)&quot; \
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>-d &quot;flow=$(base64 -w 0 ./exec-flow.yaml)&quot; \
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>;
 </code></pre></div>
 
