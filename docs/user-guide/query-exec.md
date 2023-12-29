@@ -221,7 +221,7 @@ Send query flow to `Chango Query Exec`.
 ```agsl
 curl -XPOST -H "Authorization: Bearer $ACCESS_TOKEN" \
 http://<chango-query-exec-endpoint>/v1/trino/exec-query-flow \
--d "flow=$(base64 -w 0 ./exec-flow.sql)" \
+-d "flow=$(base64 -w 0 ./exec-flow.yaml)" \
 ;
 ```
 
