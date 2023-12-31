@@ -821,6 +821,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#date-functions" class="md-nav__link">
+    Date Functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#install-standalone-chango-query-exec" class="md-nav__link">
     Install Standalone Chango Query Exec
   </a>
@@ -923,6 +930,8 @@
 <h1 id="data-transformation-using-standalone-chango-query-exec">Data Transformation Using Standalone Chango Query Exec</h1>
 <p><code>Chango Query Exec</code> standalone distribution can be downloaded and installed. 
 It can be used as standalone <code>Chango Query Exec</code> which is not controlled by <code>Chango Admin</code>.</p>
+<h2 id="date-functions">Date Functions</h2>
+<p>Date Functions supported by <code>Chango Query Exec</code> can be found <a href="../../user-guide/query-exec/#date-functions">here</a>.</p>
 <h2 id="install-standalone-chango-query-exec">Install Standalone Chango Query Exec</h2>
 <p>Download <code>Chango Query Exec</code> standalone distribution.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-query-exec-2.2.0-linux-x64.tar.gz
@@ -1033,6 +1042,7 @@ It can be used as standalone <code>Chango Query Exec</code> which is not control
 <a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a>      limit 10000
 <a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a>      ;
 </code></pre></div>
+<p>The individual queries used in this example are not useful. You should take a look at how to construct DAG like query flow in this example.</p>
 <p>You can define the following properties except <code>queries</code> in the query flow.</p>
 <ul>
 <li><code>uri</code>: Trino URI.</li>
