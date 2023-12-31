@@ -1,6 +1,7 @@
 # Data Transformation Using Standalone Chango Query Exec
 
-`Chango Query Exec` standalone distribution can be downloaded and installed.
+`Chango Query Exec` standalone distribution can be downloaded and installed. 
+It can be used as standalone `Chango Query Exec` which is not controlled by `Chango Admin`.
 
 ## Install Standalone Chango Query Exec
 
