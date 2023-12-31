@@ -60,6 +60,7 @@ nav:
       - "Reading Log Files Using Chango Log": user-guide/chango-log.md
       - "Change Data Capture Using Chango CDC": user-guide/chango-cdc.md
       - "Data Transformation Using Chango Query Exec": user-guide/query-exec.md
+      - "Data Transformation Using Standalone Chango Query Exec": user-guide/standalone-query-exec.md
   - "Components":
      - "Components": components/components.md
 
