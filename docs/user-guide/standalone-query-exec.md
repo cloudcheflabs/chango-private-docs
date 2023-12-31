@@ -3,6 +3,11 @@
 `Chango Query Exec` standalone distribution can be downloaded and installed. 
 It can be used as standalone `Chango Query Exec` which is not controlled by `Chango Admin`.
 
+## Date Functions
+
+Date Functions supported by `Chango Query Exec` can be found <a href="../../user-guide/query-exec/#date-functions">here</a>.
+
+
 ## Install Standalone Chango Query Exec
 
 Download `Chango Query Exec` standalone distribution.
@@ -141,6 +146,8 @@ queries:
       limit 10000
       ;
 ```
+
+The individual queries used in this example are not useful. You should take a look at how to construct DAG like query flow in this example.
 
 You can define the following properties except `queries` in the query flow.
 
