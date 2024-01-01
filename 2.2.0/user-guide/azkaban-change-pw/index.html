@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.2.0/user-guide/upload-excel/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.2.0/user-guide/azkaban-change-pw/">
       
       
-        <link rel="prev" href="../upload/">
+        <link rel="prev" href="../spark-azkaban/">
       
       
-        <link rel="next" href="../connect-trino-gw/">
+        <link rel="next" href="../kafka-topic/">
       
       <link rel="icon" href="../../images/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Upload Excel - Chango Private</title>
+        <title>Change Login Password in Azkaban - Chango Private</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#upload-excel" class="md-skip">
+        <a href="#change-login-password-in-azkaban" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Upload Excel
+              Change Login Password in Azkaban
             
           </span>
         </div>
@@ -631,66 +631,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Upload Excel
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../upload-excel/" class="md-nav__link">
         Upload Excel
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#get-chango-data-api-endpoint" class="md-nav__link">
-    Get Chango Data API Endpoint
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#get-chango-credential" class="md-nav__link">
-    Get Chango Credential
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upload-excel-file" class="md-nav__link">
-    Upload Excel File
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -770,11 +715,52 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../azkaban-change-pw/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Change Login Password in Azkaban
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Change Login Password in Azkaban
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#change-login-password" class="md-nav__link">
+    Change Login Password
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -934,34 +920,26 @@
                   
 
 
-<h1 id="upload-excel">Upload Excel</h1>
-<p>You can upload Excel files with either Chango CLI or Admin UI.</p>
-<p>This example will show how to upload Excel files with Admin UI.</p>
-<blockquote>
-<p><strong><em>NOTE:</em></strong> Before uploading Excel, make sure that <code>Chango Data API</code> and <code>Chango Straming</code> are installed.</p>
-</blockquote>
-<h2 id="get-chango-data-api-endpoint">Get Chango Data API Endpoint</h2>
-<p>You need to get the endpoint of <code>Chango Data API</code> in <code>Components</code> -&gt; <code>Chango Data API</code>. </p>
-<p><img width="900" src="../../images/user-guide/data-api-endpoint.png" /></p>
-<h2 id="get-chango-credential">Get Chango Credential</h2>
-<p>You need to get Chango Credential to have privileges to upload Excel file. Go to <code>Settings</code> -&gt; <code>Security</code>.</p>
-<p>First, create a role <code>upload-excel</code>.</p>
-<p><img width="900" src="../../images/user-guide/role-upload-excel.png" /></p>
-<p>Crate a credential for the role <code>upload-excel</code>.</p>
-<p><img width="900" src="../../images/user-guide/cred-upload-excel.png" /></p>
-<p>Create privileges with storage path <code>iceberg.excel_db.*</code> for the role <code>upload-excel</code>.</p>
-<p><img width="900" src="../../images/user-guide/read-priv-upload-excel.png" />
-<img width="900" src="../../images/user-guide/write-priv-upload-excel.png" /></p>
-<h2 id="upload-excel-file">Upload Excel File</h2>
-<p>Before uploading Excel file, make sure that the header columns exist in the Excel file. Go to <code>Upload Files</code> -&gt; <code>Upload Excel</code>.</p>
-<p>Assumed that you want to insert uploaded Excel rows into the table <code>test_excel</code> in schema <code>excel_db</code> of catalog <code>iceberg</code>, 
-Enter the values as follows.</p>
-<p><img width="900" src="../../images/user-guide/upload-excel.png" /></p>
-<p>To select rows of uploaded Excel, run the query with Superset like this.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-- select rows in uploaded excel.
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>select * from iceberg.excel_db.test_excel;
+<h1 id="change-login-password-in-azkaban">Change Login Password in Azkaban</h1>
+<p>The default login user and password of <code>Azkaban</code> is <code>azkaban</code> and <code>azkaban</code>. The default password should be changed.</p>
+<h2 id="change-login-password">Change Login Password</h2>
+<p>Enter Azkaban web server host via SSH, and move to the Azakban web server directory.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo su - azkaban;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd /usr/lib/azkaban/web;
 </code></pre></div>
-<p><img width="900" src="../../images/user-guide/select-upload-excel.png" /></p>
+<p>There is a user management file <code>conf/azkaban-users.xml</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;azkaban-users&gt;
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  &lt;user groups=&quot;azkaban&quot; password=&quot;azkaban&quot; roles=&quot;admin&quot; username=&quot;azkaban&quot;/&gt;
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  &lt;user password=&quot;metrics&quot; roles=&quot;metrics&quot; username=&quot;metrics&quot;/&gt;
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  &lt;role name=&quot;admin&quot; permissions=&quot;ADMIN&quot;/&gt;
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  &lt;role name=&quot;metrics&quot; permissions=&quot;METRICS&quot;/&gt;
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>&lt;/azkaban-users&gt;
+</code></pre></div>
+<p>The value of <code>password</code> in the following line needs to be modified.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;user groups=&quot;azkaban&quot; password=&quot;azkaban&quot; roles=&quot;admin&quot; username=&quot;azkaban&quot;/&gt;
+</code></pre></div>
+<p>After modifying <code>conf/azkaban-users.xml</code>, restart <code>Azkaban</code> in Chango Admin UI.</p>
 
 
 
