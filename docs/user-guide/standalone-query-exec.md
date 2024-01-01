@@ -161,7 +161,7 @@ You can define the following properties except `queries` in the query flow.
 Send query flow to `Chango Query Exec`.
 
 ```agsl
-curl -XPOST -H "Authorization: Bearer $ACCESS_TOKEN" \
+curl -XPOST \
 http://localhost:28291/v1/trino/exec-query-flow \
 -d "flow=$(base64 -w 0 ./exec-flow.yaml)" \
 ;
