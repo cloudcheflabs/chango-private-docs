@@ -1066,7 +1066,7 @@ It can be used as standalone <code>Chango Query Exec</code> which is not control
 <li><code>sslVerification</code>: SSL Verification enabled or not. Default is <code>false</code>. Optional.</li>
 </ul>
 <p>Send query flow to <code>Chango Query Exec</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl -XPOST -H &quot;Authorization: Bearer $ACCESS_TOKEN&quot; \
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl -XPOST \
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>http://localhost:28291/v1/trino/exec-query-flow \
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>-d &quot;flow=$(base64 -w 0 ./exec-flow.yaml)&quot; \
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>;
