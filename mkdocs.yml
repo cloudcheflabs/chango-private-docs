@@ -72,7 +72,8 @@ extra:
     provider: mike
     default: 2.1.0
 
-
+extra_javascript:
+  - javascripts/extra.js
 
 markdown_extensions:
   - pymdownx.highlight:
