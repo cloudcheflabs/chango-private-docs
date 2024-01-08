@@ -29,6 +29,7 @@ theme:
       accent: lime
   logo: images/chango-logo.png
   favicon: images/chango-logo.png
+  custom_dir: overrides
 
 
 nav:
@@ -72,8 +73,10 @@ extra:
     provider: mike
     default: 2.2.0
 
+
 extra_javascript:
   - javascripts/extra.js
+
 
 markdown_extensions:
   - pymdownx.highlight:
