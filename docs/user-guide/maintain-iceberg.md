@@ -22,7 +22,7 @@ to maintain iceberg tables in Chango.
 `Chango Spark Thrift Server` exposes JDBC/Thrift interface to which clients can send spark sql queries through JDBC/Thrift.
 
 All the incoming queries in `Chango Spark SQL Runner` and `Chango Spark Thrift Server` will be checked by `Chango Authorizer` 
-if the queries is allowed to be run. This access control provided by Chango is RBAC with fained-grained access control like 
+if the queries is allowed to be run. This access control provided by Chango is RBAC with fain-grained access control like 
 catalog, schema and table level to Iceberg.
 
 Take a note that `Chango Spark SQL Runner` and `Chango Thrift Server` will connect to `Chango REST Catalog` as data catalog.
