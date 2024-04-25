@@ -47,7 +47,7 @@ iceberg.*               WRITE
 ## Send Spark SQL Queries to Chango Spark SQL Runner
 
 Clients like `curl` can send iceberg maintenance spark queries to `Chango Spark SQL Runner` through REST.
-For example, the spark sql queries below are small files compaction, snapshot expiration and old metadata files removal 
+For example, the spark sql queries below which are small files compaction, snapshot expiration and old metadata files removal in iceberg tables 
 will be sent.
 
 ```agsl
