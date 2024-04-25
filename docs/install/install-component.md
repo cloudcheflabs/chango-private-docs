@@ -379,6 +379,40 @@ In spark master UI, `Chango Streaming` job will be found.
 <img width="900" src="../../images/streaming/in-spark-ui.png" />
 
 
+### Install Chango Streaming Tx
+
+This is transactional spark streaming jobs. Enter spark configurations for `Chango Streaming Tx` job.
+
+> You need to enter iceberg `schema` and `table` to which streaming messages will be saved.
+
+<img width="900" src="../../images/streaming/install-tx.png" />
+
+After installation, you will see chango streaming tx applications in running status in spark ui.
+
+
+## Spark Thrift Server
+
+Spark Thrift Server is a spark streaming job to run spark sql queries. Clients can connect to spark thrift server, 
+for example through JDBC/Thrift.
+
+### Install Spark Thrift Server
+Enter spark configurations for `Spark Thrift Server` job.
+<img width="900" src="../../images/streaming/install-sts.png" />
+
+After installation, you will see spark thrift server in running status in spark ui.
+
+
+## Spark SQL Runner
+
+Spark SQL Runner is a spark streaming job which exposes REST API to run spark sql queries requested by clients through REST.
+
+### Install Spark SQL Runner
+Enter spark configurations for `Spark SQL Runner` job.
+<img width="900" src="../../images/streaming/install-sql.png" />
+
+After installation, you will see spark sql runner in running status in spark ui.
+
+
 ## Chango Query Exec
 
 `Chango Query Exec` is a REST application to execute trino ETL queries to transform data in Chango. 

@@ -41,6 +41,17 @@ Add privilege of `*` for WRITE type.
 
 `*` means all data access to Chango is allowed.
 
+But, note that all data access above is not secure, so you need to set the values in fine-grained manner in your production environment, for example.
+
+```agsl
+information_schema.*	   READ
+tpch.*                     READ
+iceberg.*                  READ
+iceberg.*                  WRITE
+```
+
+> **_NOTE:_** `information_schema.*` needs to be added for trino connector of superset.
+
 
 ## Get Endpoint of Chango Trino Gateway
 
