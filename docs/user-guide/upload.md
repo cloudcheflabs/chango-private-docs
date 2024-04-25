@@ -8,8 +8,8 @@ Using `Chango CLI`, CSV, JSON, and Excel Files can be uploaded whose data will b
 
 Download chango client jar and install it as Chango CLI.
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.1/chango-client-2.0.1-executable.jar;
-cp chango-client-2.0.1-executable.jar ~/bin/chango;
+curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.2/chango-client-2.0.2-executable.jar;
+cp chango-client-2.0.2-executable.jar ~/bin/chango;
 chmod +x ~/bin/chango;
 ```
 
@@ -69,6 +69,19 @@ chango upload json local \
 - `directory`: the directory where json files are located which will be sent to chango.
 
 `[endpoint-of-data-api]` is the endpoint of `Chango Data API`, go to `Components` -> `Chango Data API`, and get URL in `Endpoint` section.
+
+If you want to upload json transactionally, you need to add `--tx` parameter.
+
+```
+chango upload json local \
+--data-api-server [endpoint-of-data-api] \
+--schema iceberg_db \
+--table test_iceberg \
+--file /home/chango/multi-line-json.json \
+--batch-size 150000 \
+--tx \
+;
+```
 
 
 ## Upload Excel
