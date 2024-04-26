@@ -8,18 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.3.0/intro/intro/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/livy/">
       
       
+        <link rel="prev" href="../maintain-iceberg/">
       
-        <link rel="next" href="../../install/install-admin/">
+      
+        <link rel="next" href="../../components/components/">
       
       <link rel="icon" href="../../images/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>What is Chango Private? - Chango Private</title>
+        <title>Run Spark Applications using Livy - Chango Private</title>
       
     
     
@@ -74,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-is-chango-private" class="md-skip">
+        <a href="#run-spark-applications-using-livy" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              What is Chango Private?
+              Run Spark Applications using Livy
             
           </span>
         </div>
@@ -198,15 +200,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="./" class="md-tabs__link md-tabs__link--active">
+      <a href="../../intro/intro/" class="md-tabs__link">
         What is Chango Private?
       </a>
     </li>
@@ -248,13 +248,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../user-guide/cred/" class="md-tabs__link">
+      <a href="../cred/" class="md-tabs__link md-tabs__link--active">
         User Guide
       </a>
     </li>
@@ -316,16 +318,14 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
       
       
       
@@ -334,7 +334,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
           What is Chango Private?
@@ -345,52 +345,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          What is Chango Private?
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../intro/intro/" class="md-nav__link">
         What is Chango Private?
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#chango-private-data-lakehouse-platform" class="md-nav__link">
-    Chango Private Data Lakehouse Platform
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -590,14 +549,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
       
       
       
@@ -606,7 +567,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           User Guide
@@ -619,7 +580,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/cred/" class="md-nav__link">
+      <a href="../cred/" class="md-nav__link">
         Get Chango Credential
       </a>
     </li>
@@ -633,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/s3-cred/" class="md-nav__link">
+      <a href="../s3-cred/" class="md-nav__link">
         Get S3 Credential
       </a>
     </li>
@@ -647,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/streaming/" class="md-nav__link">
+      <a href="../streaming/" class="md-nav__link">
         Send Streaming Events
       </a>
     </li>
@@ -661,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/upload/" class="md-nav__link">
+      <a href="../upload/" class="md-nav__link">
         Upload Files
       </a>
     </li>
@@ -675,7 +636,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/upload-excel/" class="md-nav__link">
+      <a href="../upload-excel/" class="md-nav__link">
         Upload Excel
       </a>
     </li>
@@ -689,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/connect-trino-gw/" class="md-nav__link">
+      <a href="../connect-trino-gw/" class="md-nav__link">
         Connect to Chango Trino Gateway with Trino Clients
       </a>
     </li>
@@ -703,7 +664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/rest-in-spark/" class="md-nav__link">
+      <a href="../rest-in-spark/" class="md-nav__link">
         Create Iceberg REST Catalog in Spark
       </a>
     </li>
@@ -717,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/dbt/" class="md-nav__link">
+      <a href="../dbt/" class="md-nav__link">
         Run dbt Model
       </a>
     </li>
@@ -731,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/azkaban-cli/" class="md-nav__link">
+      <a href="../azkaban-cli/" class="md-nav__link">
         Create Azkaban Project using CLI
       </a>
     </li>
@@ -745,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/spark-azkaban/" class="md-nav__link">
+      <a href="../spark-azkaban/" class="md-nav__link">
         Run Spark Jobs with Azkaban
       </a>
     </li>
@@ -759,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/azkaban-change-pw/" class="md-nav__link">
+      <a href="../azkaban-change-pw/" class="md-nav__link">
         Change Login Password in Azkaban
       </a>
     </li>
@@ -773,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/kafka-topic/" class="md-nav__link">
+      <a href="../kafka-topic/" class="md-nav__link">
         Create Kafka Topic
       </a>
     </li>
@@ -787,7 +748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/schema-reg/" class="md-nav__link">
+      <a href="../schema-reg/" class="md-nav__link">
         Configure Schema Registry URL
       </a>
     </li>
@@ -801,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/chango-log/" class="md-nav__link">
+      <a href="../chango-log/" class="md-nav__link">
         Reading Log Files Using Chango Log
       </a>
     </li>
@@ -815,7 +776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/chango-cdc/" class="md-nav__link">
+      <a href="../chango-cdc/" class="md-nav__link">
         Change Data Capture Using Chango CDC
       </a>
     </li>
@@ -829,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/query-exec/" class="md-nav__link">
+      <a href="../query-exec/" class="md-nav__link">
         Data Transformation Using Chango Query Exec
       </a>
     </li>
@@ -843,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/standalone-query-exec/" class="md-nav__link">
+      <a href="../standalone-query-exec/" class="md-nav__link">
         Data Transformation Using Standalone Chango Query Exec
       </a>
     </li>
@@ -857,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/maintain-iceberg/" class="md-nav__link">
+      <a href="../maintain-iceberg/" class="md-nav__link">
         Maintain Iceberg Tables
       </a>
     </li>
@@ -869,11 +830,73 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../user-guide/livy/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Run Spark Applications using Livy
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Run Spark Applications using Livy
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-spark-batch-application" class="md-nav__link">
+    Run Spark Batch Application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-batch-state" class="md-nav__link">
+    Get Batch State
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-batch-log" class="md-nav__link">
+    Get Batch Log
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete-batch" class="md-nav__link">
+    Delete Batch
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -949,38 +972,60 @@
                   
 
 
-<h1 id="what-is-chango-private">What is Chango Private?</h1>
-<p><img width="800" src="../../images/chango-overview.png" /></p>
-<p>Chango Private is a Data Lakehouse Platform for both online and disconnected environment.</p>
-<h2 id="chango-private-data-lakehouse-platform">Chango Private Data Lakehouse Platform</h2>
-<p><img width="900" src="../../images/architecture/lakehouse-platform.png" /></p>
-<p>In <code>Ingestion</code> layer:</p>
-<ul>
-<li><code>Spark</code> and <code>Trino</code> with <code>dbt</code> or <code>Chango Query Exec</code> will be used as data integration tool.</li>
-<li><code>Kafka</code> is used as event streaming platform to handle streaming events.</li>
-<li><code>Chango Ingestion</code> will be used to insert incoming streaming events to Chango directly.</li>
-</ul>
-<p>In <code>Storage</code> layer:</p>
-<ul>
-<li>Chango Private supports Apache Ozone as object storage by default and external S3 compatible object storage like AWS S3, MinIO, OCI Object Storage.</li>
-<li>Default storage format is <code>Iceberg</code> table format used for data warehousing in Chango.</li>
-</ul>
-<p>In <code>Transformation</code> layer:</p>
-<ul>
-<li><code>Spark</code> and <code>Trino</code> with <code>dbt</code> or <code>Chango Query Exec</code> will be used to run ETL jobs.</li>
-</ul>
-<p>In <code>Analytics</code> layer:</p>
-<ul>
-<li><code>Trino</code> will be used as query engine to explore all the data in Chango.</li>
-<li><code>BI</code> tools like <code>Apache Superset</code> will connect to <code>Trino</code> to run queries through <code>Chango Trino Gateway</code>.</li>
-</ul>
-<p>In <code>Management</code> layer:</p>
-<ul>
-<li><code>Azkaban</code> will be used as workflow. All the batch jobs like ETL will be integrated with <code>Azkaban</code>.</li>
-<li><code>Chango REST Catalog</code> will be used as data catalog in Chango.</li>
-<li>Chango Private supports storage security to control data access based on RBAC in Chango. <code>Chango Authorizer</code> will be used for it.</li>
-<li><code>Chango Trino Gateway</code> is an implementation of Trino Gateway concept. <code>Chango Trino Gateway</code> provides several features like authentication, authorization, smart query routing(routing to less exhausted trino clusters), trino cluster activation/deactivation. For more details, see <a href="../../features/trino-gw/">Chango Trino Gateway</a>.</li>
-</ul>
+<h1 id="run-spark-applications-using-livy">Run Spark Applications using Livy</h1>
+<p>Livy exposes REST API to run spark applications remotely. </p>
+<h2 id="run-spark-batch-application">Run Spark Batch Application</h2>
+<p>You need to know Livy endpoint to which spark job configuration should be sent in the menu of <code>Spark</code> beforehand.</p>
+<p>Let's run spark example PI application using Livy.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cat &lt;&lt;EOF &gt; /home/opc/run-livy-batch.json
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>{
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   &quot;file&quot;:&quot;file:///usr/lib/spark/examples/jars/spark-examples_2.12-3.4.3.jar&quot;,
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>   &quot;className&quot;:&quot;org.apache.spark.examples.SparkPi&quot;,
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>   &quot;args&quot;: [&quot;100&quot;],
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>   &quot;driverMemory&quot;:&quot;1G&quot;,
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   &quot;driverCores&quot;: 1,
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>   &quot;executorMemory&quot;:&quot;1G&quot;,
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   &quot;executorCores&quot;:1,
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>   &quot;numExecutors&quot;:1,
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>   &quot;name&quot;:&quot;PI Example New Named 3&quot;,
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>   &quot;conf&quot;:{
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>      &quot;spark.master&quot;:&quot;spark://chango-private-1.chango.private:7777&quot;
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>   }
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>}
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>EOF
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a># convert pretty json to oneline json.
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>cat /home/opc/run-livy-batch.json | jq -c &gt; /home/opc/run-livy-batch-oneline.json
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a># call livy api.
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>curl -H &quot;Content-Type: application/json&quot; \
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>-XPOST \
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>&quot;http://chango-private-1.chango.private:8998/batches&quot; \
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>-d @/home/opc/run-livy-batch-oneline.json \
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>;
+</code></pre></div>
+<p>The livy endpoint above needs to be replaced with your current livy endpoint shown in <code>Spark</code> UI page.</p>
+<h2 id="get-batch-state">Get Batch State</h2>
+<p>You can get batch state of spark applications run by Livy.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl -H &quot;Content-Type: application/json&quot; \
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>-XGET \
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>&quot;http://chango-private-1.chango.private:8998/batches/0/state&quot; \
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>;
+</code></pre></div>
+<h2 id="get-batch-log">Get Batch Log</h2>
+<p>If you want to see the log of spark application, call the following.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl -H &quot;Content-Type: application/json&quot; \
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>-XGET \
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>&quot;http://chango-private-1.chango.private:8998/batches/0/log&quot; \
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>;
+</code></pre></div>
+<h2 id="delete-batch">Delete Batch</h2>
+<p>In order to delete spark application job, run the following rest call.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl -H &quot;Content-Type: application/json&quot; \
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>-XDELETE \
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>&quot;http://chango-private-1.chango.private:8998/batches/0&quot; \
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>;
+</code></pre></div>
 
 
 
