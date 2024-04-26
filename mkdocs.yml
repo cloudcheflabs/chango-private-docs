@@ -64,6 +64,7 @@ nav:
       - "Data Transformation Using Chango Query Exec": user-guide/query-exec.md
       - "Data Transformation Using Standalone Chango Query Exec": user-guide/standalone-query-exec.md
       - "Maintain Iceberg Tables": user-guide/maintain-iceberg.md
+      - "Run Spark Applications using Livy": user-guide/livy.md
   - "Components":
      - "Components": components/components.md
 
