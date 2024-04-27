@@ -141,6 +141,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/tx-streaming/</loc>
+         <lastmod>2024-04-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/upload-excel/</loc>
          <lastmod>2024-04-27</lastmod>
          <changefreq>daily</changefreq>
