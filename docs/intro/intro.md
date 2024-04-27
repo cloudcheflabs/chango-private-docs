@@ -19,7 +19,7 @@ In `Ingestion` layer:
 In `Storage` layer:
 
 - Chango Private supports Apache Ozone as object storage by default and external S3 compatible object storage like AWS S3, MinIO, OCI Object Storage.
-- Default storage format is `Iceberg` table format used for data warehousing in Chango.
+- Data lakehouse format is `Iceberg` table format in Chango.
 
 In `Transformation` layer:
 
