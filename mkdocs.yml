@@ -63,6 +63,7 @@ nav:
       - "Change Data Capture Using Chango CDC": user-guide/chango-cdc.md
       - "Data Transformation Using Chango Query Exec": user-guide/query-exec.md
       - "Data Transformation Using Standalone Chango Query Exec": user-guide/standalone-query-exec.md
+      - "Transactional Streaming": user-guide/tx-streaming.md
       - "Maintain Iceberg Tables": user-guide/maintain-iceberg.md
       - "Run Spark Applications using Livy": user-guide/livy.md
   - "Components":
