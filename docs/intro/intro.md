@@ -27,14 +27,16 @@ In `Transformation` layer:
 
 In `Analytics` layer:
 
-- `Trino` will be used as query engine to explore all the data in Chango.
+- `Trino` is used as query engine to explore all the data in Chango.
 - `BI` tools like `Apache Superset` will connect to `Trino` to run queries through `Chango Trino Gateway`.
 
 In `Management` layer:
 
-- `Azkaban` will be used as workflow. All the batch jobs like ETL will be integrated with `Azkaban`.
-- `Chango REST Catalog` will be used as data catalog in Chango.
+- `Azkaban` is used as workflow. All the batch jobs like ETL will be integrated with `Azkaban`.
+- `Chango REST Catalog` is Iceberg REST Catalog and used as data catalog in Chango.
 - Chango Private supports storage security to control data access based on RBAC in Chango. `Chango Authorizer` will be used for it.
 - `Chango Trino Gateway` is an implementation of Trino Gateway concept. `Chango Trino Gateway` provides several features like authentication, authorization, smart query routing(routing to less exhausted trino clusters), trino cluster activation/deactivation. For more details, see <a href="../../features/trino-gw/">Chango Trino Gateway</a>.
+- `Chango Spark SQL Runner` exposes REST API to which clients send spark sql queries using REST to execute spark queries.
+- `Chango Thrift Server` exposes JDBC/Thrift to which clients send spark sql queries using JDBC/Thrift to execute spark queries.
 
  
