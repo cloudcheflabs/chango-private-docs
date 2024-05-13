@@ -155,7 +155,7 @@ ssh chango-admin.chango.private
 
 ### Attache Raw Disks to `Chango Component Nodes`
 
-As depicted in the above picture, several Raw Disks must be attached to `Chango Component Nodes`. But you don’t have to attache any disks to `Chango Admin Node`.
+As depicted in the above picture, several Raw Disks must be attached to `Chango Component Nodes`. But you don’t have to mount any disks to `Chango Admin Node`.
 
 > **_NOTE:_** Raw disks attached to `Chango Component Nodes` **MUST NOT** be mounted!
 > Chango will mount attached disks as logical volume by installing Chango Components later.
@@ -385,6 +385,13 @@ Download all Chango Components.
 ```agsl
 ./download-component-files.sh
 ```
+
+If it takes long time to download chango components, then run the following to download in background.
+
+```agsl
+nohup ./download-component-files.sh > out.log; tail -f out.log;
+```
+
 
 > **_NOTE:_** For installing Chango Private in disconnected environment, after downloading chango component files, 
 > you need to package the whole distribution directory with downloaded component files to the file(for example, tar.gz) which needs to be transferred
