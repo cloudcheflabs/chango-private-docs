@@ -1355,6 +1355,9 @@ you need to be logged in as <code>sudo</code> user created before on <code>Chang
 <p>Download all Chango Components.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>./download-component-files.sh
 </code></pre></div>
+<p>If it takes long time to download chango components, then run the following to download in background.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>nohup ./download-component-files.sh &gt; out.log; tail -f out.log;
+</code></pre></div>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> For installing Chango Private in disconnected environment, after downloading chango component files, 
 you need to package the whole distribution directory with downloaded component files to the file(for example, tar.gz) which needs to be transferred
@@ -1366,7 +1369,7 @@ to your node in which internet is not available.</p>
 <p><strong><em>NOTE:</em></strong> Make sure that current user is <code>sudo</code> user created before to access <code>Chango Component Nodes</code> and the self host of <code>Chango Admin Node</code> with password-less SSH connection.</p>
 </blockquote>
 <p>Run the following to install Chango Admin.</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>./start-chango-private.sh;
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>./start-chango-private.sh;
 </code></pre></div>
 , which will </p>
 <ul>
@@ -1375,17 +1378,17 @@ to your node in which internet is not available.</p>
 <li>install Chango Admin on the current host.</li>
 </ul>
 <p>Enter values for the prompts, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>Installing ansible in virtual environment...
-<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>Ansible installed...
-<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>Ready to install Chango Admin...
-<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>Enter FQDN of the target host name on which PostgreSQL database will be installed: 
-<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>chango-comp-3.chango.private
-<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>
-<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>Enter comma-separated disk paths for LVM mount on the target host of PostgreSQL database (for example, &#39;/dev/sdb,/dev/sdc&#39;): 
-<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>/dev/sdb,/dev/sdc
-<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>
-<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>Enter current host name on which Chango Admin will be installed: 
-<a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>chango-admin.chango.private
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>Installing ansible in virtual environment...
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>Ansible installed...
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>Ready to install Chango Admin...
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>Enter FQDN of the target host name on which PostgreSQL database will be installed: 
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>chango-comp-3.chango.private
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>Enter comma-separated disk paths for LVM mount on the target host of PostgreSQL database (for example, &#39;/dev/sdb,/dev/sdc&#39;): 
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>/dev/sdb,/dev/sdc
+<a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>
+<a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a>Enter current host name on which Chango Admin will be installed: 
+<a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a>chango-admin.chango.private
 </code></pre></div>
 <ul>
 <li><code>chango-comp-3.chango.private</code> is for PostgreSQL database host which <strong>MUST BE</strong> one of <code>Chango Component Nodes</code>, <strong>NOT</strong> <code>Chango Admin Node</code>.</li>
@@ -1393,36 +1396,36 @@ to your node in which internet is not available.</p>
 <li><code>chango-admin.chango.private</code> is for current host name of <code>Chango Admin Node</code>.</li>
 </ul>
 <p>To enter the raw disks, run <code>lsblk</code> for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>lsblk;
-<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>
-<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>
-<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>...
-<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>
-<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>sdb      8:16   0   512G  0 disk 
-<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>sdc      8:32   0   512G  0 disk 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>lsblk;
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>...
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>sdb      8:16   0   512G  0 disk 
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>sdc      8:32   0   512G  0 disk 
 </code></pre></div>
 <p>After installing Chango Admin successfully, you need to get randomly genterated password of <code>admin</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>cat /export/chango-private-admin-logs/admin.log | grep &quot;randomly generated password&quot;;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>cat /export/chango-private-admin-logs/admin.log | grep &quot;randomly generated password&quot;;
 </code></pre></div>
 <p>Output looks like this.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>2023-10-27 03:53:59,863 INFO com.cloudcheflabs.changoprivate.admin.config.AdminUserConfigurer:32 [main] randomly generated password for user &#39;admin&#39;: b3b3c51fde594d7abdd38fbc3eb2a581
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>2023-10-27 03:53:59,863 INFO com.cloudcheflabs.changoprivate.admin.config.AdminUserConfigurer:32 [main] randomly generated password for user &#39;admin&#39;: b3b3c51fde594d7abdd38fbc3eb2a581
 </code></pre></div>
 <p>For example, <code>b3b3c51fde594d7abdd38fbc3eb2a581</code> is the password of <code>admin</code>.</p>
 <p>The URL of Chango Admin UI is, for example.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>http://chango-admin.chango.private:8123/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>http://chango-admin.chango.private:8123/
 </code></pre></div></p>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> <code>8123</code> for Admin UI and <code>8080</code> for NGINX proxy to Admin on <code>Chango Admin Node</code> need to be open.</p>
 </blockquote>
 <p>Make sure that the host DNS entries for <code>Chango Admin Node</code> and <code>Chango Component Nodes</code> are added to the host file(for example, <code>/etc/hosts</code>) on your local PC, 
 for example.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>[ip-address]  chango-admin.chango.private
-<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>
-<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>[ip-address]  chango-comp-1.chango.private
-<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>[ip-address]  chango-comp-2.chango.private
-<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>[ip-address]  chango-comp-3.chango.private
-<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>[ip-address]  chango-comp-4.chango.private
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>[ip-address]  chango-admin.chango.private
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>[ip-address]  chango-comp-1.chango.private
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>[ip-address]  chango-comp-2.chango.private
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>[ip-address]  chango-comp-3.chango.private
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>[ip-address]  chango-comp-4.chango.private
 </code></pre></div>
 , where <code>[ip-address]</code> can be public IP address for online environment or private IP address for offline environment.</p>
 <p>Login as <code>admin</code> with the randomly generated password. You can change the password of <code>admin</code> in Chango Admin UI <code>Account</code> -&gt; <code>Profile</code> later.</p>
@@ -1450,25 +1453,25 @@ If you entered wrong values for the prompts which affects installation failure a
 <p>, and then, install Chango Admin again with running <code>start-chango-private.sh</code>.</p>
 <p>If you changed the host and port of NGINX for <code>Chango Admin</code> after adding TLS configuration to NGINX, 
 then, add the variables to <code>--extra-vars</code> in <code>restart-admin.sh</code>, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>cpadmin_nginx_scheme=https \
-<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>cpadmin_nginx_host=[your-nginx-host] \
-<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>cpadmin_nginx_port=[your-nginx-port] \
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>cpadmin_nginx_scheme=https \
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>cpadmin_nginx_host=[your-nginx-host] \
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>cpadmin_nginx_port=[your-nginx-port] \
 </code></pre></div>
 <p>The revised <code>restart-admin.sh</code> looks like this, for example.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>python3 -m venv venv;
-<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>source /home/chango/venv/bin/activate;
-<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>
-<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>ansible-playbook -i admin.inv run.yml \
-<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>--extra-vars &quot;\
-<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>exec_user=chango \
-<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>target_hosts=changoprivate-admin-hosts \
-<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>role_name=changoprivate-admin \
-<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.3.0/ansible \
-<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>run_option=restart \
-<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>cpadmin_nginx_scheme=https \
-<a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a>cpadmin_nginx_host=[your-nginx-host] \
-<a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a>cpadmin_nginx_port=[your-nginx-port] \
-<a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a>&quot;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>python3 -m venv venv;
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>source /home/chango/venv/bin/activate;
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>ansible-playbook -i admin.inv run.yml \
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>--extra-vars &quot;\
+<a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>exec_user=chango \
+<a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>target_hosts=changoprivate-admin-hosts \
+<a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>role_name=changoprivate-admin \
+<a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.3.0/ansible \
+<a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>run_option=restart \
+<a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>cpadmin_nginx_scheme=https \
+<a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a>cpadmin_nginx_host=[your-nginx-host] \
+<a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a>cpadmin_nginx_port=[your-nginx-port] \
+<a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a>&quot;
 </code></pre></div></p>
 <p>Run the revised <code>restart-admin.sh</code>.</p>
 
