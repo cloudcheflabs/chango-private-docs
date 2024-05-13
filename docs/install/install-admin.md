@@ -155,7 +155,7 @@ ssh chango-admin.chango.private
 
 ### Attache Raw Disks to `Chango Component Nodes`
 
-As depicted in the above picture, several Raw Disks must be attached to `Chango Component Nodes`. But you don’t have to attache any disks to `Chango Admin Node`.
+As depicted in the above picture, several Raw Disks must be attached to `Chango Component Nodes`. But you don’t have to mount any disks to `Chango Admin Node`.
 
 > **_NOTE:_** Raw disks attached to `Chango Component Nodes` **MUST NOT** be mounted!
 > Chango will mount attached disks as logical volume by installing Chango Components later.
