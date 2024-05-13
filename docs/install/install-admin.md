@@ -386,6 +386,13 @@ Download all Chango Components.
 ./download-component-files.sh
 ```
 
+If it takes long time to download chango components, then run the following to download in background.
+
+```agsl
+nohup ./download-component-files.sh > out.log; tail -f out.log;
+```
+
+
 > **_NOTE:_** For installing Chango Private in disconnected environment, after downloading chango component files, 
 > you need to package the whole distribution directory with downloaded component files to the file(for example, tar.gz) which needs to be transferred
 > to your node in which internet is not available.
