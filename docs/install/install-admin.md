@@ -389,7 +389,11 @@ Download all Chango Components.
 If it takes long time to download chango components, then run the following to download in background.
 
 ```agsl
-nohup ./download-component-files.sh > out.log; tail -f out.log;
+# download chango components in background.
+nohup ./download-component-files.sh > out.log;
+
+# tail output log.
+tail -f out.log;
 ```
 
 
