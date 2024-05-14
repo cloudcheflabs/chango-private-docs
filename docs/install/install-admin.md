@@ -171,6 +171,35 @@ sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 sudo sed -i 's/SELINUX=disabled/SELINUX=permissive/g' /etc/selinux/config
 ```
 
+### Install Python 3.6
+
+For online environment, install python 3.6 on all the `Chango Nodes`.
+
+```agsl
+sudo yum -y install wget make gcc openssl-devel bzip2-devel
+
+cd /tmp/
+wget https://www.python.org/ftp/python/3.6.12/Python-3.6.12.tgz
+
+tar xzf Python-3.6.12.tgz
+cd Python-3.6.12
+./configure --enable-optimizations
+sudo make altinstall
+
+sudo ln -sfn /usr/local/bin/python3.6 /usr/bin/python3.6
+sudo ln -sfn /usr/local/bin/python3.6 /usr/bin/python3
+sudo ln -sfn /usr/local/bin/pip3.6 /usr/bin/pip3.6
+sudo ln -sfn /usr/local/bin/pip3.6 /usr/bin/pip3
+```
+
+### Install LVM
+
+For online environment, install LVM on all the `Chango Nodes`.
+
+```agsl
+sudo yum install lvm2 -y
+```
+
 
 ### Add Yum Repositories
 
