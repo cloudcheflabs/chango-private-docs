@@ -77,7 +77,7 @@ Parameters for this API.
 - `uri`: Trino URI.
 - `user`: Trino User.
 - `password`: Trino Password. Optional.
-- `query`: Trino Queries. Base64 encoded.
+- `query`: Trino Queries.
 - `ssl`: SSL enabled or not. Default is `true`. Optional.
 - `ssl_verification`: SSL Verification enabled or not. Default is `false`. Optional.
 
