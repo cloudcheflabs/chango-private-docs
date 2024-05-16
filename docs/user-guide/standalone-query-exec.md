@@ -83,6 +83,22 @@ Parameters for this API.
 
 
 
+If `Chango Query Exec` is installed by `Chango Admin`, you need to add http header `Authorization: Bearer` with `Chango Credential` and 
+parameter `password` like this.
+
+```agsl
+export ACCESS_TOKEN=<chango-credential>
+
+curl -XPOST -H "Authorization: Bearer $ACCESS_TOKEN" \
+http://<chango-query-exec-endpoint>/v1/trino/exec-query \
+-d "uri=chango-private-1.chango.private:443" \
+-d "user=trino" \
+-d "password=<trino-password>" \
+-d "query=$(cat ./exec-queries.sql)" \
+;
+```
+
+
 ## Send Query Flow
 
 Let's create more complex queries like DAG, `exec-flow.yaml`.
@@ -163,6 +179,25 @@ Send query flow to `Chango Query Exec`.
 ```agsl
 curl -XPOST \
 http://localhost:28291/v1/trino/exec-query-flow \
+-d "flow=$(cat ./exec-flow.yaml)" \
+;
+```
+
+If `Chango Query Exec` is installed by `Chango Admin`, you need to replace trino connection part in `exec-flow.yaml` with the following.
+
+```agsl
+uri: <trino-gateway-endpoint>
+user: <trino-user>
+password: <trino-password>
+```
+
+In addition, you need to add http header `Authorization: Bearer` with `Chango Credential`.
+
+```agsl
+export ACCESS_TOKEN=<chango-credential>
+
+curl -XPOST -H "Authorization: Bearer $ACCESS_TOKEN" \
+http://<chango-query-exec-endpoint>/v1/trino/exec-query-flow \
 -d "flow=$(cat ./exec-flow.yaml)" \
 ;
 ```
