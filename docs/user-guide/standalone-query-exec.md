@@ -68,7 +68,7 @@ http://localhost:28291/v1/trino/exec-query \
 -d "uri=chango-private-1.chango.private:18080" \
 -d "user=trino" \
 -d "ssl=false" \
--d "query=$(base64 -w 0 ./exec-queries.sql)" \
+-d "query=$(cat ./exec-queries.sql)" \
 ;
 ```
 
@@ -163,6 +163,6 @@ Send query flow to `Chango Query Exec`.
 ```agsl
 curl -XPOST \
 http://localhost:28291/v1/trino/exec-query-flow \
--d "flow=$(base64 -w 0 ./exec-flow.yaml)" \
+-d "flow=$(cat ./exec-flow.yaml)" \
 ;
 ```
