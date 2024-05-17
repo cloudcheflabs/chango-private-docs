@@ -212,6 +212,16 @@ sudo yum install epel-release -y
 > **_NOTE:_** For offline and disconnected environment, you don't have to do it.
 
 
+### Update and Install Dev Tools
+
+For online environment, update and install development tools on all the `Chango Nodes`.
+
+```agsl
+sudo yum update -y;
+sudo yum groupinstall "development tools" -y;
+```
+
+
 ### Local Yum Repository
 
 If you want to install Chango Private in disconnected environment, you need to install local yum repository which all the `Chango Nodes` will look up.
