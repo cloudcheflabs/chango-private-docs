@@ -67,8 +67,12 @@ For example, the following DNS entry is configured in `/etc/hosts` on `Chango Ad
 ```
 And set host name with FQDN.
 ```agsl
-sudo hostnamectl set-hostname chango-admin.chango.private
+sudo hostnamectl set-hostname --static chango-admin.chango.private
 ```
+
+
+> If your nodes are in cloud environment like AWS EC2, you need to add `preserve_hostname: true` in `/etc/cloud/cloud.cfg` 
+> to ensure that the new hostname is preserved between restarts/reboots.
 
 
 #### Create `sudo` User
