@@ -1164,8 +1164,12 @@ The following components provided by Chango Private are the components which can
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>10.0.0.100  chango-admin.chango.private chango-admin
 </code></pre></div>
 And set host name with FQDN.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo hostnamectl set-hostname chango-admin.chango.private
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo hostnamectl set-hostname --static chango-admin.chango.private
 </code></pre></div></p>
+<blockquote>
+<p>If your nodes are in cloud environment like AWS EC2, you need to add <code>preserve_hostname: true</code> in <code>/etc/cloud/cloud.cfg</code> 
+to ensure that the new hostname is preserved between restarts/reboots.</p>
+</blockquote>
 <h4 id="create-sudo-user">Create <code>sudo</code> User</h4>
 <p>For example, we will create <code>sudo</code> user with the name of <code>chango</code>.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo su -;
