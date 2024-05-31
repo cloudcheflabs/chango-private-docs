@@ -2,157 +2,162 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/components/components/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/features/ingestion/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/features/rbac/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/features/realtime/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/features/transform/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/features/trino-gw/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/install/install-admin/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/install/install-component/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/install/run-first-ctas/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/intro/intro/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/azkaban-change-pw/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/azkaban-cli/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/chango-cdc/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/chango-log/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/connect-trino-gw/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/cred/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/dbt/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/hidden-partition/</loc>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/kafka-topic/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/livy/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/maintain-iceberg/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/query-exec/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/rest-in-spark/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/s3-cred/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/schema-reg/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/spark-azkaban/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/standalone-query-exec/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/streaming/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/tx-streaming/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/upload-excel/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/upload/</loc>
-         <lastmod>2024-05-18</lastmod>
+         <lastmod>2024-05-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

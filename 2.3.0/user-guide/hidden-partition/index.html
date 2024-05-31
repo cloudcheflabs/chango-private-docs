@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.3.0/install/run-first-ctas/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/2.3.0/user-guide/hidden-partition/">
       
       
-        <link rel="prev" href="../install-component/">
+        <link rel="prev" href="../maintain-iceberg/">
       
       
-        <link rel="next" href="../../features/rbac/">
+        <link rel="next" href="../livy/">
       
       <link rel="icon" href="../../images/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Run First Trino Query - Chango Private</title>
+        <title>Create Hidden Partitioned Iceberg Tables - Chango Private</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#run-first-trino-query" class="md-skip">
+        <a href="#create-hidden-partitioned-iceberg-table" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Run First Trino Query
+              Create Hidden Partitioned Iceberg Tables
             
           </span>
         </div>
@@ -216,15 +216,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../install-admin/" class="md-tabs__link md-tabs__link--active">
+      <a href="../../install/install-admin/" class="md-tabs__link">
         Getting Started
       </a>
     </li>
@@ -250,13 +248,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../user-guide/cred/" class="md-tabs__link">
+      <a href="../cred/" class="md-tabs__link md-tabs__link--active">
         User Guide
       </a>
     </li>
@@ -367,16 +367,14 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
       
       
       
@@ -385,7 +383,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Getting Started
@@ -398,7 +396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install-admin/" class="md-nav__link">
+      <a href="../../install/install-admin/" class="md-nav__link">
         Install Chango Admin
       </a>
     </li>
@@ -412,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install-component/" class="md-nav__link">
+      <a href="../../install/install-component/" class="md-nav__link">
         Install Chango Components
       </a>
     </li>
@@ -424,107 +422,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Run First Trino Query
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../install/run-first-ctas/" class="md-nav__link">
         Run First Trino Query
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#create-cluster-group" class="md-nav__link">
-    Create Cluster Group
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-trino-user-and-register-trino-cluster" class="md-nav__link">
-    Create Trino User and Register Trino Cluster
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-privileges" class="md-nav__link">
-    Create Privileges
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#get-endpoint-of-chango-trino-gateway" class="md-nav__link">
-    Get Endpoint of Chango Trino Gateway
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#run-first-ctas-query-with-superset" class="md-nav__link">
-    Run First CTAS Query with Superset
-  </a>
-  
-    <nav class="md-nav" aria-label="Run First CTAS Query with Superset">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#login-to-superset" class="md-nav__link">
-    Login to Superset
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-trino-database" class="md-nav__link">
-    Add Trino Database
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-ctas-query" class="md-nav__link">
-    Run CTAS Query
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -647,14 +549,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
       
       
       
@@ -663,7 +567,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           User Guide
@@ -676,7 +580,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/cred/" class="md-nav__link">
+      <a href="../cred/" class="md-nav__link">
         Get Chango Credential
       </a>
     </li>
@@ -690,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/s3-cred/" class="md-nav__link">
+      <a href="../s3-cred/" class="md-nav__link">
         Get S3 Credential
       </a>
     </li>
@@ -704,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/streaming/" class="md-nav__link">
+      <a href="../streaming/" class="md-nav__link">
         Send Streaming Events
       </a>
     </li>
@@ -718,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/upload/" class="md-nav__link">
+      <a href="../upload/" class="md-nav__link">
         Upload Files
       </a>
     </li>
@@ -732,7 +636,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/upload-excel/" class="md-nav__link">
+      <a href="../upload-excel/" class="md-nav__link">
         Upload Excel
       </a>
     </li>
@@ -746,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/connect-trino-gw/" class="md-nav__link">
+      <a href="../connect-trino-gw/" class="md-nav__link">
         Connect to Chango Trino Gateway with Trino Clients
       </a>
     </li>
@@ -760,7 +664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/rest-in-spark/" class="md-nav__link">
+      <a href="../rest-in-spark/" class="md-nav__link">
         Create Iceberg REST Catalog in Spark
       </a>
     </li>
@@ -774,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/dbt/" class="md-nav__link">
+      <a href="../dbt/" class="md-nav__link">
         Run dbt Model
       </a>
     </li>
@@ -788,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/azkaban-cli/" class="md-nav__link">
+      <a href="../azkaban-cli/" class="md-nav__link">
         Create Azkaban Project using CLI
       </a>
     </li>
@@ -802,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/spark-azkaban/" class="md-nav__link">
+      <a href="../spark-azkaban/" class="md-nav__link">
         Run Spark Jobs with Azkaban
       </a>
     </li>
@@ -816,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/azkaban-change-pw/" class="md-nav__link">
+      <a href="../azkaban-change-pw/" class="md-nav__link">
         Change Login Password in Azkaban
       </a>
     </li>
@@ -830,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/kafka-topic/" class="md-nav__link">
+      <a href="../kafka-topic/" class="md-nav__link">
         Create Kafka Topic
       </a>
     </li>
@@ -844,7 +748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/schema-reg/" class="md-nav__link">
+      <a href="../schema-reg/" class="md-nav__link">
         Configure Schema Registry URL
       </a>
     </li>
@@ -858,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/chango-log/" class="md-nav__link">
+      <a href="../chango-log/" class="md-nav__link">
         Reading Log Files Using Chango Log
       </a>
     </li>
@@ -872,7 +776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/chango-cdc/" class="md-nav__link">
+      <a href="../chango-cdc/" class="md-nav__link">
         Change Data Capture Using Chango CDC
       </a>
     </li>
@@ -886,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/query-exec/" class="md-nav__link">
+      <a href="../query-exec/" class="md-nav__link">
         Data Transformation Using Chango Query Exec
       </a>
     </li>
@@ -900,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/standalone-query-exec/" class="md-nav__link">
+      <a href="../standalone-query-exec/" class="md-nav__link">
         Data Transformation Using Standalone Chango Query Exec
       </a>
     </li>
@@ -914,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/tx-streaming/" class="md-nav__link">
+      <a href="../tx-streaming/" class="md-nav__link">
         Transactional Streaming
       </a>
     </li>
@@ -928,7 +832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/maintain-iceberg/" class="md-nav__link">
+      <a href="../maintain-iceberg/" class="md-nav__link">
         Maintain Iceberg Tables
       </a>
     </li>
@@ -940,11 +844,66 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../user-guide/hidden-partition/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Create Hidden Partitioned Iceberg Tables
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Create Hidden Partitioned Iceberg Tables
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#connect-chango-spark-thrift-server-using-superset" class="md-nav__link">
+    Connect Chango Spark Thrift Server using Superset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hidden-partitioned-iceberg-table" class="md-nav__link">
+    Hidden Partitioned Iceberg Table
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-hidden-partitioned-iceberg-table-using-superset" class="md-nav__link">
+    Create Hidden Partitioned Iceberg Table using Superset
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -956,7 +915,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/livy/" class="md-nav__link">
+      <a href="../livy/" class="md-nav__link">
         Run Spark Applications using Livy
       </a>
     </li>
@@ -1034,95 +993,41 @@
                   
 
 
-<h1 id="run-first-trino-query">Run First Trino Query</h1>
-<p>This is an example to run queries to Trino through <code>Chango Trino Gateway</code>.</p>
-<h2 id="create-cluster-group">Create Cluster Group</h2>
-<p>First, you need to create <code>Cluster Group</code> in <code>Trino Gateway</code>.
-Go to <code>Settings</code> -&gt; <code>Trino Gateway</code>. Click <code>Create Cluster Group</code> in <code>Cluster Groups</code> section.</p>
-<p><img width="900" src="../../images/run-first/create-cg.png" /></p>
-<p>And, enter cluster group name <code>bi</code>.
-<img width="900" src="../../images/run-first/create-cg-2.png" /></p>
-<h2 id="create-trino-user-and-register-trino-cluster">Create Trino User and Register Trino Cluster</h2>
-<p>In order to create trino user and register trino cluster, first select cluster group created before.
-<img width="900" src="../../images/run-first/select-cg.png" /></p>
-<p>Click <code>Create Trino User</code> in <code>Trino Users</code> section, and enter user name with password.</p>
-<p><img width="900" src="../../images/run-first/create-user.png" /></p>
-<p>To register trino cluster, click <code>Register Trino Cluster</code> in <code>Trino Clusters</code> section. 
-Select trino cluster which trino queries will be routed to.</p>
-<p><img width="900" src="../../images/run-first/reg-cluster.png" /></p>
-<h2 id="create-privileges">Create Privileges</h2>
-<p>To add privileges to the cluster group, go to <code>Settings</code> -&gt; <code>Security</code>. And select role in <code>Roles</code> section.</p>
-<p><img width="900" src="../../images/run-first/select-role.png" /></p>
-<p>Add privilege of <code>*</code> for READ type.
-<img width="900" src="../../images/run-first/create-priv-read.png" /></p>
-<p>Add privilege of <code>*</code> for WRITE type.
-<img width="900" src="../../images/run-first/create-priv-write.png" /></p>
-<p><code>*</code> means all data access to Chango is allowed.</p>
-<p>But, note that all data access above is not secure, so you need to set the values in fine-grained manner in your production environment, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>information_schema.*       READ
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>tpch.*                     READ
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>iceberg.*                  READ
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>iceberg.*                  WRITE
+<h1 id="create-hidden-partitioned-iceberg-table">Create Hidden Partitioned Iceberg Table</h1>
+<p>There are ways to create hidden partitioned iceberg tables in Chango. You can create them with trino, but trino does not 
+support all the features of iceberg at the moment. 
+Chango provides <code>Chango Spark SQL Runner</code> and <code>Chango Spark Thrift Server</code> to execute spark sql which can be iceberg specific queries.
+<code>Chango Spark SQL Runner</code> and <code>Chango Spark Thrift Server</code> provide full features of iceberg, so they are suitable to run iceberg 
+specific queries like DDL and iceberg maintenance queries.</p>
+<p>This shows how to create hidden partitioned iceberg table using <code>Chango Spark Thrift Server</code>.</p>
+<h2 id="connect-chango-spark-thrift-server-using-superset">Connect Chango Spark Thrift Server using Superset</h2>
+<p>After installing <code>Chango Spark Thrift Server</code>, you can connect <code>Chango Spark Thrift Server</code> with Superset.
+See <a href="../../user-guide/maintain-iceberg/#connect-chango-spark-thrift-server-using-superset">Connect Chango Spark Thrift Server using Superset</a>.</p>
+<h2 id="hidden-partitioned-iceberg-table">Hidden Partitioned Iceberg Table</h2>
+<p>You can create hidden partitioned iceberg table like this.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>--hidden partitioned table.
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>CREATE TABLE IF NOT EXISTS iceberg.iceberg_db.hidden_partitioning (
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    id long,
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    log string,
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    ts TIMESTAMP_LTZ
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>USING iceberg
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>;
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>-- add hidden partitions.
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD year(ts);
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD month(ts);
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD day(ts);
 </code></pre></div>
-<blockquote>
-<p><strong><em>NOTE:</em></strong> <code>information_schema.*</code> needs to be added for trino connector of superset.</p>
-</blockquote>
-<h2 id="get-endpoint-of-chango-trino-gateway">Get Endpoint of Chango Trino Gateway</h2>
-<p>You need endpoint of <code>Chango Trino Gateway</code> to which clients will connect to run queries.</p>
-<p>Go to <code>Components</code> -&gt; <code>Chango Trino Gateway</code>. Get the endpoint in <code>Endpoint</code> section.
-<img width="900" src="../../images/run-first/trino-gw-endpoint.png" /></p>
-<h2 id="run-first-ctas-query-with-superset">Run First CTAS Query with Superset</h2>
-<p>To run queries to trino, Superset will be used.</p>
-<h3 id="login-to-superset">Login to Superset</h3>
-<p>To move to <code>Superset</code> UI, go to <code>Components</code> -&gt; <code>Apache Superset</code>. Click UI URL to move to Superset UI.</p>
-<p>First, login as <code>admin</code> with default password <code>SupersetPass1#</code>.</p>
-<h3 id="add-trino-database">Add Trino Database</h3>
-<p>You need to add trino database in superset.</p>
-<p>You need to enter trino url in <code>SQLAlchemy URI *</code> with the following convention.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>trino://[user]:[password]@[trino-gateway-endpoint-without-scheme]
+<p>Column <code>ts</code> must be timestamp type.
+After creating iceberg table, you need to add partitions using iceberg functions like <code>year()</code>, <code>month()</code> and <code>day()</code>.</p>
+<h2 id="create-hidden-partitioned-iceberg-table-using-superset">Create Hidden Partitioned Iceberg Table using Superset</h2>
+<p>Run the above iceberg DDL queries using Superset like this.</p>
+<p><img width="900" src="../../images/user-guide/hidden-partition.png" /></p>
+<p>Then, you will get table description with the following query.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>-- describe table.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>describe iceberg.iceberg_db.hidden_partitioning;
 </code></pre></div>
-For example, you can enter like this.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>trino://trino:trino123@chango-private-3.chango.private:443
-</code></pre></div>
-Replace <code>chango-private-3.chango.private:443</code> with your trino gateway endpoint without <code>https://</code>.</p>
-<p><img width="900" src="../../images/run-first/superset-trino.png" /></p>
-<p>And you need to add the following in <code>Extra</code> to disable TLS validation.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    &quot;metadata_params&quot;: {},
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;engine_params&quot;: {
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>          &quot;connect_args&quot;:{
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>              &quot;http_scheme&quot;: &quot;https&quot;,
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>              &quot;verify&quot;: false
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        }
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>     },
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    &quot;metadata_cache_timeout&quot;: {},
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    &quot;schemas_allowed_for_csv_upload&quot;: []
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>}
-</code></pre></div>
-<img width="900" src="../../images/run-first/superset-extra.png" /></p>
-<p>Check the options of <code>Allow CREATE TABLE AS</code>, <code>Allow CREATE VIEW AS</code>, <code>Allow DML</code>.</p>
-<p>Finally, press <code>Save</code>.</p>
-<h3 id="run-ctas-query">Run CTAS Query</h3>
-<p>Run CTAS query which selects rows from <code>tpch.sf1000.lineitem</code> table and insert them to new created iceberg table <code>iceberg.iceberg_db.test_ctas</code>.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>-- create schema.
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>CREATE SCHEMA IF NOT EXISTS iceberg.iceberg_db;
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>-- ctas.
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>CREATE TABLE IF NOT EXISTS iceberg.iceberg_db.test_ctas 
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>AS
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>SELECT
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    *
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>FROM tpch.sf1000.lineitem limit 1000
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>;
-</code></pre></div>
-<img width="900" src="../../images/run-first/ctas.png" /></p>
-<p>And select rows from created iceberg table.
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>-- select.
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>select * from iceberg.iceberg_db.test_ctas limit 1000;
-</code></pre></div>
-<img width="900" src="../../images/run-first/ctas-2.png" /></p>
-<p>Congratulations!</p>
+<p><img width="900" src="../../images/user-guide/describe-hidden-partition.png" /></p>
 
 
 
