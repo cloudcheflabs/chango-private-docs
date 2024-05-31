@@ -65,6 +65,7 @@ nav:
       - "Data Transformation Using Standalone Chango Query Exec": user-guide/standalone-query-exec.md
       - "Transactional Streaming": user-guide/tx-streaming.md
       - "Maintain Iceberg Tables": user-guide/maintain-iceberg.md
+      - "Create Hidden Partitioned Iceberg Tables": user-guide/hidden-partition.md
       - "Run Spark Applications using Livy": user-guide/livy.md
   - "Components":
      - "Components": components/components.md
