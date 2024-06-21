@@ -3,6 +3,10 @@
 You may load files like `CSV`, `JSON`, `Parquet` and `ORC` in S3 compatible object storages to iceberg tables in Chango using SQL, 
 for which Chango provides `Chango SQL Procedure`.
 
+`Chango Spark Thrift Server` to which hive clients like superset can connect through JDBC/Thrift 
+and `Chango Spark SQL Runner` which exposes REST API can be used to run `Chango SQL Procedure`.
+
+
 ## Load Files to Iceberg Tables using Import Procedure
 
 With `import` procedure, you may load files to iceberg tables in Chango.
