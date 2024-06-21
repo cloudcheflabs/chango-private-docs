@@ -1,17 +1,18 @@
 # Data Ingestion
 
-Chango Private provides components like `Chango Data API` and `Chango Streaming` to insert external data to Chango with ease.
+In order to ingest data to iceberg tables in Chango, Chango provides the followings.
+
+- Load Files to Iceberg Tables using `Chango SQL Procedure`.
+- Send Streaming Events / Log / CDC through `Chango Streaming`.
 
 
-## Upload Files
+## Load Files to Iceberg Tables using SQL
 
+`Chango SQL Procedure` is an easy way to load external files like `CSV`, `JSON`, `Parquet` and `ORC` located in s3 compatible object storage 
+to iceberg tables in Chango.
 
-<img width="400" height="300" src="../../images/chango-ingestion.png" />
+Take a look at <a href="../../user-guide/load-files">Load Files to Iceberg Tables using SQL</a> for more details.
 
-
-As data analytics engineer, you don’t have to struggle with long row Excel to analyze data. SQL is better to analyze data. 
-External data like CSV, Excel, JSON can be inserted directly to iceberg table in chango, 
-then you can explore and analyze iceberg tables with trino queries.
 
 
 ## Streaming
@@ -46,5 +47,13 @@ and send CDC data to Chango.
 You don't need such as Kafka and Kafka Connect cluster to accomplish CDC. See <a href="../../user-guide/chango-cdc/">Change Data Capture Using Chango CDC</a> for more details.
 
 
+## Upload Files
+
+<img width="400" height="300" src="../../images/chango-ingestion.png" />
+
+
+As data analytics engineer, you don’t have to struggle with long row Excel to analyze data. SQL is better to analyze data.
+External data like CSV, Excel, JSON can be inserted directly to iceberg table in chango,
+then you can explore and analyze iceberg tables with trino queries.
 
 

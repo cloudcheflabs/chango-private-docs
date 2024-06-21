@@ -11,10 +11,10 @@ For example, maven dependency version of Debezium connector for PostgreSQL can b
 
 Package `Chango CDC` distribution with Debezium maven dependency version. Please note that Java 11 and Maven 3 are required to build `Chango CDC`.
 ```agsl
-git clone -b branch-1.0.1 https://github.com/cloudcheflabs/chango-cdc.git
+git clone -b branch-1.1.0 https://github.com/cloudcheflabs/chango-cdc.git
 cd chango-cdc;
 
-export CHANGO_CDC_VERSION=1.0.1
+export CHANGO_CDC_VERSION=1.1.0
 export DEBEZIUM_VERSION=1.9.7.Final
 
 ./package-dist.sh \
@@ -29,14 +29,14 @@ You may use `Chango CDC` package which was built for yourself previously.
 For this example, the pre-built `Chango CDC` will be used. Download Chango CDC.
 
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-cdc/releases/download/1.0.1/chango-cdc-1.0.1-debezium-1.9.7.Final-linux-x64.tar.gz
+curl -L -O https://github.com/cloudcheflabs/chango-cdc/releases/download/1.1.0/chango-cdc-1.1.0-debezium-1.9.7.Final-linux-x64.tar.gz
 ```
 
 Untar and move to Chango CDC directory.
 
 ```agsl
-tar zxvf chango-cdc-1.0.1-debezium-1.9.7.Final-linux-x64.tar.gz
-cd chango-cdc-1.0.1-debezium-1.9.7.Final-linux-x64/
+tar zxvf chango-cdc-1.1.0-debezium-1.9.7.Final-linux-x64.tar.gz
+cd chango-cdc-1.1.0-debezium-1.9.7.Final-linux-x64/
 ```
 
 ## Configure Chango CDC
@@ -145,7 +145,7 @@ CREATE TABLE public.student
 
 ## Create Iceberg Table
 
-You need to create Iceberg table in Chango using trino clients like `Superset`.
+You need to create Iceberg table in Chango using hive clients like `Superset` which connects to `Chango Spark Thrift Server`.
 
 ```agsl
 -- create iceberg schema.
@@ -154,31 +154,33 @@ CREATE SCHEMA IF NOT EXISTS iceberg.cdc_db;
 
 -- create iceberg table.
 CREATE TABLE iceberg.cdc_db.student (
-    address varchar,
-    day varchar,
-    email varchar,
-    id bigint,
-    month varchar,
-    name varchar,
-    op varchar,
-    ts bigint,
-    year varchar 
+    address string,
+    email string,
+    id long,
+    name string,
+    op string,
+    ts TIMESTAMP_LTZ
 )
-WITH (
-    partitioning=ARRAY['year', 'month', 'day'],
-    format = 'PARQUET'
-);
+USING iceberg
+;
+
+-- add hidden partitions.
+ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD year(ts);
+ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD month(ts);
+ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD day(ts);
 ```
 
-In addition to the original fields of PostgreSQL table, fields `year`, `month`, `day`, `ts` and `op` are required for partitioning and small files compaction.
-If fields `year`, `month`, `day`, `ts` and `op` exist in the original PostgreSQL table, then `_` will be appended to the original fields of PostgreSQL table.
+In addition to the original fields of PostgreSQL table, fields `ts` and `op` are required for partitioning and small files compaction.
+If fields `ts` and `op` exist in the original PostgreSQL table, then `_` will be appended to the original fields of PostgreSQL table.
 
-Take a note that the type of field `id` in original PostgreSQL table is `integer`, but the type of field `id` in Iceberg table in Chango is `bigint`.
+Take a note that the type of field `id` in original PostgreSQL table is `integer`, but the type of field `id` in Iceberg table in Chango is `long`.
 
 > **_NOTE:_** The sequence  of table column names in **lower case** must be **alphanumeric in ascending order**.
 
 
 ## Run Chango CDC
+
+> **_NOTE:_** Before running Chango CDC, make sure that Chango Data API and Chango Streaming Tx are installed in Chango.
 
 Move to Chango CDC directory, and run Chango CDC.
 
@@ -207,13 +209,12 @@ UPDATE STUDENT SET EMAIL='kidong2@example.com', NAME='Kidong2 Lee' WHERE ID = 1;
 DELETE FROM STUDENT WHERE ID = 1;
 ```
 
-Let's check if CDC data has been saved in Iceberg table in Chango with running the following query in `Superset`.
+Check if CDC data has been saved in Iceberg table in Chango with running the following query in `Superset`.
 
 ```agsl
-select *, from_unixtime(ts/1000) from iceberg.cdc_db.student order by ts desc;
+select * from iceberg.cdc_db.student order by ts desc;
 ```
 
-<img width="900" src="../../images/user-guide/select-cdc.png" />
 
 
 
