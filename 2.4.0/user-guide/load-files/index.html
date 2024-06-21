@@ -1031,6 +1031,8 @@
 <h1 id="load-files-to-iceberg-tables-using-sql">Load Files to Iceberg Tables using SQL</h1>
 <p>You may load files like <code>CSV</code>, <code>JSON</code>, <code>Parquet</code> and <code>ORC</code> in S3 compatible object storages to iceberg tables in Chango using SQL, 
 for which Chango provides <code>Chango SQL Procedure</code>.</p>
+<p><code>Chango Spark Thrift Server</code> to which hive clients like superset can connect through JDBC/Thrift 
+and <code>Chango Spark SQL Runner</code> which exposes REST API can be used to run <code>Chango SQL Procedure</code>.</p>
 <h2 id="load-files-to-iceberg-tables-using-import-procedure">Load Files to Iceberg Tables using Import Procedure</h2>
 <p>With <code>import</code> procedure, you may load files to iceberg tables in Chango.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>PROC iceberg.system.import (
