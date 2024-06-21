@@ -19,16 +19,16 @@
 | Azkaban CLI                  | 0.9.14                            |
 | Superset                     | 0.38.1                            | 
 | dbt                          | dbt-core: 1.2.1, dbt-trino: 1.2.2 |
-| Chango Private Admin         | 2.3.0                             | 
-| Chango Private Streaming     | 2.3.0                             | 
-| Chango Private Streaming Tx  | 2.3.0                             | 
-| Chango Spark Thrift Server   | 2.3.0                             | 
-| Chango Spark SQL Runner      | 2.3.0                             | 
-| Chango Private Data API      | 2.3.0                             | 
-| Chango Private Trino Gateway | 2.3.0                             | 
-| Chango Private Authorizer    | 2.3.0                             | 
-| Chango Private REST Catalog  | 2.3.0                             |
-| Chango Private Query Exec    | 2.3.0                             |
+| Chango Private Admin         | 2.4.0                             | 
+| Chango Private Streaming     | 2.4.0                             | 
+| Chango Private Streaming Tx  | 2.4.0                             | 
+| Chango Spark Thrift Server   | 2.4.0                             | 
+| Chango Spark SQL Runner      | 2.4.0                             | 
+| Chango Private Data API      | 2.4.0                             | 
+| Chango Private Trino Gateway | 2.4.0                             | 
+| Chango Private Authorizer    | 2.4.0                             | 
+| Chango Private REST Catalog  | 2.4.0                             |
+| Chango Private Query Exec    | 2.4.0                             |
 
 ## Component Ports
 
@@ -98,6 +98,11 @@
 - 2181: Zookeeper Server 
 - 2888: Zookeeper Peer Port 
 - 3888: Zookeeper Leader Port
+
+### Zookeeper ICC
+- 12181: Zookeeper Server
+- 12888: Zookeeper Peer Port
+- 13888: Zookeeper Leader Port
 
 ### PostgreSQL
 - 5432: PostgreSQL Server

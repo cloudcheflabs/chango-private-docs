@@ -3,7 +3,11 @@
 
 <img width="800" src="../../images/chango-overview.png" />
 
-Chango Private is a Data Lakehouse Platform for both online and disconnected environment.
+Chango is unified data lakehouse platform to solve the problems which occur in your data area, 
+which can be installed either in online/public or in offline/disconnected environment.
+
+Chango provides popular open source engines like spark, trino, kafka and iceberg as lakehouse table format 
+and several chango specific components.
 
 
 ## Chango Private Data Lakehouse Platform

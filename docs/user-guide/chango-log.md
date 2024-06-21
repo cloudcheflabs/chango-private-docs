@@ -5,31 +5,29 @@ to Chango to analyze logs.
 
 ## Create Iceberg Table
 
-Before sending logs to Chango, you need to create Iceberg table for logs with trino clients like `Superset`.
+Before sending logs to Chango, you need to create Iceberg table for logs with hive clients like `Superset` which connects to `Chango Spark Thrift Server`.
 
 ```agsl
 -- create schema.
 CREATE SCHEMA IF NOT EXISTS iceberg.logs_db;
 
-
 -- create iceberg table.
-CREATE TABLE iceberg.logs_db.logs (
-    day varchar,
-    fileName varchar,
-    filePath varchar,
-    hostAddress varchar,
-    hostName varchar,
-    lineNumber bigint,
-    message varchar,
-    month varchar,
-    readableTs varchar,
-    ts bigint,
-    year varchar 
+CREATE TABLE IF NOT EXISTS iceberg.logs_db.logs (
+    fileName string,
+    filePath string,
+    hostAddress string,
+    hostName string,
+    lineNumber long,
+    message string,
+    ts TIMESTAMP_LTZ
 )
-WITH (
-    partitioning=ARRAY['year', 'month', 'day'],
-    format = 'PARQUET'
-);
+USING iceberg
+;
+
+-- add hidden partitions.
+ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD year(ts);
+ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD month(ts);
+ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD day(ts);
 ```
 
 ## Install Chango Log
@@ -37,14 +35,14 @@ WITH (
 Download `Chango Log` distribution package.
 
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-log/releases/download/1.0.1/chango-log-1.0.1-linux-x64.tar.gz;
+curl -L -O https://github.com/cloudcheflabs/chango-log/releases/download/1.1.0/chango-log-1.1.0-linux-x64.tar.gz;
 ```
 
 Untar Chango Log file and move to Chango Log directory.
 
 ```agsl
-tar zxvf chango-log-1.0.1-linux-x64.tar.gz;
-cd chango-log-1.0.1-linux-x64;
+tar zxvf chango-log-1.1.0-linux-x64.tar.gz;
+cd chango-log-1.1.0-linux-x64;
 ```
 
 ## Configure Chango Log
@@ -90,6 +88,8 @@ You can configure multiple log directories in which all the log files will be re
 
 ## Run Chango Log
 
+> **_NOTE:_** Before running Chango Log, make sure that Chango Data API and Chango Streaming are installed in Chango.
+
 Start `Chango Log` to read local log files and send logs to Chango.
 
 ```agsl
@@ -115,10 +115,6 @@ For example.
 select * from iceberg.logs_db.logs where fileName = 'admin.log' order by lineNumber asc limit 100000;
 ```
 
-
-If the query is run with `Superset`, then it looks like this.
-
-<img width="900" src="../../images/user-guide/select-logs.png" />
 
 
 

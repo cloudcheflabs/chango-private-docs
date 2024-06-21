@@ -12,13 +12,13 @@ Date Functions supported by `Chango Query Exec` can be found <a href="../../user
 
 Download `Chango Query Exec` standalone distribution.
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-query-exec-2.3.0-linux-x64.tar.gz
+curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-query-exec-2.4.0-linux-x64.tar.gz
 ```
 
 Untar and move to query exec directory.
 ```agsl
-tar zxvf chango-query-exec-2.3.0-linux-x64.tar.gz;
-cd chango-query-exec-2.3.0-linux-x64/
+tar zxvf chango-query-exec-2.4.0-linux-x64.tar.gz;
+cd chango-query-exec-2.4.0-linux-x64/
 ```
 
 
