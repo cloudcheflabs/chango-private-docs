@@ -29,23 +29,13 @@ curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.
 ## Create Iceberg Table before Sending JSON Events
 
 Before sending json as streaming events to `Chango Data API` server, Iceberg table needs to be created beforehand with 
-trino clients like Trino CLI and Apache Superset.
+hive clients like Apache Superset which connects to `Chango Spark Thrift Server`.
 
-It is good practice that Iceberg table for streaming events needs to be partitioned with date, for example, `year`, `month` and `day`.
-In addition, timestamp column like `ts` also needs to be added to Iceberg table. 
+It is good practice that Iceberg table for streaming events needs to be partitioned with timestamp.
+Timestamp column  `ts` needs to be added to Iceberg table. 
 Actually, with `ts` column, Chango Private will compact small data, manifest, and position delete files and expire snapshots to improve query performance.
 
-Especially, in order to compact small files and add partitioning in Iceberg table in Chango, you need to follow the rules.
-
-> The name of timestamp column must be `ts` whose type is `bigint` which is equivalent to `long` in java. 
-> Column names `year`, `month`, `day` will be used as partitioning columns.
-
-- `ts`:  the number of **milliseconds** since 1970-01-01 00:00:00.
-- `year`: year with the format of `yyyy` which is necessary for partitioning.
-- `month`: month of the year with the format of `MM` which is necessary for partitioning.
-- `day`: day of the month with the format of `dd` which is necessary for partitioning.
-
-For example, create `logs` table with partitioning and timestamp.
+For example, create `logs` table with hidden partitioning with the column of `ts`.
 
 ```
 -- create iceberg schema.
@@ -54,25 +44,20 @@ CREATE SCHEMA IF NOT EXISTS iceberg.iceberg_db;
 
 -- create iceberg table.
 CREATE TABLE iceberg.iceberg_db.logs (
-    day varchar,
-    level varchar,
-    message varchar,
-    month varchar,
-    ts bigint,
-    year varchar 
+    level string,
+    message string,
+    ts TIMESTAMP_LTZ
 )
-WITH (
-    partitioning=ARRAY['year', 'month', 'day'],
-    format = 'PARQUET'
-);
+USING iceberg
+;
+
+-- add hidden partitions.
+ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD year(ts);
+ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD month(ts);
+ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD day(ts);
 ```
 
 > **_NOTE:_** The sequence  of table column names in **lower case** must be **alphanumeric in ascending order**.
-
-You can create Iceberg table with Superset provided by Chango Private like this.
-
-<img width="900" src="../../images/user-guide/create-table.png" />
-
 
 
 
@@ -157,17 +142,9 @@ public class SendLogsToDataAPI {
 
                 DateTime dt = DateTime.now();
 
-                String year = String.valueOf(dt.getYear());
-                String month = padZero(dt.getMonthOfYear());
-                String day = padZero(dt.getDayOfMonth());
-                long ts = dt.getMillis(); // in milliseconds.
-
                 map.put("level", "INFO");
                 map.put("message", "any log message ... [" + count + "]");
-                map.put("ts", ts);
-                map.put("year", year);
-                map.put("month", month);
-                map.put("day", day);
+                map.put("ts", dt.toString());
 
                 String json = JsonUtils.toJson(map);
 
@@ -207,7 +184,7 @@ public class SendLogsToDataAPI {
 }
 ```
 
-> Take a look at the value of `ts` must be the number of **milliseconds** since 1970-01-01 00:00:00.
+> Take a look at the value of `ts` must be timestamp type.
 
 
 If you want to ingest events to Chango transactionally, you need to use transactional chango client like this.
@@ -225,16 +202,4 @@ If you want to ingest events to Chango transactionally, you need to use transact
 ```
 
 > Before you use transactional chango client, you need to install <a href="../../install/install-component/#install-chango-streaming-tx">transactional chango streaming</a>.
-
-
-## Run Query in Iceberg Table for Streaming Events
-
-You can run queries in iceberg table `logs` to which streaming events are inserted.
-
-```agsl
--- select with partitioning columns.
-select *, from_unixtime(ts/1000) from iceberg.iceberg_db.logs where year = '2023' and month = '11' and day = '07' limit 1000;
-```
-
-<img width="900" src="../../images/user-guide/select-logs.png" />
 
