@@ -432,6 +432,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/load-external-files/" class="md-nav__link">
+        Load Your Files to Iceberg Tables
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1033,6 +1047,15 @@
 for which Chango provides <code>Chango SQL Procedure</code>.</p>
 <p><code>Chango Spark Thrift Server</code> to which hive clients like superset can connect through JDBC/Thrift 
 and <code>Chango Spark SQL Runner</code> which exposes REST API can be used to run <code>Chango SQL Procedure</code>.</p>
+<blockquote>
+<p>If you want to send <code>Chango SQL Procedure</code> to <code>Chango Spark SQL Runner</code> through REST to load files to iceberg tables in Chango, 
+Take a look at <a href="../../user-guide/maintain-iceberg/#send-spark-sql-queries-to-chango-spark-sql-runner">
+Send Spark SQL Queries to Chango Spark SQL Runner</a>.</p>
+</blockquote>
+<p>This shows how to run <code>Chango SQL Procedure</code> with <code>Chango Spark Thrift Server</code> to load files to iceberg tables in Chango.</p>
+<blockquote>
+<p>Make sure that you have installed Spark on which <code>Chango Spark Thrift Server</code> is deployed beforehand.</p>
+</blockquote>
 <h2 id="load-files-to-iceberg-tables-using-import-procedure">Load Files to Iceberg Tables using Import Procedure</h2>
 <p>With <code>import</code> procedure, you may load files to iceberg tables in Chango.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>PROC iceberg.system.import (
