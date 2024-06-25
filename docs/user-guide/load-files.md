@@ -6,6 +6,13 @@ for which Chango provides `Chango SQL Procedure`.
 `Chango Spark Thrift Server` to which hive clients like superset can connect through JDBC/Thrift 
 and `Chango Spark SQL Runner` which exposes REST API can be used to run `Chango SQL Procedure`.
 
+> If you want to send `Chango SQL Procedure` to `Chango Spark SQL Runner` through REST to load files to iceberg tables in Chango, 
+> Take a look at <a href="../../user-guide/maintain-iceberg/#send-spark-sql-queries-to-chango-spark-sql-runner">
+> Send Spark SQL Queries to Chango Spark SQL Runner</a>.
+
+This shows how to run `Chango SQL Procedure` with `Chango Spark Thrift Server` to load files to iceberg tables in Chango.
+
+> Make sure that you have installed Spark on which `Chango Spark Thrift Server` is deployed beforehand.
 
 ## Load Files to Iceberg Tables using Import Procedure
 

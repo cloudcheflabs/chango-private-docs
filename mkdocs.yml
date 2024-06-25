@@ -39,6 +39,7 @@ nav:
       - "Install Chango Admin": install/install-admin.md
       - "Install Chango Components": install/install-component.md
       - "Run First Trino Query": install/run-first-ctas.md
+      - "Load Your Files to Iceberg Tables": install/load-external-files.md
   - "Features":
       - "Storage Security": features/rbac.md
       - "Data Catalog": features/catalog.md
