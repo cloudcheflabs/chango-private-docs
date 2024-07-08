@@ -15,7 +15,7 @@ There are several things to prepare before proceeding to install Chango Private.
 Supported OS and Python Version are:
 
 - `CentOS 7.9`
-- `Python 3.6.8`
+- `Python 3.6.x`
 
 
 ### Prepare Chango Nodes
@@ -39,6 +39,46 @@ The following components provided by Chango Private are the components which can
 - <a href="https://spark.apache.org/docs/latest/hardware-provisioning.html">Apache Spark</a>
 - <a href="https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html">Apache Ozone</a>
 - <a href="https://docs.confluent.io/platform/current/installation/system-requirements.html">Apache Kafka</a>
+
+
+### Change Yum Repository URL
+
+From first of July 2024 on CentOS 7, you need to change yum repository url to vault archive repositories.
+
+Open `/etc/yum.repos.d/CentOS-Base.repo`, and for example, replace it with the following for the version of `7.9.2009`.
+
+```agsl
+[base]
+name=CentOS-$releasever - Base
+baseurl=http://vault.centos.org/7.9.2009/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=http://vault.centos.org/7.9.2009/updates/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=http://vault.centos.org/7.9.2009/extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[centosplus]
+name=CentOS-$releasever - Plus
+baseurl=http://vault.centos.org/7.9.2009/centosplus/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+```
+
+And run the following to clean up yum repos.
+
+```agsl
+sudo yum clean all
+```
 
 
 ### Open Ports
