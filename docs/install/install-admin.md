@@ -74,7 +74,7 @@ enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 ```
 
-And run the following to clean up yum repos.
+And run the following to clean up yum cache.
 
 ```agsl
 sudo yum clean all
