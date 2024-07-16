@@ -4,31 +4,30 @@
 ## Component Version
 
 
-| Component                    | Version                           | 
-|:-----------------------------|:----------------------------------| 
-| Apache Ozone                 | 1.3.0                             | 
-| Kafka                        | 3.4.x                             | 
-| Zookeeper                    | 3.6.4                             | 
-| Schema Registry              | 7.4.0                             | 
-| Spark                        | 3.4.3 / Scala 2.12                | 
-| Livy                         | 0.8.0-incubating                | 
-| Trino                        | 435                               | 
-| Iceberg                      | 1.4.2                             | 
-| Open JDK                     | 8 / 11 / 17                       | 
-| Azkaban                      | 3.69.0-8                          | 
-| Azkaban CLI                  | 0.9.14                            |
-| Superset                     | 0.38.1                            | 
-| dbt                          | dbt-core: 1.2.1, dbt-trino: 1.2.2 |
-| Chango Private Admin         | 2.4.0                             | 
-| Chango Private Streaming     | 2.4.0                             | 
-| Chango Private Streaming Tx  | 2.4.0                             | 
-| Chango Spark Thrift Server   | 2.4.0                             | 
-| Chango Spark SQL Runner      | 2.4.0                             | 
-| Chango Private Data API      | 2.4.0                             | 
-| Chango Private Trino Gateway | 2.4.0                             | 
-| Chango Private Authorizer    | 2.4.0                             | 
-| Chango Private REST Catalog  | 2.4.0                             |
-| Chango Private Query Exec    | 2.4.0                             |
+| Component                    | Version            | 
+|:-----------------------------|:-------------------| 
+| Apache Ozone                 | 1.3.0              | 
+| Kafka                        | 3.6.x              | 
+| Zookeeper                    | 3.6.4              | 
+| Schema Registry              | 7.6.1              | 
+| Spark                        | 3.4.3 / Scala 2.12 | 
+| Livy                         | 0.8.0-incubating   | 
+| Trino                        | 452                | 
+| Iceberg                      | 1.5.2              | 
+| Open JDK                     | 8 / 11 / 22        | 
+| Azkaban                      | 3.69.0-8           | 
+| Azkaban CLI                  | 0.9.14             |
+| Superset                     | 0.38.1             |
+| Chango Private Admin         | 2.4.0              | 
+| Chango Private Streaming     | 2.4.0              | 
+| Chango Private Streaming Tx  | 2.4.0              | 
+| Chango Spark Thrift Server   | 2.4.0              | 
+| Chango Spark SQL Runner      | 2.4.0              | 
+| Chango Private Data API      | 2.4.0              | 
+| Chango Private Trino Gateway | 2.4.0              | 
+| Chango Private Authorizer    | 2.4.0              | 
+| Chango Private REST Catalog  | 2.4.0              |
+| Chango Private Query Exec    | 2.4.0              |
 
 ## Component Ports
 
