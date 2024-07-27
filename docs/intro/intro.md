@@ -41,6 +41,6 @@ In `Management` layer:
 - Chango supports storage security to control data access based on RBAC in Chango. `Chango Authorizer` will be used for it.
 - `Chango Trino Gateway` is an implementation of Trino Gateway concept. `Chango Trino Gateway` provides several features like authentication, authorization, smart query routing(routing to less exhausted trino clusters), trino cluster activation/deactivation. For more details, see <a href="../../features/trino-gw/">Chango Trino Gateway</a>.
 - `Chango Spark SQL Runner` exposes REST API to which clients send spark sql queries using REST to execute spark queries.
-- `Chango Thrift Server` exposes JDBC/Thrift to which clients send spark sql queries using JDBC/Thrift to execute spark queries.
+- `Chango Spark Thrift Server` exposes JDBC/Thrift to which clients send spark sql queries using JDBC/Thrift to execute spark queries.
 
  
