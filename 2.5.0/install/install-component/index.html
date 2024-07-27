@@ -765,26 +765,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dbt" class="md-nav__link">
-    dbt
-  </a>
-  
-    <nav class="md-nav" aria-label="dbt">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-dbt" class="md-nav__link">
-    Install dbt
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#chango-data-api" class="md-nav__link">
     Chango Data API
   </a>
@@ -839,16 +819,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#spark-thrift-server" class="md-nav__link">
-    Spark Thrift Server
+  <a href="#chango-spark-thrift-server" class="md-nav__link">
+    Chango Spark Thrift Server
   </a>
   
-    <nav class="md-nav" aria-label="Spark Thrift Server">
+    <nav class="md-nav" aria-label="Chango Spark Thrift Server">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-spark-thrift-server" class="md-nav__link">
-    Install Spark Thrift Server
+  <a href="#install-chango-spark-thrift-server" class="md-nav__link">
+    Install Chango Spark Thrift Server
   </a>
   
 </li>
@@ -859,16 +839,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#spark-sql-runner" class="md-nav__link">
-    Spark SQL Runner
+  <a href="#chango-spark-sql-runner" class="md-nav__link">
+    Chango Spark SQL Runner
   </a>
   
-    <nav class="md-nav" aria-label="Spark SQL Runner">
+    <nav class="md-nav" aria-label="Chango Spark SQL Runner">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-spark-sql-runner" class="md-nav__link">
-    Install Spark SQL Runner
+  <a href="#install-chango-spark-sql-runner" class="md-nav__link">
+    Install Chango Spark SQL Runner
   </a>
   
 </li>
@@ -1669,11 +1649,6 @@ or press the button of <code>Unscale Server</code> to unscale Trino Gateway serv
 <h3 id="install-azkaban-cli">Install Azkaban CLI</h3>
 <p>Select hosts for azkaban CLI.
 <img width="900" src="../../images/azkaban-cli/install.png" /></p>
-<h2 id="dbt">dbt</h2>
-<p><code>dbt</code> is CLI tool to transform data in Chango. In most cases, it will be used to run trino queries.</p>
-<h3 id="install-dbt">Install dbt</h3>
-<p>Select hosts for dbt.
-<img width="900" src="../../images/dbt/install.png" /></p>
 <h2 id="chango-data-api">Chango Data API</h2>
 <p>Chango provides data ingestion especially for streaming events.
 <code>Chango Data API</code> is used to collect streaming events and produce them to kafka.</p>
@@ -1699,17 +1674,17 @@ or press the button of <code>Unscale Server</code> to unscale Trino Gateway serv
 </blockquote>
 <p><img width="900" src="../../images/streaming/install-tx.png" /></p>
 <p>After installation, you will see chango streaming tx applications in running status in spark ui.</p>
-<h2 id="spark-thrift-server">Spark Thrift Server</h2>
-<p>Spark Thrift Server is a spark streaming job to run spark sql queries. Clients can connect to spark thrift server, 
+<h2 id="chango-spark-thrift-server">Chango Spark Thrift Server</h2>
+<p><code>Chango Spark Thrift Server</code> is a spark streaming job to run spark sql queries. Clients can connect to spark thrift server, 
 for example through JDBC/Thrift.</p>
-<h3 id="install-spark-thrift-server">Install Spark Thrift Server</h3>
-<p>Enter spark configurations for <code>Spark Thrift Server</code> job.
+<h3 id="install-chango-spark-thrift-server">Install Chango Spark Thrift Server</h3>
+<p>Enter spark configurations for <code>Chango Spark Thrift Server</code> job.
 <img width="900" src="../../images/streaming/install-sts.png" /></p>
 <p>After installation, you will see spark thrift server in running status in spark ui.</p>
-<h2 id="spark-sql-runner">Spark SQL Runner</h2>
-<p>Spark SQL Runner is a spark streaming job which exposes REST API to run spark sql queries requested by clients through REST.</p>
-<h3 id="install-spark-sql-runner">Install Spark SQL Runner</h3>
-<p>Enter spark configurations for <code>Spark SQL Runner</code> job.
+<h2 id="chango-spark-sql-runner">Chango Spark SQL Runner</h2>
+<p><code>Chango Spark SQL Runner</code> is a spark streaming job which exposes REST API to run spark sql queries requested by clients through REST.</p>
+<h3 id="install-chango-spark-sql-runner">Install Chango Spark SQL Runner</h3>
+<p>Enter spark configurations for <code>Chango Spark SQL Runner</code> job.
 <img width="900" src="../../images/streaming/install-sql.png" /></p>
 <p>After installation, you will see spark sql runner in running status in spark ui.</p>
 <h2 id="chango-query-exec">Chango Query Exec</h2>
