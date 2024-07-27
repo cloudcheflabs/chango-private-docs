@@ -506,24 +506,30 @@ Run the following to install Chango Admin.
 Enter values for the prompts, for example.
 
 ```agsl
+Setting selinux to permissive..
 Installing ansible in virtual environment...
 Ansible installed...
 Ready to install Chango Admin...
 Enter FQDN of the target host name on which PostgreSQL database will be installed: 
 chango-comp-3.chango.private
 
+Enter super user password of PostgreSQL(Password not displayed): 
+
+Enter Chango admin password of PostgreSQL(Password not displayed): 
+
 Enter comma-separated disk paths for LVM mount on the target host of PostgreSQL database (for example, '/dev/sdb,/dev/sdc'): 
-/dev/sdb,/dev/sdc
+/dev/xvdb,/dev/xvdc
 
 Enter current host name on which Chango Admin will be installed: 
 chango-admin.chango.private
 ```
 
 - `chango-comp-3.chango.private` is for PostgreSQL database host which **MUST BE** one of `Chango Component Nodes`, **NOT** `Chango Admin Node`.
-- `/dev/sdb,/dev/sdc` is for LVM raw disks in comma separated list on PostgreSQL database host.
+- You need to enter the password of postgresql super user and admin password of `Chango Admin`.
+- `/dev/sdb,/dev/sdc` is for LVM raw disks in comma separated list in the host of PostgreSQL database.
 - `chango-admin.chango.private` is for current host name of `Chango Admin Node`.
 
-To enter the raw disks, run `lsblk` for example.
+To enter the raw disks, run `lsblk` for example on Postgresql host.
 
 ```agsl
 lsblk;
@@ -548,7 +554,7 @@ Output looks like this.
 2023-10-27 03:53:59,863 INFO com.cloudcheflabs.changoprivate.admin.config.AdminUserConfigurer:32 [main] randomly generated password for user 'admin': b3b3c51fde594d7abdd38fbc3eb2a581
 ```
 
-For example, `b3b3c51fde594d7abdd38fbc3eb2a581` is the password of `admin`.
+For example, `b3b3c51fde594d7abdd38fbc3eb2a581` is the temporary password of `admin`, which can be updated later.
 
 
 The URL of Chango Admin UI is, for example.
