@@ -338,16 +338,6 @@ Select hosts for azkaban CLI.
 <img width="900" src="../../images/azkaban-cli/install.png" />
 
 
-## dbt
-
-`dbt` is CLI tool to transform data in Chango. In most cases, it will be used to run trino queries.
-
-### Install dbt
-
-Select hosts for dbt.
-<img width="900" src="../../images/dbt/install.png" />
-
-
 ## Chango Data API
 
 Chango provides data ingestion especially for streaming events.
@@ -390,24 +380,24 @@ This is transactional spark streaming jobs. Enter spark configurations for `Chan
 After installation, you will see chango streaming tx applications in running status in spark ui.
 
 
-## Spark Thrift Server
+## Chango Spark Thrift Server
 
-Spark Thrift Server is a spark streaming job to run spark sql queries. Clients can connect to spark thrift server, 
+`Chango Spark Thrift Server` is a spark streaming job to run spark sql queries. Clients can connect to spark thrift server, 
 for example through JDBC/Thrift.
 
-### Install Spark Thrift Server
-Enter spark configurations for `Spark Thrift Server` job.
+### Install Chango Spark Thrift Server
+Enter spark configurations for `Chango Spark Thrift Server` job.
 <img width="900" src="../../images/streaming/install-sts.png" />
 
 After installation, you will see spark thrift server in running status in spark ui.
 
 
-## Spark SQL Runner
+## Chango Spark SQL Runner
 
-Spark SQL Runner is a spark streaming job which exposes REST API to run spark sql queries requested by clients through REST.
+`Chango Spark SQL Runner` is a spark streaming job which exposes REST API to run spark sql queries requested by clients through REST.
 
-### Install Spark SQL Runner
-Enter spark configurations for `Spark SQL Runner` job.
+### Install Chango Spark SQL Runner
+Enter spark configurations for `Chango Spark SQL Runner` job.
 <img width="900" src="../../images/streaming/install-sql.png" />
 
 After installation, you will see spark sql runner in running status in spark ui.
