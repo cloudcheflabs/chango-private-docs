@@ -1,4 +1,4 @@
-# What is Chango Private?
+# What is Chango?
 
 
 <img width="800" src="../../images/chango-overview.png" />
@@ -10,7 +10,7 @@ Chango provides popular open source engines like spark, trino, kafka and iceberg
 and several chango specific components.
 
 
-## Chango Private Data Lakehouse Platform
+## Chango Data Lakehouse Platform
 
 <img width="900" src="../../images/architecture/lakehouse-platform.png" />
 
@@ -22,12 +22,12 @@ In `Ingestion` layer:
 
 In `Storage` layer:
 
-- Chango Private supports Apache Ozone as object storage by default and external S3 compatible object storage like AWS S3, MinIO, OCI Object Storage.
+- Chango supports Apache Ozone as object storage by default and external S3 compatible object storage like AWS S3, MinIO, OCI Object Storage.
 - Data lakehouse format is `Iceberg` table format in Chango.
 
 In `Transformation` layer:
 
-- `Spark` and `Trino` with `dbt` or `Chango Query Exec` will be used to run ETL jobs.
+- `Spark` and `Trino` with `Chango Query Exec` will be used to run ETL jobs.
 
 In `Analytics` layer:
 
@@ -36,9 +36,9 @@ In `Analytics` layer:
 
 In `Management` layer:
 
-- `Azkaban` is used as workflow. All the batch jobs like ETL will be integrated with `Azkaban`.
+- `Azkaban` is used as workflow. All the batch jobs like ETL can be integrated with `Azkaban`.
 - `Chango REST Catalog` is Iceberg REST Catalog and used as data catalog in Chango.
-- Chango Private supports storage security to control data access based on RBAC in Chango. `Chango Authorizer` will be used for it.
+- Chango supports storage security to control data access based on RBAC in Chango. `Chango Authorizer` will be used for it.
 - `Chango Trino Gateway` is an implementation of Trino Gateway concept. `Chango Trino Gateway` provides several features like authentication, authorization, smart query routing(routing to less exhausted trino clusters), trino cluster activation/deactivation. For more details, see <a href="../../features/trino-gw/">Chango Trino Gateway</a>.
 - `Chango Spark SQL Runner` exposes REST API to which clients send spark sql queries using REST to execute spark queries.
 - `Chango Thrift Server` exposes JDBC/Thrift to which clients send spark sql queries using JDBC/Thrift to execute spark queries.

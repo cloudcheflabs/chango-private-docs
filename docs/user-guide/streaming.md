@@ -33,7 +33,7 @@ hive clients like Apache Superset which connects to `Chango Spark Thrift Server`
 
 It is good practice that Iceberg table for streaming events needs to be partitioned with timestamp.
 Timestamp column  `ts` needs to be added to Iceberg table. 
-Actually, with `ts` column, Chango Private will compact small data, manifest, and position delete files and expire snapshots to improve query performance.
+Actually, with `ts` column, Chango will compact small data, manifest, and position delete files and expire snapshots to improve query performance.
 
 For example, create `logs` table with hidden partitioning with the column of `ts`.
 

@@ -1,4 +1,4 @@
-# Chango Private Components
+# Chango Components
 
 
 ## Component Version
@@ -14,20 +14,20 @@
 | Livy                         | 0.8.0-incubating   | 
 | Trino                        | 452                | 
 | Iceberg                      | 1.5.2              | 
-| Open JDK                     | 8 / 11 / 22        | 
+| Open JDK                     | 8 / 17 / 22        | 
 | Azkaban                      | 3.69.0-8           | 
 | Azkaban CLI                  | 0.9.14             |
 | Superset                     | 0.38.1             |
-| Chango Private Admin         | 2.4.0              | 
-| Chango Private Streaming     | 2.4.0              | 
-| Chango Private Streaming Tx  | 2.4.0              | 
-| Chango Spark Thrift Server   | 2.4.0              | 
-| Chango Spark SQL Runner      | 2.4.0              | 
-| Chango Private Data API      | 2.4.0              | 
-| Chango Private Trino Gateway | 2.4.0              | 
-| Chango Private Authorizer    | 2.4.0              | 
-| Chango Private REST Catalog  | 2.4.0              |
-| Chango Private Query Exec    | 2.4.0              |
+| Chango Admin         | 2.5.0              | 
+| Chango Streaming     | 2.5.0              | 
+| Chango Streaming Tx  | 2.5.0              | 
+| Chango Spark Thrift Server   | 2.5.0              | 
+| Chango Spark SQL Runner      | 2.5.0              | 
+| Chango Data API      | 2.5.0              | 
+| Chango Trino Gateway | 2.5.0              | 
+| Chango Authorizer    | 2.5.0              | 
+| Chango REST Catalog  | 2.5.0              |
+| Chango Query Exec    | 2.5.0              |
 
 ## Component Ports
 
@@ -106,11 +106,11 @@
 ### PostgreSQL
 - 5432: PostgreSQL Server
 
-### Chango Private Admin
+### Chango Admin
 - 28095: Admin Server 
 - 8080: NGINX
 
-### Chango Private Admin UI
+### Chango Admin UI
 - 8123: Admin UI Server
 
 ### Chango Spark Thrift Server
@@ -119,13 +119,13 @@
 ### Chango Spark SQL Runner
 - 29080: Server
 
-### Chango Private Data API
+### Chango Data API
 - 28097: Server 
 - 28098: Jetty Server 
 - 27072: Management Server 
 - 80: NGINX
 
-### Chango Private Trino Gateway
+### Chango Trino Gateway
 - 28096: Server 
 - 27081: Management Server 
 - 27788: Jetty Proxy Server 
@@ -135,18 +135,18 @@
 - 16380: Redis Slave Cluster
 - 443: NGINX SSL
 
-### Chango Private Authorizer
+### Chango Authorizer
 - 28196: Server 
 - 27181: Management Server 
 - 81: NGINX
 
-### Chango Private REST Catalog
+### Chango REST Catalog
 - 28197: Server 
 - 27182: Management Server 
 - 28297: Jetty Proxy Server 
 - 8008: NGINX
 
-### Chango Private Query Exec
+### Chango Query Exec
 - 28291: Server
 - 27291: Management Server
 - 8009: NGINX

@@ -1,13 +1,13 @@
 # Install Chango Admin
 
-Chango Private is Data Lakehouse Platform which can be installed in both connected and disconnected environment.
+Chango is Data Lakehouse Platform which can be installed in both connected and disconnected environment.
 
-Chango Private consists of `Chango Admin` and `Chango Components`. All the `Chango Components` will be installed by `Chango Admin`, 
+Chango consists of `Chango Admin` and `Chango Components`. All the `Chango Components` will be installed by `Chango Admin`, 
 so you need to install `Chango Admin` before installing `Chango Components`.
 
 ## Prerequisites
 
-There are several things to prepare before proceeding to install Chango Private.
+There are several things to prepare before proceeding to install Chango.
 
 
 ### Supported OS and Python
@@ -20,20 +20,20 @@ Supported OS and Python Version are:
 
 ### Prepare Chango Nodes
 
-In order to install Chango Private, we need nodes. Let's call it as `Chango Nodes`.
+In order to install Chango, we need nodes. Let's call it as `Chango Nodes`.
 `Chango Nodes` consist of `Chango Admin Node` on which Chango Admin will be installed and `Chango Component Nodes` on which 
 Chango Components will be installed.
 
 <img width="800" src="../../images/admin/ssh-node-access.png" />
 
 First, you will install `Chango Admin`, and then all the components will be installed by `Chango Admin` through ansible playbook using SSH.
-So, you need to prepare `at least 4` nodes to install Chango Private.
+So, you need to prepare `at least 4` nodes to install Chango.
 > **_NOTE:_** 1 node for `Chango Admin Node` and `at least 3` nodes for `Chango Comonent Nodes`.
-> That is, you need to have `at least 4 `nodes to install Chango Private.
+> That is, you need to have `at least 4 `nodes to install Chango.
 
 With respect to hardware requirement, 2 cores and 4GB memory is good for `Chango Admin Node`, but for `Chango Component Nodes`, 
 there are many variations to determine how much capacity you need for `Chango Component Nodes`. 
-The following components provided by Chango Private are the components which can affect the determination of hardware capacity.
+The following components provided by Chango are the components which can affect the determination of hardware capacity.
 
 - <a href="https://trino.io/docs/current/installation/deployment.html">Trino</a>
 - <a href="https://spark.apache.org/docs/latest/hardware-provisioning.html">Apache Spark</a>
@@ -83,7 +83,7 @@ sudo yum clean all
 
 ### Open Ports
 
-You need to open ports in your subnet of `Chango Nodes`. See the details of <a href="../../components/components/#component-ports">Chango Private Ports</a>.
+You need to open ports in your subnet of `Chango Nodes`. See the details of <a href="../../components/components/#component-ports">Chango Ports</a>.
 
 
 ### Password-less SSH Connection
@@ -268,9 +268,9 @@ sudo yum groupinstall "development tools" -y;
 
 ### Local Yum Repository
 
-If you want to install Chango Private in disconnected environment, you need to install local yum repository which all the `Chango Nodes` will look up.
+If you want to install Chango in disconnected environment, you need to install local yum repository which all the `Chango Nodes` will look up.
 
-> **_NOTE:_** If you want to install Chango Private in connected environment, skip this instruction.
+> **_NOTE:_** If you want to install Chango in connected environment, skip this instruction.
 
 
 #### On the Node of Local Yum Repository
@@ -442,25 +442,25 @@ sudo yum install nginx
 ```
 
 
-## Download Chango Private Distribution
+## Download Chango Distribution
 
-If you want to install Chango Private in public, then, before downloading Chango Private distribution, 
+If you want to install Chango in public, then, before downloading Chango distribution, 
 you need to be logged in as `sudo` user created before on `Chango Admin Node`, for example.
 
 ```agsl
 sudo su - chango;
 ```
 
-Download Chango Private distribution.
+Download Chango distribution.
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-private-2.4.0.tar.gz
+curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-private-2.5.0.tar.gz
 ```
 
-And tar the file and move to the installation directory of Chango Private.
+And tar the file and move to the installation directory of Chango.
 
 ```agsl
-tar zxvf chango-private-2.4.0.tar.gz 
-cd chango-private-2.4.0/ansible/
+tar zxvf chango-private-2.5.0.tar.gz 
+cd chango-private-2.5.0/ansible/
 ```
 
 Download all Chango Components.
@@ -480,7 +480,7 @@ tail -f out.log;
 ```
 
 
-> **_NOTE:_** For installing Chango Private in disconnected environment, after downloading chango component files, 
+> **_NOTE:_** For installing Chango in disconnected environment, after downloading chango component files, 
 > you need to package the whole distribution directory with downloaded component files to the file(for example, tar.gz) which needs to be transferred
 > to your node in which internet is not available.
 
@@ -586,7 +586,7 @@ After installing Chango Admin, several shell files will be created which can be 
 
 > **_NOTE:_** If you have installed `Chango Components` by `Chango Admin` later, 
 > **DO NOT** use `reinstall-admin.sh`, `uninstall-lvm.sh`, and `uninstall-postgresql.sh` 
-> which will destroy all the installation of Chango Private!
+> which will destroy all the installation of Chango!
 
 
 When the installation of Chango Admin failed with some reasons, you need to run the above shell.
@@ -617,7 +617,7 @@ ansible-playbook -i admin.inv run.yml \
 exec_user=chango \
 target_hosts=changoprivate-admin-hosts \
 role_name=changoprivate-admin \
-cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.4.0/ansible \
+cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.5.0/ansible \
 run_option=restart \
 cpadmin_nginx_scheme=https \
 cpadmin_nginx_host=[your-nginx-host] \

@@ -1,4 +1,4 @@
-site_name: Chango Private
+site_name: Chango
 site_url: https://cloudcheflabs.github.io/chango-private-docs
 theme:
   name: material
@@ -33,8 +33,8 @@ theme:
 
 
 nav:
-  - "What is Chango Private?":
-      - "What is Chango Private?": intro/intro.md
+  - "What is Chango?":
+      - "What is Chango?": intro/intro.md
   - "Getting Started":
       - "Install Chango Admin": install/install-admin.md
       - "Install Chango Components": install/install-component.md
@@ -56,7 +56,6 @@ nav:
       - "Upload Excel": user-guide/upload-excel.md
       - "Connect to Chango Trino Gateway with Trino Clients": user-guide/connect-trino-gw.md
       - "Create Iceberg REST Catalog in Spark": user-guide/rest-in-spark.md
-      - "Run dbt Model": user-guide/dbt.md
       - "Create Azkaban Project using CLI": user-guide/azkaban-cli.md
       - "Run Spark Jobs with Azkaban": user-guide/spark-azkaban.md
       - "Change Login Password in Azkaban": user-guide/azkaban-change-pw.md
@@ -71,6 +70,7 @@ nav:
       - "Maintain Iceberg Tables": user-guide/maintain-iceberg.md
       - "Create Hidden Partitioned Iceberg Tables": user-guide/hidden-partition.md
       - "Run Spark Applications using Livy": user-guide/livy.md
+      - "Configure Resource Groups": user-guide/resource-group.md
   - "Components":
      - "Components": components/components.md
 

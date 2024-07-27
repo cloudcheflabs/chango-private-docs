@@ -2,7 +2,7 @@
 
 <img width="700" src="../../images/realtime/realtime-analytics.png" />
 
-Chango Private provides several solutions for realtime analytics. 
+Chango provides several solutions for realtime analytics. 
 Streaming events from external applications, distributed logs and CDC(Change Data Capture) data will be inserted to Iceberg tables 
 in Chango and will be analyzed in realtime for example using `Trino` provided by Chango.
 

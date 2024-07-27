@@ -9,7 +9,7 @@ Go to `Settings` -> `S3 Credential`.
 
 ## Create S3 Credential
 
-If `Apache Ozone` is being used as object storage in Chango Private, you can create new S3 Credential as you want.
+If `Apache Ozone` is being used as object storage in Chango, you can create new S3 Credential as you want.
 
 Press `Create` button, and enter description.
 <img width="900" src="../../images/s3/create.png" />

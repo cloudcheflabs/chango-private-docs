@@ -1,6 +1,6 @@
 # Run Spark Jobs with Azkaban
 
-`Azkaban` is used as Workflow in Chango Private. 
+`Azkaban` is used as Workflow in Chango. 
 All the batch jobs like spark jobs and trino ETL jobs using dbt can be integrated with `Azkaban` in Chango.
 
 This example shows how spark jobs can be integrated with Azkaban.
