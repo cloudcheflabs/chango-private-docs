@@ -1,6 +1,6 @@
 # Create Iceberg REST Catalog in Spark
 
-This shows how to create Iceberg REST catalog in spark applications in Chango Private.
+This shows how to create Iceberg REST catalog in spark applications in Chango.
 
 
 If spark applications need to access Iceberg tables using `Chango REST Catalog`, Chango credential and S3 credential are necessary.

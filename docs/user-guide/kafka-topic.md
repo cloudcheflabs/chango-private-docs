@@ -1,6 +1,6 @@
 # Create Kafka Topic
 
-To create kafka topic in Chango Private, first access to the host of kafka nodes.
+To create kafka topic in Chango, first access to the host of kafka nodes.
 
 Login as kafka user and move to kafka installation directory.
 

@@ -74,4 +74,13 @@ Do the following steps for every trino clusters in order to accomplish `Zero Dow
 - restart that trino cluster. 
 - activate that trino cluster again. 
 
+### Resource Groups
+
+`Chango Trino Gateway` provides Trino Resource Groups to limit resources of the backend trino cluster resources like 
+maximum number of running queries, maximum queued queries, and maximum amount of memory which resource group can use. 
+
+In `Chango Trino Gateway`, there is `Global Resource Group` which is root resource group to which all subgroups belong which are equivalent to `Cluster Group` of `Chango Trino Gateway`.
+For example, if users in `BI Cluster Group` send queries, the queries will be run in the backend trino clusters according to `BI Resource Group` configuration.
+
+
 

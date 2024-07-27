@@ -1,6 +1,6 @@
 # Storage Security
 
-Chango Private provides fine-grained data access control using RBAC to Chango storage.
+Chango provides fine-grained data access control using RBAC to Chango storage.
 
 ## Data Access in Secure Way
 

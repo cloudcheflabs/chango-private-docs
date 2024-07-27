@@ -1,21 +1,21 @@
 # Install Chango Components
 
-There are several components supported by Chango Private.
+There are several components supported by Chango.
 
-See <a href="../../intro/intro">What is Chango Private?</a> for more details.
+See <a href="../../intro/intro">What is Chango?</a> for more details.
 
-> **_NOTE:_** If Chango Private initialization failed or you want to reset Chango Private, then you need to move to 
-> `http://[admin-host]:8123/cp-reset.html` to reset Chango Private.
+> **_NOTE:_** If Chango initialization failed or you want to reset Chango, then you need to move to 
+> `http://[admin-host]:8123/cp-reset.html` to reset Chango.
 
-## Initialize Chango Private
+## Initialize Chango
 
-If you have not initialized Chango Private, you will get the following picture to initialze Chango Private.
+If you have not initialized Chango, you will get the following picture to initialze Chango.
 
 <img width="900" src="../../images/init/init-chango.png" />
 
 There are mandatory Chango Components like `MySQL`, `Object Storage`, `Chango Authorizer`, and 
-`Chango REST Catalog` which must be installed when Chango Private is initialized. 
-The other optional compoents can be installed after Chango Private initialization.
+`Chango REST Catalog` which must be installed when Chango is initialized. 
+The other optional compoents can be installed after Chango initialization.
 
 ### Configure Hosts and SSH Private Key
 
@@ -49,7 +49,7 @@ If the disks attached are different on every node, use this.
 
 ### Configure MySQL
 
-`MySQL` is used by open source components like `Apache Superset` and `Apache Ozone` in Chango Private.
+`MySQL` is used by open source components like `Apache Superset` and `Apache Ozone` in Chango.
 Select the host on which `MySQL` will be installed.
 
 <img width="900" src="../../images/init/mysql.png" />
@@ -57,7 +57,7 @@ Select the host on which `MySQL` will be installed.
 
 ### Configure Object Storage
 
-Select the options for object storage. `Apache Ozone` is default object storage provided by Chango Private, 
+Select the options for object storage. `Apache Ozone` is default object storage provided by Chango, 
 which will be used in disconnected environment in most cases.
 In public, you may select the external object storage like AWS S3, MinIO, OCI Object Storage.
 
@@ -86,7 +86,7 @@ For now, the components you configured are mandatory.  After configuring mandato
 <img width="900" src="../../images/init/skip.png" />
 
 
-You can install other optional components later after finishing Chango Private initialization.
+You can install other optional components later after finishing Chango initialization.
 
 ### Install Configured Components
 
@@ -143,7 +143,7 @@ or press the button of `Unscale Server` to unscale REST Catalog servers.
 
 ## Apache Kafka
 
-`Apache Kafka` is used as event streaming platform in Chango Private.
+`Apache Kafka` is used as event streaming platform in Chango.
 Multiple Kafka clusters are supported by Chango, that is, you can install kafka clusters as many as you want.
 
 ### Install Kafka
@@ -160,7 +160,7 @@ After installing kafka, you will see kafka page like this.
 <img width="900" src="../../images/kafka/after-install.png" />
 
 
-Because Chango Private supports multiple kafka clusters, you can install another kafka cluster.
+Because Chango supports multiple kafka clusters, you can install another kafka cluster.
 
 > **_NOTE:_** Because you have already installed default kafka cluster, you can enter anything for the cluster name.
 
@@ -227,7 +227,7 @@ Spark History Server UI looks like this.
 ## Trino
 
 `Trino` is used as query engine to run interactive and long running ETL query in Chango. 
-Chango Private provides multiple trino clusters, so, you can install trino clusers as many as you want.
+Chango provides multiple trino clusters, so, you can install trino clusers as many as you want.
 
 ### Install Trino
 
