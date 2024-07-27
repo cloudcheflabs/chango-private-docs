@@ -1541,24 +1541,30 @@ to your node in which internet is not available.</p>
 <li>install Chango Admin on the current host.</li>
 </ul>
 <p>Enter values for the prompts, for example.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Installing ansible in virtual environment...
-<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>Ansible installed...
-<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>Ready to install Chango Admin...
-<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>Enter FQDN of the target host name on which PostgreSQL database will be installed: 
-<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>chango-comp-3.chango.private
-<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>
-<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>Enter comma-separated disk paths for LVM mount on the target host of PostgreSQL database (for example, &#39;/dev/sdb,/dev/sdc&#39;): 
-<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>/dev/sdb,/dev/sdc
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Setting selinux to permissive..
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>Installing ansible in virtual environment...
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>Ansible installed...
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>Ready to install Chango Admin...
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>Enter FQDN of the target host name on which PostgreSQL database will be installed: 
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>chango-comp-3.chango.private
+<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>
+<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>Enter super user password of PostgreSQL(Password not displayed): 
 <a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>
-<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>Enter current host name on which Chango Admin will be installed: 
-<a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>chango-admin.chango.private
+<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>Enter Chango admin password of PostgreSQL(Password not displayed): 
+<a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>
+<a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>Enter comma-separated disk paths for LVM mount on the target host of PostgreSQL database (for example, &#39;/dev/sdb,/dev/sdc&#39;): 
+<a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>/dev/xvdb,/dev/xvdc
+<a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>
+<a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a>Enter current host name on which Chango Admin will be installed: 
+<a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a>chango-admin.chango.private
 </code></pre></div>
 <ul>
 <li><code>chango-comp-3.chango.private</code> is for PostgreSQL database host which <strong>MUST BE</strong> one of <code>Chango Component Nodes</code>, <strong>NOT</strong> <code>Chango Admin Node</code>.</li>
-<li><code>/dev/sdb,/dev/sdc</code> is for LVM raw disks in comma separated list on PostgreSQL database host.</li>
+<li>You need to enter the password of postgresql super user and admin password of <code>Chango Admin</code>.</li>
+<li><code>/dev/sdb,/dev/sdc</code> is for LVM raw disks in comma separated list in the host of PostgreSQL database.</li>
 <li><code>chango-admin.chango.private</code> is for current host name of <code>Chango Admin Node</code>.</li>
 </ul>
-<p>To enter the raw disks, run <code>lsblk</code> for example.</p>
+<p>To enter the raw disks, run <code>lsblk</code> for example on Postgresql host.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>lsblk;
 <a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
 <a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
@@ -1574,7 +1580,7 @@ to your node in which internet is not available.</p>
 <p>Output looks like this.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>2023-10-27 03:53:59,863 INFO com.cloudcheflabs.changoprivate.admin.config.AdminUserConfigurer:32 [main] randomly generated password for user &#39;admin&#39;: b3b3c51fde594d7abdd38fbc3eb2a581
 </code></pre></div>
-<p>For example, <code>b3b3c51fde594d7abdd38fbc3eb2a581</code> is the password of <code>admin</code>.</p>
+<p>For example, <code>b3b3c51fde594d7abdd38fbc3eb2a581</code> is the temporary password of <code>admin</code>, which can be updated later.</p>
 <p>The URL of Chango Admin UI is, for example.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>http://chango-admin.chango.private:8123/
 </code></pre></div></p>
