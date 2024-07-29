@@ -14,7 +14,7 @@ In order to access spark node from azkaban executor nodes without password promp
 
 ## Create Flow of Chango Query Exec
 
-The following is an example flow file which will be sent to `Chango Query Exec` to run trino queries in trino through `Chango Trino Gateway`.
+The following is an example flow file called `postgresql-to-iceberg.yaml` which will be sent to `Chango Query Exec` to run trino queries in trino through `Chango Trino Gateway`.
 
 ```agsl
 uri: <chango-trino-gateway-endpoing-without-scheme>
