@@ -1,6 +1,9 @@
 # Run Trino ETL Jobs with Azkaban
 
 Trino ETL queries can be sent to `Chango Query Exec` through REST to run ETL query jobs in trino with ease.
+
+<img width="900" src="../../images/user-guide/trino-azkaban-create.png" />
+
 Here, we will learn how to integrate Trino ETL jobs with Azkaban workflow in Chango.
 
 ## Passwordless SSH Connection from Azkaban Executor Nodes to Spark Node
