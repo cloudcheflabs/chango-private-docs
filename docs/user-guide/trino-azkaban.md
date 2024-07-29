@@ -231,7 +231,7 @@ nodes:
 
 This azkaban flow file shows DAG to run remote shell files which send query flow to `Chango Query Exec`.
 
-Create a meta file called `flow20.project` for azkaban project.
+Create a metadata file called `flow20.project` for azkaban project.
 
 ```agsl
 azkaban-flow-version: 2.0
@@ -250,7 +250,7 @@ zip metrics.zip metrics.flow flow20.project
 mv metrics.zip /tmp
 ```
 
-Upload azkaban project file on spark node on which `Azkaban CLI` is installed.
+Upload azkaban project file on the node where `Azkaban CLI` is installed.
 
 ```agsl
 sudo su - azkabancli;
