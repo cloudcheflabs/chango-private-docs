@@ -1099,9 +1099,7 @@ to Chango to analyze logs.</p>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>;
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>-- add hidden partitions.
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD year(ts);
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD month(ts);
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD day(ts);
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD hour(ts);
 </code></pre></div>
 <h2 id="install-chango-log">Install Chango Log</h2>
 <p>Download <code>Chango Log</code> distribution package.</p>

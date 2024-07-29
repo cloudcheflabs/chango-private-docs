@@ -1084,12 +1084,10 @@ See <a href="../../user-guide/maintain-iceberg/#connect-chango-spark-thrift-serv
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>USING iceberg
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>;
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>-- add hidden partitions.
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD year(ts);
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD month(ts);
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD day(ts);
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD day(ts);
 </code></pre></div>
 <p>Column <code>ts</code> must be timestamp type.
-After creating iceberg table, you need to add partitions using iceberg functions like <code>year()</code>, <code>month()</code> and <code>day()</code>.</p>
+After creating iceberg table, you need to add partitions using iceberg functions like one of <code>year()</code>, <code>month()</code>, <code>day()</code> or <code>hour()</code>.</p>
 <h2 id="create-hidden-partitioned-iceberg-table-using-superset">Create Hidden Partitioned Iceberg Table using Superset</h2>
 <p>Run the above iceberg DDL queries using Superset like this.</p>
 <p><img width="900" src="../../images/user-guide/hidden-partition.png" /></p>

@@ -1103,9 +1103,7 @@ Actually, with <code>ts</code> column, Chango will compact small data, manifest,
 <a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>;
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>-- add hidden partitions.
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD year(ts);
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD month(ts);
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD day(ts);
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD hour(ts);
 </code></pre></div>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> The sequence  of table column names in <strong>lower case</strong> must be <strong>alphanumeric in ascending order</strong>.</p>

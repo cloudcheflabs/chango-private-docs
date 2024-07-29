@@ -1219,9 +1219,7 @@ For this example, the pre-built <code>Chango CDC</code> will be used. Download C
 <a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>;
 <a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
 <a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>-- add hidden partitions.
-<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD year(ts);
-<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD month(ts);
-<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD day(ts);
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD day(ts);
 </code></pre></div>
 <p>In addition to the original fields of PostgreSQL table, fields <code>ts</code> and <code>op</code> are required for partitioning and small files compaction.
 If fields <code>ts</code> and <code>op</code> exist in the original PostgreSQL table, then <code>_</code> will be appended to the original fields of PostgreSQL table.</p>
