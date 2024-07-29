@@ -9,7 +9,7 @@ Here, we will learn how to integrate Trino ETL jobs with Azkaban workflow in Cha
 ## Passwordless SSH Connection from Azkaban Executor Nodes to Flow Query Execution Node
 
 `Flow Query Execution Node` is where all the files like flow query files, azkaban project files and query runner shell files in this example below will be created. We are going to use SSH to run remote shell files to run Trino ETL jobs.
-In order to access flow query execution node from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.
+In order to access `Flow Query Execution Node` from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.
 
 
 ## Create Flow of Chango Query Exec
