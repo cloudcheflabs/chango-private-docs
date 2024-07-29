@@ -165,8 +165,6 @@ USING iceberg
 ;
 
 -- add hidden partitions.
-ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD year(ts);
-ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD month(ts);
 ALTER TABLE iceberg.cdc_db.student ADD PARTITION FIELD day(ts);
 ```
 

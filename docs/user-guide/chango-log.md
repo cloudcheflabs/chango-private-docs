@@ -25,9 +25,7 @@ USING iceberg
 ;
 
 -- add hidden partitions.
-ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD year(ts);
-ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD month(ts);
-ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD day(ts);
+ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD hour(ts);
 ```
 
 ## Install Chango Log

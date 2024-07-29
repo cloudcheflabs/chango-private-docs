@@ -52,9 +52,7 @@ USING iceberg
 ;
 
 -- add hidden partitions.
-ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD year(ts);
-ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD month(ts);
-ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD day(ts);
+ALTER TABLE iceberg.iceberg_db.logs ADD PARTITION FIELD hour(ts);
 ```
 
 > **_NOTE:_** The sequence  of table column names in **lower case** must be **alphanumeric in ascending order**.
