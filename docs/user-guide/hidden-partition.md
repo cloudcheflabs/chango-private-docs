@@ -29,13 +29,11 @@ CREATE TABLE IF NOT EXISTS iceberg.iceberg_db.hidden_partitioning (
 USING iceberg
 ;
 -- add hidden partitions.
-ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD year(ts);
-ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD month(ts);
 ALTER TABLE iceberg.iceberg_db.hidden_partitioning ADD PARTITION FIELD day(ts);
 ```
 
 Column `ts` must be timestamp type.
-After creating iceberg table, you need to add partitions using iceberg functions like `year()`, `month()` and `day()`.
+After creating iceberg table, you need to add partitions using iceberg functions like one of `year()`, `month()`, `day()` or `hour()`.
 
 ## Create Hidden Partitioned Iceberg Table using Superset
 
