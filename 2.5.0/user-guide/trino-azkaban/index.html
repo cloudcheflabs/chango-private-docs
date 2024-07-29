@@ -1090,7 +1090,7 @@
 <p>Here, we will learn how to integrate Trino ETL jobs with Azkaban workflow in Chango.</p>
 <h2 id="passwordless-ssh-connection-from-azkaban-executor-nodes-to-flow-query-execution-node">Passwordless SSH Connection from Azkaban Executor Nodes to Flow Query Execution Node</h2>
 <p><code>Flow Query Execution Node</code> is where all the files like flow query files, azkaban project files and query runner shell files in this example below will be created. We are going to use SSH to run remote shell files to run Trino ETL jobs.
-In order to access flow query execution node from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.</p>
+In order to access <code>Flow Query Execution Node</code> from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.</p>
 <h2 id="create-flow-of-chango-query-exec">Create Flow of Chango Query Exec</h2>
 <p>The following is an example flow file called <code>postgresql-to-iceberg.yaml</code> which will be sent to <code>Chango Query Exec</code> to run trino queries in trino through <code>Chango Trino Gateway</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uri: &lt;chango-trino-gateway-endpoing-without-scheme&gt;
