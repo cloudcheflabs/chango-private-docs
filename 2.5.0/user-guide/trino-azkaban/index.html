@@ -782,8 +782,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#passwordless-ssh-connection-from-azkaban-executor-nodes-to-spark-node" class="md-nav__link">
-    Passwordless SSH Connection from Azkaban Executor Nodes to Spark Node
+  <a href="#passwordless-ssh-connection-from-azkaban-executor-nodes-to-flow-query-execution-node" class="md-nav__link">
+    Passwordless SSH Connection from Azkaban Executor Nodes to Flow Query Execution Node
   </a>
   
 </li>
@@ -1088,9 +1088,10 @@
 <p>Trino ETL queries can be sent to <code>Chango Query Exec</code> through REST to run ETL query jobs in trino with ease.</p>
 <p><img width="900" src="../../images/user-guide/query-exec.png" /></p>
 <p>Here, we will learn how to integrate Trino ETL jobs with Azkaban workflow in Chango.</p>
-<h2 id="passwordless-ssh-connection-from-azkaban-executor-nodes-to-spark-node">Passwordless SSH Connection from Azkaban Executor Nodes to Spark Node</h2>
-<p>We are going to use SSH to run remote shell files to run Trino ETL jobs. 
-In order to access spark node from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.</p>
+<h2 id="passwordless-ssh-connection-from-azkaban-executor-nodes-to-flow-query-execution-node">Passwordless SSH Connection from Azkaban Executor Nodes to Flow Query Execution Node</h2>
+<p><code>Flow Query Execution Node</code> is where all the files like flow query files, azkaban project files and query runner shell files in this example below<br />
+will be created. We are going to use SSH to run remote shell files to run Trino ETL jobs.
+In order to access flow query execution node from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.</p>
 <h2 id="create-flow-of-chango-query-exec">Create Flow of Chango Query Exec</h2>
 <p>The following is an example flow file called <code>postgresql-to-iceberg.yaml</code> which will be sent to <code>Chango Query Exec</code> to run trino queries in trino through <code>Chango Trino Gateway</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uri: &lt;chango-trino-gateway-endpoing-without-scheme&gt;
@@ -1284,7 +1285,7 @@ The following is an example shell file called <code>trino-query-exec.sh</code> t
 <a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>      - &quot;pg-metrics-to-iceberg&quot;
 </code></pre></div>
 <p>This azkaban flow file shows DAG to run remote shell files which send query flow to <code>Chango Query Exec</code>.</p>
-<p>Create a meta file called <code>flow20.project</code> for azkaban project.</p>
+<p>Create a metadata file called <code>flow20.project</code> for azkaban project.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>azkaban-flow-version: 2.0
 </code></pre></div>
 <blockquote>
@@ -1297,7 +1298,7 @@ The following is an example shell file called <code>trino-query-exec.sh</code> t
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a># move to /tmp.
 <a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>mv metrics.zip /tmp
 </code></pre></div>
-<p>Upload azkaban project file on spark node on which <code>Azkaban CLI</code> is installed.</p>
+<p>Upload azkaban project file on <code>Flow Query Execution Node</code> where <code>Azkaban CLI</code> needs to be installed.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo su - azkabancli;
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>source venv/bin/activate;
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>azkaban upload \
