@@ -6,10 +6,11 @@ Trino ETL queries can be sent to `Chango Query Exec` through REST to run ETL que
 
 Here, we will learn how to integrate Trino ETL jobs with Azkaban workflow in Chango.
 
-## Passwordless SSH Connection from Azkaban Executor Nodes to Spark Node
+## Passwordless SSH Connection from Azkaban Executor Nodes to Flow Query Execution Node
 
-We are going to use SSH to run remote shell files to run Trino ETL jobs. 
-In order to access spark node from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.
+`Flow Query Execution Node` is where all the files like flow query files, azkaban project files and query runner shell files in this example below  
+will be created. We are going to use SSH to run remote shell files to run Trino ETL jobs.
+In order to access flow query execution node from azkaban executor nodes without password prompt, follow <a href="../../user-guide/spark-azkaban/#password-less-ssh-access-to-spark-node-from-azkaban-executor-nodes" >this instruction</a>.
 
 
 ## Create Flow of Chango Query Exec
@@ -231,7 +232,7 @@ nodes:
 
 This azkaban flow file shows DAG to run remote shell files which send query flow to `Chango Query Exec`.
 
-Create a meta file called `flow20.project` for azkaban project.
+Create a metadata file called `flow20.project` for azkaban project.
 
 ```agsl
 azkaban-flow-version: 2.0
@@ -250,7 +251,7 @@ zip metrics.zip metrics.flow flow20.project
 mv metrics.zip /tmp
 ```
 
-Upload azkaban project file on spark node on which `Azkaban CLI` is installed.
+Upload azkaban project file on `Flow Query Execution Node` where `Azkaban CLI` needs to be installed.
 
 ```agsl
 sudo su - azkabancli;
