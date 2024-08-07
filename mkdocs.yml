@@ -61,7 +61,7 @@ nav:
       - "Run Spark Jobs with Azkaban": user-guide/spark-azkaban.md
       - "Run Trino ETL Jobs with Azkaban": user-guide/trino-azkaban.md
       - "Run Spark SQL ETL Jobs with Azkaban": user-guide/spark-sql-azkaban.md
-      - "Change Login Password in Azkaban": user-guide/azkaban-change-pw.md
+      - "Azkaban User Management": user-guide/azkaban-user-management.md
       - "Create Kafka Topic": user-guide/kafka-topic.md
       - "Configure Schema Registry URL": user-guide/schema-reg.md
       - "Reading Log Files Using Chango Log": user-guide/chango-log.md
