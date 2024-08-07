@@ -453,14 +453,14 @@ sudo su - chango;
 
 Download Chango distribution.
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-private-2.5.0.tar.gz
+curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-private-2.6.0.tar.gz
 ```
 
 And tar the file and move to the installation directory of Chango.
 
 ```agsl
-tar zxvf chango-private-2.5.0.tar.gz 
-cd chango-private-2.5.0/ansible/
+tar zxvf chango-private-2.6.0.tar.gz 
+cd chango-private-2.6.0/ansible/
 ```
 
 Download all Chango Components.
@@ -623,7 +623,7 @@ ansible-playbook -i admin.inv run.yml \
 exec_user=chango \
 target_hosts=changoprivate-admin-hosts \
 role_name=changoprivate-admin \
-cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.5.0/ansible \
+cpadmin_ansible_path=/data/chango/cp-dist/chango-private-2.6.0/ansible \
 run_option=restart \
 cpadmin_nginx_scheme=https \
 cpadmin_nginx_host=[your-nginx-host] \

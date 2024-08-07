@@ -1,7 +1,6 @@
 # Data Transformation Using Standalone Chango Query Exec
 
-`Chango Query Exec` standalone distribution can be downloaded and installed. 
-It can be used as standalone `Chango Query Exec` which is not controlled by `Chango Admin`.
+`Chango Query Exec` is used to run trino ETL queries and spark SQL ETL queries through REST simply.
 
 ## Date Functions
 
@@ -10,15 +9,18 @@ Date Functions supported by `Chango Query Exec` can be found <a href="../../user
 
 ## Install Standalone Chango Query Exec
 
-Download `Chango Query Exec` standalone distribution.
+> You can install `Chango Query Exec` for yourself with downloading standalone package as below, 
+> but it is easier to install `Chango Query Exec` using Admin UI.
+
+Download `Chango Query Exec` distribution.
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-query-exec-2.5.0-linux-x64.tar.gz
+curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-private-deps/chango-query-exec-2.6.0-linux-x64.tar.gz
 ```
 
 Untar and move to query exec directory.
 ```agsl
-tar zxvf chango-query-exec-2.5.0-linux-x64.tar.gz;
-cd chango-query-exec-2.5.0-linux-x64/
+tar zxvf chango-query-exec-2.6.0-linux-x64.tar.gz;
+cd chango-query-exec-2.6.0-linux-x64/
 ```
 
 

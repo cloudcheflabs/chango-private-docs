@@ -1,10 +1,9 @@
 # Data Tranformation Using Chango Query Exec
 
-`Chango Query Exec` is a REST application to execute trino ETL queries requested through REST call to transform 
+`Chango Query Exec` is a REST application to execute trino and spark SQL ETL queries requested through REST call to transform 
 data in Chango. 
 
-`dbt` is a popular tool to transform data with running trino ETL queries. But `Chango Query Exec` is a more simpler way 
-to transform data in Chango. You just send trino queries for ETL jobs to `Chango Query Exec` explicitly through REST using, for example `curl`.
+`Chango Query Exec` is simpler way to transform data in Chango. You just send trino and spark SQL queries for ETL jobs to `Chango Query Exec` explicitly through REST using, for example `curl`.
 Such ETL jobs using `Chango Query Exec` can be integrated with Workflow like `Azkaban` with ease.
 
 

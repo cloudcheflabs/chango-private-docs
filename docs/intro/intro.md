@@ -16,7 +16,7 @@ and several chango specific components.
 
 In `Ingestion` layer:
 
-- `Spark` and `Trino` with `dbt` or `Chango Query Exec` will be used as data integration tool.
+- `Spark` and `Trino` with `Chango Query Exec` will be used as data integration tool.
 - `Kafka` is used as event streaming platform to handle streaming events.
 - `Chango Ingestion` will be used to insert incoming streaming events to Chango directly.
 
