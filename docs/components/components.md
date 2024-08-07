@@ -15,19 +15,19 @@
 | Trino                        | 452                | 
 | Iceberg                      | 1.5.2              | 
 | Open JDK                     | 8 / 17 / 22        | 
-| Azkaban                      | 3.69.0-8           | 
+| Azkaban                      | 3.90.0             | 
 | Azkaban CLI                  | 0.9.14             |
 | Superset                     | 0.38.1             |
-| Chango Admin         | 2.5.0              | 
-| Chango Streaming     | 2.5.0              | 
-| Chango Streaming Tx  | 2.5.0              | 
-| Chango Spark Thrift Server   | 2.5.0              | 
-| Chango Spark SQL Runner      | 2.5.0              | 
-| Chango Data API      | 2.5.0              | 
-| Chango Trino Gateway | 2.5.0              | 
-| Chango Authorizer    | 2.5.0              | 
-| Chango REST Catalog  | 2.5.0              |
-| Chango Query Exec    | 2.5.0              |
+| Chango Admin         | 2.6.0              | 
+| Chango Streaming     | 2.6.0              | 
+| Chango Streaming Tx  | 2.6.0              | 
+| Chango Spark Thrift Server   | 2.6.0              | 
+| Chango Spark SQL Runner      | 2.6.0              | 
+| Chango Data API      | 2.6.0              | 
+| Chango Trino Gateway | 2.6.0              | 
+| Chango Authorizer    | 2.6.0              | 
+| Chango REST Catalog  | 2.6.0              |
+| Chango Query Exec    | 2.6.0              |
 
 ## Component Ports
 
