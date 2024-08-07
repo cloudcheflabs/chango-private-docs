@@ -47,6 +47,7 @@ nav:
       - "Realtime Analytics": features/realtime.md
       - "Trino Gateway": features/trino-gw.md
       - "Data Transformation": features/transform.md
+      - "Query Audit": features/query-audit.md
   - "User Guide":
       - "Get Chango Credential": user-guide/cred.md
       - "Get S3 Credential": user-guide/s3-cred.md
