@@ -207,7 +207,7 @@ Then, you can run query exec runner shell file as follows, for example.
 
 ## Create Azkaban Project 
 
-You need to create flow file called `metrics.flow` of Azkaban like this.
+You need to create flow file called `load.flow` of Azkaban like this.
 
 ```agsl
 ---
