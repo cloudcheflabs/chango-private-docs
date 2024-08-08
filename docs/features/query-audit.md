@@ -5,5 +5,9 @@ logged to explore history of all the executed queries later.
 
 <img width="900" src="../../images/user-guide/query-audit.png" />
 
+Query counts by query engines look as follows.
+
+<img width="900" src="../../images/user-guide/query-audit-count.png" />
+
 You will see the query counts by query engines and roles, and explore the details of executed queries.
 
