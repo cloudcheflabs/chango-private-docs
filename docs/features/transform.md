@@ -1,7 +1,7 @@
 # Data Transformation
 
 In most of cases, trino ETL queries and spark SQL ETL queries will be used to transform data in Chango, 
-and all the ETL jobs of trino queries need to be integrated with workflow like `Azkaban`.
+and all the ETL jobs of trino and spark SQL queries need to be integrated with workflow like `Azkaban`.
 
 
 ## Chango Query Exec
