@@ -110,7 +110,7 @@ Table `iceberg.iceberg_db.metrics` will be created if not exists like this.
 
 After that, data from `postgresql.public.metrics` will be moved to `iceberg.iceberg_db.metrics` incrementally using `MERGE INTO`.
 
-Take also a look at the function of `format_datetime(ts, 'YYYY-MM-dd HH:mm:ss.SSS') < '#{ nowMinusFormatted(0, 0, 0, 0, 50, 0, "YYYY-MM-dd HH:mm:ss.SSS") }'` 
+Take also a look at the function of `nowMinusFormatted(0, 0, 0, 0, 50, 0, "YYYY-MM-dd HH:mm:ss.SSS")` 
 which will be interpreted with appropriate time in `Chango Query Exec`. See <a href="../../user-guide/query-exec/">Date Functions</a> for more details.
 
 
