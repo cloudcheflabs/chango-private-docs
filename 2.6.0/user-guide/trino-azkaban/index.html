@@ -1210,7 +1210,7 @@ In order to access <code>Flow Query Execution Node</code> from azkaban executor 
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>      )
 </code></pre></div>
 <p>After that, data from <code>postgresql.public.metrics</code> will be moved to <code>iceberg.iceberg_db.metrics</code> incrementally using <code>MERGE INTO</code>.</p>
-<p>Take also a look at the function of <code>format_datetime(ts, 'YYYY-MM-dd HH:mm:ss.SSS') &lt; '#{ nowMinusFormatted(0, 0, 0, 0, 50, 0, "YYYY-MM-dd HH:mm:ss.SSS") }'</code> 
+<p>Take also a look at the function of <code>nowMinusFormatted(0, 0, 0, 0, 50, 0, "YYYY-MM-dd HH:mm:ss.SSS")</code> 
 which will be interpreted with appropriate time in <code>Chango Query Exec</code>. See <a href="../../user-guide/query-exec/">Date Functions</a> for more details.</p>
 <h2 id="create-shell-file-to-send-flow-queries-to-chango-query-exec">Create Shell File to Send Flow Queries to Chango Query Exec</h2>
 <p>You can send flow queries to <code>Chango Query Exec</code> simply using <code>curl</code>. 
