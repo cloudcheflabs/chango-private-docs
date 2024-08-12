@@ -1104,11 +1104,11 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;dependency&gt;
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  &lt;groupId&gt;co.cloudcheflabs.chango&lt;/groupId&gt;
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  &lt;artifactId&gt;chango-client&lt;/artifactId&gt;
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  &lt;version&gt;2.0.4&lt;/version&gt;
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  &lt;version&gt;2.0.5&lt;/version&gt;
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>&lt;/dependency&gt;
 </code></pre></div>
 <p>You can also download Chango Client jar file to add it to your application classpath.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.4/chango-client-2.0.4-executable.jar;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.5/chango-client-2.0.5-executable.jar;
 </code></pre></div>
 <h2 id="create-iceberg-table-before-sending-json-events">Create Iceberg Table before Sending JSON Events</h2>
 <p>Before sending json as streaming events to <code>Chango Data API</code> server, Iceberg table needs to be created beforehand with 
@@ -1165,7 +1165,7 @@ Actually, with <code>ts</code> column, Chango will compact small data, manifest,
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w">        </span><span class="c1">// send json.</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">        </span><span class="n">changoClient</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
 </code></pre></div>
-<p>Let's see the full codes to send JSON events.</p>
+<p>Let's see the following example codes to send JSON events.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">co.cloudcheflabs.chango.client.component.ChangoClient</span><span class="p">;</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">co.cloudcheflabs.chango.client.util.JsonUtils</span><span class="p">;</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.joda.time.DateTime</span><span class="p">;</span>
@@ -1251,16 +1251,25 @@ Actually, with <code>ts</code> column, Chango will compact small data, manifest,
 <blockquote>
 <p>Take a look at the value of <code>ts</code> must be timestamp type.</p>
 </blockquote>
+<p>You can also use <code>add(List&lt;String&gt; jsonList)</code> method.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>            List&lt;String&gt; jsonList = ...;
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>            try {
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>                changoClient.add(jsonList);
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>            } catch (Exception e) {
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                throw new RuntimeException(e);
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>            }
+</code></pre></div></p>
 <p>If you want to ingest events to Chango transactionally, you need to use transactional chango client like this.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="w">        </span><span class="n">ChangoClient</span><span class="w"> </span><span class="n">changoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChangoClient</span><span class="p">(</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">                </span><span class="n">token</span><span class="p">,</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">                </span><span class="n">dataApiServer</span><span class="p">,</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">                </span><span class="n">schema</span><span class="p">,</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">                </span><span class="n">table</span><span class="p">,</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">                </span><span class="n">batchSize</span><span class="p">,</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">                </span><span class="n">interval</span><span class="p">,</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">                </span><span class="n">transactional</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="w">        </span><span class="n">ChangoClient</span><span class="w"> </span><span class="n">changoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChangoClient</span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">                </span><span class="n">token</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">                </span><span class="n">dataApiServer</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">                </span><span class="n">schema</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">                </span><span class="n">table</span><span class="p">,</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">                </span><span class="n">batchSize</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">                </span><span class="n">interval</span><span class="p">,</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">                </span><span class="n">transactional</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Before you use transactional chango client, you need to install <a href="../../install/install-component/#install-chango-streaming-tx">transactional chango streaming</a>.</p>
