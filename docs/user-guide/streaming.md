@@ -16,14 +16,14 @@ You can add the following maven dependency to your project.
 <dependency>
   <groupId>co.cloudcheflabs.chango</groupId>
   <artifactId>chango-client</artifactId>
-  <version>2.0.4</version>
+  <version>2.0.5</version>
 </dependency>
 ```
 
 You can also download Chango Client jar file to add it to your application classpath.
 
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.4/chango-client-2.0.4-executable.jar;
+curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.5/chango-client-2.0.5-executable.jar;
 ```
 
 ## Create Iceberg Table before Sending JSON Events
@@ -96,7 +96,7 @@ And send JSON events.
         changoClient.add(json);
 ```
 
-Let's see the full codes to send JSON events.
+Let's see the following example codes to send JSON events.
 
 ```java
 import co.cloudcheflabs.chango.client.component.ChangoClient;
@@ -183,6 +183,19 @@ public class SendLogsToDataAPI {
 ```
 
 > Take a look at the value of `ts` must be timestamp type.
+
+
+You can also use `add(List<String> jsonList)` method.
+```agsl
+            List<String> jsonList = ...;
+            
+            try {
+                changoClient.add(jsonList);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+```
+
 
 
 If you want to ingest events to Chango transactionally, you need to use transactional chango client like this.

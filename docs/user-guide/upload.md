@@ -8,8 +8,8 @@ Using `Chango CLI`, CSV, JSON, and Excel Files can be uploaded whose data will b
 
 Download chango client jar and install it as Chango CLI.
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.4/chango-client-2.0.4-executable.jar;
-cp chango-client-2.0.4-executable.jar ~/bin/chango;
+curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.5/chango-client-2.0.5-executable.jar;
+cp chango-client-2.0.5-executable.jar ~/bin/chango;
 chmod +x ~/bin/chango;
 ```
 
