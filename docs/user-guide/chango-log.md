@@ -33,14 +33,14 @@ ALTER TABLE iceberg.logs_db.logs ADD PARTITION FIELD hour(ts);
 Download `Chango Log` distribution package.
 
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-log/releases/download/1.1.0/chango-log-1.1.0-linux-x64.tar.gz;
+curl -L -O https://github.com/cloudcheflabs/chango-log/releases/download/1.1.1/chango-log-1.1.1-linux-x64.tar.gz;
 ```
 
 Untar Chango Log file and move to Chango Log directory.
 
 ```agsl
-tar zxvf chango-log-1.1.0-linux-x64.tar.gz;
-cd chango-log-1.1.0-linux-x64;
+tar zxvf chango-log-1.1.1-linux-x64.tar.gz;
+cd chango-log-1.1.1-linux-x64;
 ```
 
 ## Configure Chango Log

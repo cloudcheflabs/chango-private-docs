@@ -16,14 +16,14 @@ You can add the following maven dependency to your project.
 <dependency>
   <groupId>co.cloudcheflabs.chango</groupId>
   <artifactId>chango-client</artifactId>
-  <version>2.0.2</version>
+  <version>2.0.3</version>
 </dependency>
 ```
 
 You can also download Chango Client jar file to add it to your application classpath.
 
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.2/chango-client-2.0.2-executable.jar;
+curl -L -O https://github.com/cloudcheflabs/chango-client/releases/download/2.0.3/chango-client-2.0.3-executable.jar;
 ```
 
 ## Create Iceberg Table before Sending JSON Events
