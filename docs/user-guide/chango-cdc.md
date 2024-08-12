@@ -11,10 +11,10 @@ For example, maven dependency version of Debezium connector for PostgreSQL can b
 
 Package `Chango CDC` distribution with Debezium maven dependency version. Please note that Java 11 and Maven 3 are required to build `Chango CDC`.
 ```agsl
-git clone -b branch-1.1.1 https://github.com/cloudcheflabs/chango-cdc.git
+git clone -b branch-1.1.2 https://github.com/cloudcheflabs/chango-cdc.git
 cd chango-cdc;
 
-export CHANGO_CDC_VERSION=1.1.1
+export CHANGO_CDC_VERSION=1.1.2
 export DEBEZIUM_VERSION=1.9.7.Final
 
 ./package-dist.sh \
@@ -29,14 +29,14 @@ You may use `Chango CDC` package which was built for yourself previously.
 For this example, the pre-built `Chango CDC` will be used. Download Chango CDC.
 
 ```agsl
-curl -L -O https://github.com/cloudcheflabs/chango-cdc/releases/download/1.1.1/chango-cdc-1.1.1-debezium-1.9.7.Final-linux-x64.tar.gz
+curl -L -O https://github.com/cloudcheflabs/chango-cdc/releases/download/1.1.2/chango-cdc-1.1.2-debezium-1.9.7.Final-linux-x64.tar.gz
 ```
 
 Untar and move to Chango CDC directory.
 
 ```agsl
-tar zxvf chango-cdc-1.1.1-debezium-1.9.7.Final-linux-x64.tar.gz
-cd chango-cdc-1.1.1-debezium-1.9.7.Final-linux-x64/
+tar zxvf chango-cdc-1.1.2-debezium-1.9.7.Final-linux-x64.tar.gz
+cd chango-cdc-1.1.2-debezium-1.9.7.Final-linux-x64/
 ```
 
 ## Configure Chango CDC
