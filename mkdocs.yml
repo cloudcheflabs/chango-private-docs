@@ -48,6 +48,7 @@ nav:
       - "Trino Gateway": features/trino-gw.md
       - "Data Transformation": features/transform.md
       - "Query Audit": features/query-audit.md
+      - "MCP Server": features/mcp-server.md
   - "User Guide":
       - "Get Chango Credential": user-guide/cred.md
       - "Get S3 Credential": user-guide/s3-cred.md
@@ -74,6 +75,7 @@ nav:
       - "Create Hidden Partitioned Iceberg Tables": user-guide/hidden-partition.md
       - "Run Spark Applications using Livy": user-guide/livy.md
       - "Configure Resource Groups": user-guide/resource-group.md
+      - "Connect MCP Server": user-guide/connect-mcp.md
   - "Components":
      - "Components": components/components.md
 
