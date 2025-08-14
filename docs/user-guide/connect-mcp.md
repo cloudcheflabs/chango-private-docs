@@ -91,5 +91,7 @@ And create mcp client with this transport client for self-signed certificate.  I
         ...
 ```
 
+- Take a note that the host name of mcp server as shown in this example like `cp-2.chango.private` needs to be added to hosts file.
+
 
 
