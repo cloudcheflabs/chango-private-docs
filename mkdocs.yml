@@ -61,6 +61,7 @@ nav:
       - "Logging": features/logging.md
       - "Backup & Restore": features/backup.md
       - "Patch System": features/patch-system.md
+      - "License Manager": features/license.md
       - "Config Runtime-Only Policy": features/config-runtime-only.md
   - "Components":
       - "Catalog": components/catalog.md
