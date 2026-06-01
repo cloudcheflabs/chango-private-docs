@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/features/ui-proxy/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/features/license/">
       
       
-        <link rel="prev" href="../hosts-sync/">
+        <link rel="prev" href="../patch-system/">
       
       
-        <link rel="next" href="../monitoring/">
+        <link rel="next" href="../config-runtime-only/">
       
       <link rel="icon" href="../../images/logo/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>UI Proxy - Chango</title>
+        <title>License Manager - Chango</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ui-proxy" class="md-skip">
+        <a href="#license-manager" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              UI Proxy
+              License Manager
             
           </span>
         </div>
@@ -739,94 +739,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          UI Proxy
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../ui-proxy/" class="md-nav__link">
         UI Proxy
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#why-a-separate-proxy" class="md-nav__link">
-    Why a separate proxy
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#topology" class="md-nav__link">
-    Topology
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upstreams" class="md-nav__link">
-    Upstreams
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#auto-discovery" class="md-nav__link">
-    Auto-discovery
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ontul-integration" class="md-nav__link">
-    Ontul integration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-it-is-not" class="md-nav__link">
-    What it is not
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#day-2-ops" class="md-nav__link">
-    Day-2 ops
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -892,11 +809,101 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../license/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          License Manager
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         License Manager
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#licensed-components" class="md-nav__link">
+    Licensed components
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license-types" class="md-nav__link">
+    License types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-shape" class="md-nav__link">
+    Token shape
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operator-flow" class="md-nav__link">
+    Operator flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-wide-replication" class="md-nav__link">
+    Cluster-wide replication
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-v1-does-not-do" class="md-nav__link">
+    What v1 does NOT do
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issuer-side-cloudcheflabs-internal" class="md-nav__link">
+    Issuer side (cloudcheflabs internal)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1280,73 +1287,173 @@
                   
 
 
-<h1 id="ui-proxy">UI Proxy</h1>
-<p>Component web UIs — Spark Master, Trino, Trino Gateway, Flink JobManager, Polaris — are not exposed directly. The chango <strong>UI Proxy</strong> is the single edge entry point, and it delegates login to Ontul before forwarding requests upstream.</p>
-<h2 id="why-a-separate-proxy">Why a separate proxy</h2>
-<p>Component web UIs ship with thin or no authentication. Trino's <code>/ui/</code> shows queries and cluster state to anyone who reaches the port; Spark Master's web UI shows job graphs and worker hosts; Flink's REST surface lets you submit jobs. Putting them behind raw nginx is fine for an internal network but does not give you tenant- or role-based access.</p>
-<p>The UI Proxy fills that gap. It is a small Netty reverse proxy that:</p>
-<ul>
-<li>Terminates the user-facing TLS / HTTP connection.</li>
-<li>Drives a login flow against Ontul IAM (Ontul issues a session for the end user).</li>
-<li>Maps each request to one of N configured upstreams (Spark Master, Trino coordinator, …) by host header.</li>
-<li>Forwards the request only when Ontul has authorized the user for that upstream.</li>
-</ul>
-<p>Component admin UIs that already have their own auth (chango itself, Ontul, NeoRunBase admin) are typically exposed directly, not through the UI Proxy.</p>
-<h2 id="topology">Topology</h2>
-<p>The UI Proxy is a chango component like any other — install it from the admin UI, scale it across hosts, watch its CPU / memory in the same dashboard.</p>
-<ul>
-<li>Role: <code>proxy</code>, multi-instance.</li>
-<li>Front-end port: configurable per instance (typically <code>9190</code> or <code>8443</code>).</li>
-<li>Stateless — each instance hits the same Ontul for session validation.</li>
-</ul>
-<h2 id="upstreams">Upstreams</h2>
-<p>A UI Proxy upstream is one <code>host=url</code> mapping: the hostname the end user types in their browser, and the internal URL the proxy forwards to. For example:</p>
+<h1 id="license-manager">License Manager</h1>
+<p>The chango runtime ships every managed component on disk, but four of them
+are paid products and require an explicit license before their admin UI page
+becomes usable. v1 is intentionally minimal — license activation toggles UI
+access on the per-page level; install/start is <strong>not</strong> gated yet.</p>
+<h2 id="licensed-components">Licensed components</h2>
 <table>
 <thead>
 <tr>
-<th>User-facing hostname</th>
-<th>Internal upstream</th>
+<th>Component</th>
+<th>License required</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>spark-prod-ui.chango.local</code></td>
-<td><code>http://chango-m1:18180/</code></td>
+<td>ontul, kiok</td>
+<td>No</td>
+<td>shipped by default</td>
 </tr>
 <tr>
-<td><code>trino-prod-ui.chango.local</code></td>
-<td><code>http://chango-m2:8480/ui/</code></td>
+<td><strong>shannonstore</strong></td>
+<td>Yes</td>
+<td>per-customer</td>
 </tr>
 <tr>
-<td><code>flink-jobs-ui.chango.local</code></td>
-<td><code>http://chango-n3:8081/</code></td>
+<td><strong>neorunbase</strong></td>
+<td>Yes</td>
+<td>per-customer</td>
+</tr>
+<tr>
+<td><strong>mium</strong></td>
+<td>Yes</td>
+<td>per-customer</td>
+</tr>
+<tr>
+<td><strong>itdastream</strong></td>
+<td>Yes</td>
+<td>per-customer</td>
+</tr>
+<tr>
+<td>postgres, polaris, trino, trino-gateway, kafka, schema-registry, spark, flink, ui-proxy</td>
+<td>No</td>
+<td>upstream / open source</td>
 </tr>
 </tbody>
 </table>
-<p>These mappings live in the chango metadata RocksDB and are pushed to every UI Proxy instance on update.</p>
-<h2 id="auto-discovery">Auto-discovery</h2>
-<p>The Create UI Proxy panel in the admin UI does not ask you to type the URLs. Chango already knows every running Spark master web UI, Trino coordinator, Trino Gateway, Flink JobManager, and Polaris HTTP endpoint — it sees their cluster + role + port through the standard component registry. The Create panel lists them as checkable rows; you pick the ones you want to expose and chango fills the upstream string itself.</p>
-<p>A free-text "Add extra upstreams (advanced)" box is still available for endpoints chango does not manage (a customer-supplied legacy web UI, a Polaris CDN, …).</p>
-<h2 id="ontul-integration">Ontul integration</h2>
-<p>When a request arrives:</p>
+<p>All four paid components keep their <strong>sidebar menu item visible</strong> so the
+operator knows the page exists. Clicking the menu before activating a
+license shows a <em>"License Required"</em> screen with a single link to <strong>Settings
+→ License Manager</strong>.</p>
+<h2 id="license-types">License types</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th><code>expiresAt</code></th>
+<th>UX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eval</code></td>
+<td>required, ≤ 30 days from <code>issuedAt</code></td>
+<td>row turns <code>status:expired</code> automatically once <code>now ≥ expiresAt</code>; page gate closes again.</td>
+</tr>
+<tr>
+<td><code>full</code></td>
+<td>optional (omit / <code>0</code> → no expiry)</td>
+<td>row stays <code>status:active</code> forever (until operator deactivates).</td>
+</tr>
+</tbody>
+</table>
+<p><code>status:expired</code> rows stay in the table for visibility but are treated as
+inactive by the page gate.</p>
+<h2 id="token-shape">Token shape</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;base64url(payload-json)&gt;.&lt;base64url(RSA-SHA256(payload))&gt;
+</code></pre></div>
+<p>Payload (compact JSON):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;component&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;shannonstore&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w">       </span><span class="s2">&quot;eval&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">&quot;customer&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;Acme Corp&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">&quot;issuedAt&quot;</span><span class="p">:</span><span class="w">   </span><span class="mi">1717200000000</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">&quot;expiresAt&quot;</span><span class="p">:</span><span class="w">  </span><span class="mi">1719792000000</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>The signature is computed over the raw payload bytes with the cloudcheflabs
+RSA private key. chango verifies it against the public key embedded inside
+the chango jar at <code>chango-common/src/main/resources/license/license-pubkey.pem</code>.</p>
+<h2 id="operator-flow">Operator flow</h2>
 <ol>
-<li>The UI Proxy checks for an Ontul session cookie. No cookie → redirect to Ontul's login page; on success Ontul redirects back with a session.</li>
-<li>With a valid session, the proxy asks Ontul <code>POST /v1/api/authz/check-batch</code> whether the user is allowed to access the upstream — typically <code>(action: WEB_UI, resource: &lt;component&gt;.&lt;clusterId&gt;)</code>.</li>
-<li>On <code>ALLOW</code>, the request is forwarded upstream with the original method / headers / body. On <code>DENY</code> or <code>ABSTAIN</code>, the proxy returns <code>403</code>.</li>
+<li>cloudcheflabs sends you a single-line token (<code>&lt;base64&gt;.&lt;base64&gt;</code>).</li>
+<li>In chango admin UI, <strong>Settings → License Manager</strong>.</li>
+<li>Paste the token into the textarea and click <strong>Activate</strong>.</li>
+<li>The table shows the new row (component / type / customer / expires / status).</li>
+<li>Open the matching component's sidebar menu — the page should now render
+   normally instead of the <em>License Required</em> screen.</li>
 </ol>
-<p>The Ontul endpoint and the long-lived service token the proxy uses are wired at install time (the same <code>ontulAuthzEndpoint</code> + OTOK token that Trino / Spark / Flink use).</p>
-<h2 id="what-it-is-not">What it is not</h2>
+<p>To revoke a license, click <strong>Deactivate</strong> on the row. The component's
+sidebar page reverts to the <em>License Required</em> screen immediately on the
+next render.</p>
+<h2 id="api">API</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Body</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/api/license</code></td>
+<td>—</td>
+<td>Returns every stored license with <code>status:"active"</code> or <code>"expired"</code>.</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/admin/api/license</code></td>
+<td><code>{"token":"..."}</code></td>
+<td>Verifies + stores. Replaces any existing license for the same component. <strong>admin-only</strong>.</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/admin/api/license/&lt;component&gt;</code></td>
+<td>—</td>
+<td>Removes the license for the component. <strong>admin-only</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>Reads are local on every node (the snapshot is replicated cluster-wide on
+every mutation and pulled at startup); writes are leader-forwarded
+automatically.</p>
+<h2 id="cluster-wide-replication">Cluster-wide replication</h2>
+<p>The leader's <code>LicenseManager</code> is the sole writer to its KMS-encrypted RocksDB
+under <code>&lt;chango.base.data.dir&gt;/master/license/</code>. Every activate/deactivate
+broadcasts <code>LICENSE_SYNC_PUSH</code> (opcode 241) to every follower + NM; the
+periodic leader-pull also calls <code>LICENSE_FETCH_REQ</code> (242) at startup and on
+the configured interval, so a follower restart never loses the cache.</p>
+<p>KMS key id: <code>license</code> (separate from <code>iam</code> / <code>metadata-encryption</code>).</p>
+<h2 id="what-v1-does-not-do">What v1 does NOT do</h2>
 <ul>
-<li><strong>Not a load balancer</strong>. UI Proxy maps a hostname to a single upstream URL. For load balancing across multiple Trino coordinators, run Trino Gateway in front and point the UI Proxy at the gateway.</li>
-<li><strong>Not a TLS terminator only</strong>. The point is the auth layer. If you only want TLS, run a customer nginx instead.</li>
-<li><strong>Not for component-to-component traffic</strong>. Chango's internal NIO and Ontul authz API are separate paths — the UI Proxy is strictly the human-facing entry.</li>
+<li><strong>install/start gate</strong> — operators <em>with API access</em> can still
+  <code>POST /admin/api/&lt;comp&gt;/install</code> and bring the component up without a
+  license. v2 is expected to enforce in the cluster-service layer.</li>
+<li><strong>cluster-id binding</strong> — one token works on any chango cluster that has
+  the matching public key. v2 will likely embed a customer-binding field
+  the master verifies against its own master-key fingerprint.</li>
+<li><strong>phone-home / online revocation</strong> — chango is air-gapped friendly; the
+  only way to invalidate a token mid-life is <code>DELETE /admin/api/license/&lt;comp&gt;</code>.</li>
+<li><strong>expiry warning banner</strong> — v2 will surface "7 days left" notices in the
+  admin UI top bar.</li>
 </ul>
-<h2 id="day-2-ops">Day-2 ops</h2>
-<ul>
-<li><strong>Add an upstream</strong> — open the Configure panel, edit upstreams, save. The change rewrites the proxy config on every instance and the routing applies on the next request (no restart needed).</li>
-<li><strong>Rotate the Ontul service token</strong> — Configure → "Ontul Authz" tab → update endpoint / token. Chango re-renders the proxy config on every instance and restarts them.</li>
-<li><strong>Scale</strong> — install another proxy instance on a different host through the Scale panel. Hostnames in front of the proxies are resolved by your DNS or by chango's <a href="../hosts-sync/">Hosts Sync</a> — load-balancing across multiple proxies is your DNS / LB layer's job.</li>
-</ul>
+<h2 id="issuer-side-cloudcheflabs-internal">Issuer side (cloudcheflabs internal)</h2>
+<p>The <code>tools/license-issuer/chango-license-sign.sh</code> script in the chango repo
+signs payloads with the RSA private key. <strong>It is not packaged into the
+chango distribution</strong> — <code>package.sh</code> does not look at <code>tools/</code>, and the
+private key is gitignored. Keep the key off shared infrastructure until
+cloudcheflabs ships a dedicated issuance service.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_LICENSE_PRIVATE_KEY</span><span class="o">=</span>/path/to/license-private.pem
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>chango-license-sign.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--component<span class="w"> </span>shannonstore<span class="w"> </span>--type<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>--customer<span class="w"> </span><span class="s2">&quot;Acme Corp&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--expires-at<span class="w"> </span><span class="s2">&quot;2026-07-01T00:00:00Z&quot;</span>
+</code></pre></div>
 
 
 
