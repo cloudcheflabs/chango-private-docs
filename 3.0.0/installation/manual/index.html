@@ -544,8 +544,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-install-java-17-and-java-25" class="md-nav__link">
-    2. Install Java 17 and Java 25
+  <a href="#2-install-java-11-java-17-and-java-25" class="md-nav__link">
+    2. Install Java 11, Java 17, and Java 25
   </a>
   
 </li>
@@ -1354,6 +1354,11 @@
 <td>✓</td>
 </tr>
 <tr>
+<td>Java 11 (for Spark + Livy)</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
 <td>Java 17</td>
 <td>✓</td>
 <td>✓</td>
@@ -1403,21 +1408,26 @@
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="s">EOF</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>sudo<span class="w"> </span>sysctl<span class="w"> </span>--system
 </code></pre></div>
-<h2 id="2-install-java-17-and-java-25">2. Install Java 17 and Java 25</h2>
-<p>Chango itself runs on <strong>Java 17</strong>. Trino — deployed later via the admin UI on the node managers — needs <strong>Java 25</strong>. Install both on every host so any host can run any component.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Java 17 — chango master / NM / most components</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span>https://github.com/cloudcheflabs/chango-libs/releases/download/chango-comps/openlogic-openjdk-17.0.7+7-linux-x64.tar.gz
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>openlogic-openjdk-17.0.7+7-linux-x64.tar.gz<span class="w"> </span>-C<span class="w"> </span>/opt
+<h2 id="2-install-java-11-java-17-and-java-25">2. Install Java 11, Java 17, and Java 25</h2>
+<p>Chango itself runs on <strong>Java 17</strong>. <strong>Spark and Livy</strong> run on <strong>Java 11</strong> (Livy 0.8 was built against Java 8/11 and breaks on JDK 17's module system; Spark 3.5 standalone is most stable on 11 too). Trino — deployed later via the admin UI on the node managers — needs <strong>Java 25</strong>. Install all three on every host so any host can run any component.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Java 11 — Spark + Livy</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span>https://github.com/cloudcheflabs/chango-libs/releases/download/chango-comps/openlogic-openjdk-11.0.27+6-linux-x64.tar.gz
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>openlogic-openjdk-11.0.27+6-linux-x64.tar.gz<span class="w"> </span>-C<span class="w"> </span>/opt
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Java 25 — Trino</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span>https://github.com/cloudcheflabs/chango-libs/releases/download/chango-comps/openlogic-openjdk-25.0.3+9-linux-x64.tar.gz
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>openlogic-openjdk-25.0.3+9-linux-x64.tar.gz<span class="w"> </span>-C<span class="w"> </span>/opt
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Java 17 — chango master / NM / most components</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span>https://github.com/cloudcheflabs/chango-libs/releases/download/chango-comps/openlogic-openjdk-17.0.7+7-linux-x64.tar.gz
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>openlogic-openjdk-17.0.7+7-linux-x64.tar.gz<span class="w"> </span>-C<span class="w"> </span>/opt
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Verify</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>/opt/openlogic-openjdk-17.0.7+7-linux-x64/bin/java<span class="w"> </span>-version
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>/opt/openlogic-openjdk-25.0.3+9-linux-x64/bin/java<span class="w"> </span>-version
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Java 25 — Trino</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span>https://github.com/cloudcheflabs/chango-libs/releases/download/chango-comps/openlogic-openjdk-25.0.3+9-linux-x64.tar.gz
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>openlogic-openjdk-25.0.3+9-linux-x64.tar.gz<span class="w"> </span>-C<span class="w"> </span>/opt
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Verify</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>/opt/openlogic-openjdk-11.0.27+6-linux-x64/bin/java<span class="w"> </span>-version
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>/opt/openlogic-openjdk-17.0.7+7-linux-x64/bin/java<span class="w"> </span>-version
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>/opt/openlogic-openjdk-25.0.3+9-linux-x64/bin/java<span class="w"> </span>-version
 </code></pre></div>
-<p>Both JDKs land under <code>/opt/</code>. Chango does <strong>not</strong> want them on <code>PATH</code> or set as the system <code>JAVA_HOME</code> — the start scripts take <code>JAVA_HOME</code> from the environment of the shell that launches them.</p>
+<p>All three JDKs land under <code>/opt/</code>. Chango does <strong>not</strong> want them on <code>PATH</code> or set as the system <code>JAVA_HOME</code> — the start scripts take <code>JAVA_HOME</code> from the environment of the shell that launches them, and the node manager picks the right JDK per component from <code>chango.nodemanager.component.java.homes</code>.</p>
 <h2 id="3-create-the-chango-user-and-base-directories">3. Create the <code>chango</code> user and base directories</h2>
 <p>On every host:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>groupadd<span class="w"> </span>-r<span class="w"> </span>chango<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
@@ -1520,7 +1530,7 @@
 </table>
 <p>Pid files are port-suffixed (<code>master-8080.pid</code>, <code>node-manager-19998.pid</code>) so multiple instances per host coexist.</p>
 <h2 id="adding-hosts-manually">Adding hosts manually</h2>
-<p>Need to add a node manager later? Same recipe on the new host — host prep → install Java 17/25 → create <code>chango</code> user → extract chango tarball → <code>start-node-manager.sh</code> with the same <code>CHANGO_MASTER_KEY</code> and the existing cluster's ZK list. See <a href="../../operations/cluster-operations/#add-another-node-manager">Add another node manager</a>.</p>
+<p>Need to add a node manager later? Same recipe on the new host — host prep → install Java 11/17/25 → create <code>chango</code> user → extract chango tarball → <code>start-node-manager.sh</code> with the same <code>CHANGO_MASTER_KEY</code> and the existing cluster's ZK list. See <a href="../../operations/cluster-operations/#add-another-node-manager">Add another node manager</a>.</p>
 <p>Adding a second master is the same recipe plus extending the bundled ZooKeeper quorum — see <a href="../../operations/cluster-operations/#add-another-chango-master">Add another chango master</a>.</p>
 <h2 id="next">Next</h2>
 <ul>

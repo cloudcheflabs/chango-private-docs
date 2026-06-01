@@ -1413,7 +1413,7 @@
 <p>Leadership hands off to one of the followers on stop; when the old leader comes back up the <strong>sticky-leader</strong> mechanism re-elects it without a leadership toggle. The leader writes a <code>master-leader-preferred:&lt;expiresAt&gt;</code> hint to ZK during its graceful stop; any follower that receives <code>takeLeadership</code> while the hint is fresh yields back during the <code>deferenceWindowMs</code> window so the original leader can reclaim leadership on restart. See <a href="../../features/sticky-leader/">Sticky Leader Election</a> for the two mechanisms (cold-start deference + hot-restart sticky-back) and the ZK znodes.</p>
 <p>Node managers can be restarted in any order — the order does not affect cluster availability.</p>
 <h2 id="add-another-node-manager">Add another node manager</h2>
-<p>The bundle ships <code>ansible/add-nodemanager.yml</code> for this. It does the same <code>node-prep</code> + Java 17/25 + chango distribution + first-boot start as the initial install, but <strong>never stages the master key on disk</strong> — the playbook prompts you for it interactively and passes it through to first-boot start in memory only. The new host joins the cluster and registers in ZooKeeper; the admin UI sees it within seconds.</p>
+<p>The bundle ships <code>ansible/add-nodemanager.yml</code> for this. It does the same <code>node-prep</code> + Java 11/17/25 + chango distribution + first-boot start as the initial install, but <strong>never stages the master key on disk</strong> — the playbook prompts you for it interactively and passes it through to first-boot start in memory only. The new host joins the cluster and registers in ZooKeeper; the admin UI sees it within seconds.</p>
 <h3 id="recommended-ansible-add-nodemanageryml">Recommended — <code>ansible add-nodemanager.yml</code></h3>
 <ol>
 <li>
@@ -1433,7 +1433,7 @@
 <p>If you cannot use ansible (air-gapped maintenance host with no controller, recovering one offline node, etc.):</p>
 <ol>
 <li><strong>Prepare the host</strong> per <a href="../../installation/node-preparation/">Node Preparation</a>.</li>
-<li><strong>Install Java 17</strong> (Trino's Java 25 is only required on masters that will run Trino's coordinator; NMs don't need it).</li>
+<li><strong>Install Java 11, 17, and 25</strong> (11 for Spark/Livy workloads the NM will run, 17 for chango self + most components, 25 for Trino if this NM might host a Trino coordinator/worker).</li>
 <li><strong>Copy the chango distribution</strong> onto the new host (the same lean tarball used at install).</li>
 <li><strong>Create the <code>chango</code> user</strong> and base directories:</li>
 </ol>
@@ -1456,7 +1456,7 @@
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span>&lt;zk-quorum&gt;
 </code></pre></div>
 <h2 id="add-another-chango-master">Add another chango master</h2>
-<p>Multi-master mode is for control-plane HA. The bundle ships <code>ansible/add-master.yml</code> to do this end-to-end — it runs <code>node-prep</code> + Java 17/25 + chango install + first-boot start on the new host, prompts for the master key interactively (never writing it to disk on the new host), and is the recommended path. There is a manual fallback for environments where ansible is not an option.</p>
+<p>Multi-master mode is for control-plane HA. The bundle ships <code>ansible/add-master.yml</code> to do this end-to-end — it runs <code>node-prep</code> + Java 11/17/25 + chango install + first-boot start on the new host, prompts for the master key interactively (never writing it to disk on the new host), and is the recommended path. There is a manual fallback for environments where ansible is not an option.</p>
 <h3 id="recommended-ansible-add-masteryml">Recommended — <code>ansible add-master.yml</code></h3>
 <p><strong>Prerequisite — extend the bundled ZooKeeper quorum first</strong> (see "ZK quorum" below for the exact edits). The quorum must already contain the new server line before you start the new master.</p>
 <ol>
@@ -1471,7 +1471,7 @@
 <p>The new master joins the live ZK quorum and shows up in the admin UI's <strong>Cluster → Nodes</strong> within seconds.</p>
 <h3 id="manual-a-second-master-on-a-new-host">Manual — a second master on a <em>new</em> host</h3>
 <p>If you cannot use ansible:</p>
-<p>Same steps as the manual NM install above up through "Grant passwordless sudo" plus Java 25 installation, then:</p>
+<p>Same steps as the manual NM install above up through "Grant passwordless sudo" (which already covers Java 11, 17, and 25), then:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>store&gt;
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/openlogic-openjdk-17.0.7+7-linux-x64
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
