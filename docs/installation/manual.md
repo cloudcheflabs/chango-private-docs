@@ -9,6 +9,7 @@ The end state is identical to the [automated install](automated.md): masters run
 | Step | Master host | Node-manager host |
 |---|---|---|
 | Rocky 9 prep (SELinux / ulimit / sysctl) | ✓ | ✓ |
+| Java 11 (for Spark + Livy) | ✓ | ✓ |
 | Java 17 | ✓ | ✓ |
 | Java 25 (for Trino) | ✓ | ✓ |
 | chango distribution under `/opt/chango` | ✓ | ✓ |
@@ -43,11 +44,15 @@ EOF
 sudo sysctl --system
 ```
 
-## 2. Install Java 17 and Java 25
+## 2. Install Java 11, Java 17, and Java 25
 
-Chango itself runs on **Java 17**. Trino — deployed later via the admin UI on the node managers — needs **Java 25**. Install both on every host so any host can run any component.
+Chango itself runs on **Java 17**. **Spark and Livy** run on **Java 11** (Livy 0.8 was built against Java 8/11 and breaks on JDK 17's module system; Spark 3.5 standalone is most stable on 11 too). Trino — deployed later via the admin UI on the node managers — needs **Java 25**. Install all three on every host so any host can run any component.
 
 ```bash
+# Java 11 — Spark + Livy
+curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-comps/openlogic-openjdk-11.0.27+6-linux-x64.tar.gz
+sudo tar -xzf openlogic-openjdk-11.0.27+6-linux-x64.tar.gz -C /opt
+
 # Java 17 — chango master / NM / most components
 curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango-comps/openlogic-openjdk-17.0.7+7-linux-x64.tar.gz
 sudo tar -xzf openlogic-openjdk-17.0.7+7-linux-x64.tar.gz -C /opt
@@ -57,11 +62,12 @@ curl -L -O https://github.com/cloudcheflabs/chango-libs/releases/download/chango
 sudo tar -xzf openlogic-openjdk-25.0.3+9-linux-x64.tar.gz -C /opt
 
 # Verify
+/opt/openlogic-openjdk-11.0.27+6-linux-x64/bin/java -version
 /opt/openlogic-openjdk-17.0.7+7-linux-x64/bin/java -version
 /opt/openlogic-openjdk-25.0.3+9-linux-x64/bin/java -version
 ```
 
-Both JDKs land under `/opt/`. Chango does **not** want them on `PATH` or set as the system `JAVA_HOME` — the start scripts take `JAVA_HOME` from the environment of the shell that launches them.
+All three JDKs land under `/opt/`. Chango does **not** want them on `PATH` or set as the system `JAVA_HOME` — the start scripts take `JAVA_HOME` from the environment of the shell that launches them, and the node manager picks the right JDK per component from `chango.nodemanager.component.java.homes`.
 
 ## 3. Create the `chango` user and base directories
 
@@ -186,7 +192,7 @@ Pid files are port-suffixed (`master-8080.pid`, `node-manager-19998.pid`) so mul
 
 ## Adding hosts manually
 
-Need to add a node manager later? Same recipe on the new host — host prep → install Java 17/25 → create `chango` user → extract chango tarball → `start-node-manager.sh` with the same `CHANGO_MASTER_KEY` and the existing cluster's ZK list. See [Add another node manager](../operations/cluster-operations.md#add-another-node-manager).
+Need to add a node manager later? Same recipe on the new host — host prep → install Java 11/17/25 → create `chango` user → extract chango tarball → `start-node-manager.sh` with the same `CHANGO_MASTER_KEY` and the existing cluster's ZK list. See [Add another node manager](../operations/cluster-operations.md#add-another-node-manager).
 
 Adding a second master is the same recipe plus extending the bundled ZooKeeper quorum — see [Add another chango master](../operations/cluster-operations.md#add-another-chango-master).
 

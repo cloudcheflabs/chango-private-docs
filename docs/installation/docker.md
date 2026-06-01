@@ -8,7 +8,7 @@ This is the recommended way to walk through the [tutorials](../tutorials/index.m
 
 - 3 Rocky 9 containers: `chango-e2e-m1` (master + NM), `chango-e2e-n1`, `chango-e2e-n2` (NM)
 - The actual chango distribution extracted under `/opt/chango` on each container
-- Java 17 + Java 25 installed under `/opt/openlogic-openjdk-*`
+- Java 11 + Java 17 + Java 25 installed under `/opt/openlogic-openjdk-*`
 - A real master, bundled ZooKeeper, and node managers — started by the same first-boot logic the production ansible install uses
 - The admin UI exposed at `http://localhost:18100/admin/` on the host
 
