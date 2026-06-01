@@ -10,7 +10,7 @@ Chango uses ansible **only for these three actions**:
 
 | Playbook | Purpose |
 |---|---|
-| `install.yml` | First-time cluster bootstrap — node prep + Java 17/25 + chango distribution + first-boot start on every host. |
+| `install.yml` | First-time cluster bootstrap — node prep + Java 11/17/25 + chango distribution + first-boot start on every host. |
 | `add-master.yml` | Add a chango master to an existing cluster. |
 | `add-nodemanager.yml` | Add a node manager to an existing cluster. |
 
@@ -53,7 +53,7 @@ Then build the **with-comps** bundle (component tarballs + JDKs + ansible RPMs):
 bash build-with-comps/build-with-comps.sh
 ```
 
-This produces `chango-with-comps-3.0.0.tar.gz` (≈ 4.4 GB). The build step downloads every component package and the two JDKs (Java 17 + Java 25) into the ansible role's `files/` directories so the playbook can ship them to every host. If your controller is air-gapped, run the same script on a connected machine and transfer the resulting bundle.
+This produces `chango-with-comps-3.0.0.tar.gz` (≈ 4.4 GB). The build step downloads every component package and the three JDKs (Java 11 for Spark/Livy + Java 17 + Java 25 for Trino) into the ansible role's `files/` directories so the playbook can ship them to every host. If your controller is air-gapped, run the same script on a connected machine and transfer the resulting bundle.
 
 ## 2. Install ansible-core on the controller
 
@@ -144,14 +144,15 @@ Treat this value as a root credential — it is the root of trust for every secr
 ansible-playbook -i inventory.yml install.yml
 ```
 
-The playbook runs six plays in order:
+The playbook runs seven plays in order:
 
 1. **`node-prep`** — SELinux disabled + ulimit + sysctl on every host (masters + ZK + NMs).
-2. **`java17`** — extracts Java 17 under `/opt` on every host.
-3. **`java25`** — extracts Java 25 under `/opt` on every host (Trino's runtime).
-4. **`chango-nodemanager`** — installs chango on the NM hosts, starts the NM once. NM hosts **never** get the master key bootstrap file. Distribution is extracted here, so later plays (`chango-zookeeper`, `chango-master`) only add their role-specific files on top.
-5. **`chango-zookeeper`** — renders `zoo.cfg` from the `chango_zookeepers` group + writes `myid` + first-boot starts ZK on each ZK host. Has to run after NM (which extracts the distribution) and before master (which connects to ZK on startup).
-6. **`chango-master`** — installs chango on the master hosts (idempotent over the NM extraction), stages the master key bootstrap file (master only, 0600 root), starts master once with `CHANGO_MASTER_KEY` from the controller's environment. The master immediately connects to the ZK quorum that play 5 brought up.
+2. **`java11`** — extracts Java 11 under `/opt` on every host (Spark + Livy runtime).
+3. **`java17`** — extracts Java 17 under `/opt` on every host (chango self + most components).
+4. **`java25`** — extracts Java 25 under `/opt` on every host (Trino's runtime).
+5. **`chango-nodemanager`** — installs chango on the NM hosts, starts the NM once. NM hosts **never** get the master key bootstrap file. Distribution is extracted here, so later plays (`chango-zookeeper`, `chango-master`) only add their role-specific files on top.
+6. **`chango-zookeeper`** — renders `zoo.cfg` from the `chango_zookeepers` group + writes `myid` + first-boot starts ZK on each ZK host. Has to run after NM (which extracts the distribution) and before master (which connects to ZK on startup).
+7. **`chango-master`** — installs chango on the master hosts (idempotent over the NM extraction), stages the master key bootstrap file (master only, 0600 root), starts master once with `CHANGO_MASTER_KEY` from the controller's environment. The master immediately connects to the ZK quorum that play 6 brought up.
 
 Expected runtime: 5 – 10 minutes for a 3-host cluster (component extraction dominates).
 

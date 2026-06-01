@@ -83,7 +83,7 @@ Node managers can be restarted in any order — the order does not affect cluste
 
 ## Add another node manager
 
-The bundle ships `ansible/add-nodemanager.yml` for this. It does the same `node-prep` + Java 17/25 + chango distribution + first-boot start as the initial install, but **never stages the master key on disk** — the playbook prompts you for it interactively and passes it through to first-boot start in memory only. The new host joins the cluster and registers in ZooKeeper; the admin UI sees it within seconds.
+The bundle ships `ansible/add-nodemanager.yml` for this. It does the same `node-prep` + Java 11/17/25 + chango distribution + first-boot start as the initial install, but **never stages the master key on disk** — the playbook prompts you for it interactively and passes it through to first-boot start in memory only. The new host joins the cluster and registers in ZooKeeper; the admin UI sees it within seconds.
 
 ### Recommended — `ansible add-nodemanager.yml`
 
@@ -104,7 +104,7 @@ That is it. The new NM is registered + ready when the playbook returns. Verify w
 If you cannot use ansible (air-gapped maintenance host with no controller, recovering one offline node, etc.):
 
 1. **Prepare the host** per [Node Preparation](../installation/node-preparation.md).
-2. **Install Java 17** (Trino's Java 25 is only required on masters that will run Trino's coordinator; NMs don't need it).
+2. **Install Java 11, 17, and 25** (11 for Spark/Livy workloads the NM will run, 17 for chango self + most components, 25 for Trino if this NM might host a Trino coordinator/worker).
 3. **Copy the chango distribution** onto the new host (the same lean tarball used at install).
 4. **Create the `chango` user** and base directories:
 
@@ -132,7 +132,7 @@ If you cannot use ansible (air-gapped maintenance host with no controller, recov
 
 ## Add another chango master
 
-Multi-master mode is for control-plane HA. The bundle ships `ansible/add-master.yml` to do this end-to-end — it runs `node-prep` + Java 17/25 + chango install + first-boot start on the new host, prompts for the master key interactively (never writing it to disk on the new host), and is the recommended path. There is a manual fallback for environments where ansible is not an option.
+Multi-master mode is for control-plane HA. The bundle ships `ansible/add-master.yml` to do this end-to-end — it runs `node-prep` + Java 11/17/25 + chango install + first-boot start on the new host, prompts for the master key interactively (never writing it to disk on the new host), and is the recommended path. There is a manual fallback for environments where ansible is not an option.
 
 ### Recommended — `ansible add-master.yml`
 
@@ -153,7 +153,7 @@ The new master joins the live ZK quorum and shows up in the admin UI's **Cluster
 
 If you cannot use ansible:
 
-Same steps as the manual NM install above up through "Grant passwordless sudo" plus Java 25 installation, then:
+Same steps as the manual NM install above up through "Grant passwordless sudo" (which already covers Java 11, 17, and 25), then:
 
 ```bash
 export CHANGO_MASTER_KEY=<from your secret store>
