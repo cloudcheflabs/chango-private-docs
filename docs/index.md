@@ -7,7 +7,7 @@ title: " "
 ---
 
 <div align="center" style="margin-top: 4rem;">
-  <img width="400" src="./images/logo/chango-logo-with-name.png" alt="Chango">
+  <img width="280" src="./images/logo/chango-logo-with-name.png" alt="Chango">
 </div>
 
 <h2 align="center" style="margin-top: 1.5rem;">Agentic AI Data Platform</h2>
