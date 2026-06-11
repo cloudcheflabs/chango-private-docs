@@ -6,17 +6,22 @@ The end state is identical to the [automated install](automated.md): masters run
 
 ## What you will install on each host
 
-| Step | Master host | Node-manager host |
-|---|---|---|
-| Rocky 9 prep (SELinux / ulimit / sysctl) | ✓ | ✓ |
-| Java 11 (for Spark + Livy) | ✓ | ✓ |
-| Java 17 | ✓ | ✓ |
-| Java 25 (for Trino) | ✓ | ✓ |
-| chango distribution under `/opt/chango` | ✓ | ✓ |
-| chango master + bundled ZK first start | ✓ | — |
-| chango node manager first start | — | ✓ |
+A host can play more than one role — in the HA default, host1/host2 are master + ZK + node manager, host3 is ZK + node manager. The columns below are the three roles, not three machines.
 
-The chango tarball is the same on master and node-manager hosts. Roles are decided by which shell script you run, not which package you install.
+| Step | Master | ZooKeeper | Node manager |
+|---|---|---|---|
+| Rocky 9 prep (SELinux / ulimit / sysctl) | ✓ | ✓ | ✓ |
+| Java 11 (for Spark + Livy) | ✓ | ✓ | ✓ |
+| Java 17 | ✓ | ✓ | ✓ |
+| Java 25 (for Trino) | ✓ | ✓ | ✓ |
+| chango distribution under `/opt/chango` | ✓ | ✓ | ✓ |
+| bundled ZooKeeper first start (`start-zk.sh`) | — | ✓ | — |
+| chango master first start (`start-master.sh`) | ✓ | — | — |
+| chango node manager first start (`start-node-manager.sh`) | — | — | ✓ |
+
+The chango tarball is identical on every host. A host's role is decided by which start script you run there, not by which package you install — so install the same distribution everywhere and start the right processes per role.
+
+The HA-default end state is **2 masters + 3-node ZooKeeper quorum + 3 node managers**, matching the [automated install](automated.md). For a quick single-host eval, run all three roles on one box.
 
 ## 1. Rocky 9 host prep
 
@@ -120,11 +125,39 @@ Treat this value the same way you would treat a root credential — it is the ro
 - on every node-manager restart,
 - when adding any new host later.
 
-## 6. Start the master host
+## 6. Start the bundled ZooKeeper quorum
 
-On the master host, two shells (or two `tmux` windows / two `screen` windows / a `systemd-run --scope` per process):
+Chango ships its own ZooKeeper — you do not install ZK separately. For the HA default (3-node quorum), do this on **every ZK host**; for a single-host eval, do it once on the one host.
 
-### Start the bundled ZooKeeper
+### Configure the quorum
+
+On each ZK host, write `conf/zk/zoo.cfg` listing **every** quorum member, and write that host's own id into `myid`. The two extra ports are the ZK peer (`2888`) and leader-election (`3888`) ports.
+
+```bash
+# /opt/chango/conf/zk/zoo.cfg — identical on every ZK host
+sudo -u chango tee /opt/chango/conf/zk/zoo.cfg > /dev/null <<'EOF'
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/var/lib/chango/zookeeper
+clientPort=2181
+4lw.commands.whitelist=*
+admin.enableServer=false
+maxClientCnxns=200
+
+server.1=<zk-host1>:2888:3888
+server.2=<zk-host2>:2888:3888
+server.3=<zk-host3>:2888:3888
+EOF
+
+# myid — UNIQUE per host: 1 on zk-host1, 2 on zk-host2, 3 on zk-host3
+sudo -u chango install -d /var/lib/chango/zookeeper
+echo 1 | sudo -u chango tee /var/lib/chango/zookeeper/myid > /dev/null
+```
+
+For a **single-host eval**, the quorum is one line — `server.1=<host>:2888:3888` — and `myid` is `1`.
+
+### Start ZK on each host
 
 ```bash
 export CHANGO_MASTER_KEY=<from your secret manager>
@@ -133,38 +166,50 @@ export JAVA_HOME=/opt/openlogic-openjdk-17.0.7+7-linux-x64
 sudo -u chango -E /opt/chango/bin/start-zk.sh
 ```
 
-### Start the chango master
+Start all ZK hosts, then confirm the quorum formed (`echo stat | nc <zk-host> 2181` reports one `leader` and the rest `follower`). ZK binds `:2181` (client), `:2888` (peer), `:3888` (leader election).
+
+## 7. Start the chango master(s)
+
+The ZK server list every master and node manager connects to is the **comma-separated client endpoints of all ZK hosts**. Define it once:
+
+```bash
+ZK_LIST=<zk-host1>:2181,<zk-host2>:2181,<zk-host3>:2181   # one entry for a single-host eval
+```
+
+On **each master host** (host1 and host2 in the HA default):
 
 ```bash
 export CHANGO_MASTER_KEY=<from your secret manager>
 export JAVA_HOME=/opt/openlogic-openjdk-17.0.7+7-linux-x64
 
 sudo -u chango -E /opt/chango/bin/start-master.sh \
-    -Dchango.zk.serverList=<master-host>:2181
+    -Dchango.zk.serverList=$ZK_LIST
 ```
 
-The master binds:
+Each master binds:
 
 - `:8080` — admin HTTP (web UI + REST)
 - `:19999` — internal NIO (master ↔ NM, encrypted with the cluster master key)
 
-The first time the master starts, the KMS RocksDB under `/var/lib/chango/kms` is created and seeded from `CHANGO_MASTER_KEY`. From that point on, every later start of the same master needs the **same** master key to decrypt it.
+With two masters, the pair runs leader-election over ZooKeeper: one becomes leader, the other a warm follower that takes over on failure. Leadership is sticky — a restarted incumbent rejoins as leader without a needless toggle.
 
-## 7. Start each node manager
+The first time a master starts, the KMS RocksDB under `/var/lib/chango/kms` is created and seeded from `CHANGO_MASTER_KEY`. From that point on, every later start of that master needs the **same** master key to decrypt it.
 
-On every node-manager host:
+## 8. Start each node manager
+
+On every node-manager host (all three in the HA default):
 
 ```bash
 export CHANGO_MASTER_KEY=<from your secret manager>
 export JAVA_HOME=/opt/openlogic-openjdk-17.0.7+7-linux-x64
 
 sudo -u chango -E /opt/chango/bin/start-node-manager.sh \
-    -Dchango.zk.serverList=<master-host>:2181
+    -Dchango.zk.serverList=$ZK_LIST
 ```
 
-The NM binds `:19998` (internal NIO). It registers itself in ZooKeeper, the master picks it up, and the admin UI shows it as a target for new components.
+The NM binds `:19998` (internal NIO). It registers itself in ZooKeeper, the leader master picks it up, and the admin UI shows it as a target for new components.
 
-## 8. Verify
+## 9. Verify
 
 From any host that can reach the master's `:8080`:
 

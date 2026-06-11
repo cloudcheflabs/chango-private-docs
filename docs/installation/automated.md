@@ -37,9 +37,27 @@ Hosts can also be added later via `add-master.yml` / `add-nodemanager.yml` (see 
 
 Each host's `chango_master_zk_id` and `chango_zk_id` is a distinct positive integer. When a host is in both groups (host1, host2 in the table above) the two ids may be the same value (the master role's id only matters to chango's own master election; the ZK id is the actual ZooKeeper quorum `myid`). Keep them aligned for sanity — it makes the inventory easier to read.
 
-## 1. Download the chango bundle on the controller
+## The install artifact: download → bundle → ansible
 
-The ansible controller is typically the future master host. Download the lean tarball:
+Chango is a closed-source product. You never clone a repository — you **download a signed release tarball** from the cloudcheflabs distribution, **assemble a bundle** from it on a machine with internet access, then **carry that bundle to the cluster** and let ansible install it. The whole pipeline is three steps:
+
+```
+download  chango-3.0.0.tar.gz                 (lean — chango software only, a few hundred MB)
+   │
+   ▼  bash build-with-comps/build-with-comps.sh   (downloads JDKs + every component package)
+bundle    chango-bundle-3.0.0/                 (a directory holding two tarballs)
+          ├── chango-3.0.0.tar.gz              → node-manager hosts (lean)
+          └── chango-with-comps-3.0.0.tar.gz   → master host (chango + JDKs + components)
+   │       (also tarred as chango-bundle-3.0.0.tar.gz for air-gapped transfer)
+   ▼  ansible-playbook -i inventory.yml install.yml
+install   masters + ZK quorum + node managers, all first-booted
+```
+
+Why two tarballs: node managers only need the chango runtime (the master ships component binaries to them over the internal NIO protocol at component-install time), while the master also carries the JDKs and the component packages that ansible installs and that the master later distributes. `build-with-comps.sh` produces both and stages each one into the matching ansible role's `files/` directory, so `install.yml` finds them with no manual copying.
+
+## 1. Download the lean release and build the bundle
+
+Do this on a machine **with internet access** — typically the future master host, or a staging box if the cluster is air-gapped. Download the lean release tarball from the cloudcheflabs distribution (no git, no registry login):
 
 ```bash
 curl -L -O https://github.com/cloudcheflabs/chango-pack/releases/download/chango-archive/chango-3.0.0.tar.gz
@@ -47,15 +65,39 @@ tar -xzf chango-3.0.0.tar.gz
 cd chango-3.0.0
 ```
 
-Then build the **with-comps** bundle (component tarballs + JDKs + ansible RPMs):
+Now assemble the bundle. `build-with-comps.sh` downloads the three JDKs (Java 11 for Spark/Livy, Java 17 for chango + most components, Java 25 for Trino) and every component package (Spark, Flink, Kafka, Trino, Polaris, PostgreSQL, ansible-core, plus the cloudcheflabs components ShannonStore / NeorunBase / ItdaStream / Ontul / kiok), then packs everything into one place:
 
 ```bash
 bash build-with-comps/build-with-comps.sh
 ```
 
-This produces `chango-with-comps-3.0.0.tar.gz` (≈ 4.4 GB). The build step downloads every component package and the three JDKs (Java 11 for Spark/Livy + Java 17 + Java 25 for Trino) into the ansible role's `files/` directories so the playbook can ship them to every host. If your controller is air-gapped, run the same script on a connected machine and transfer the resulting bundle.
+When it finishes you have, **next to** the `chango-3.0.0/` directory:
 
-## 2. Install ansible-core on the controller
+```
+chango-bundle-3.0.0/
+├── chango-3.0.0.tar.gz              # lean — for node-manager hosts
+└── chango-with-comps-3.0.0.tar.gz   # + JDKs + components — for the master host (≈ 4.4 GB)
+chango-bundle-3.0.0.tar.gz           # the directory above, tarred, for air-gapped transfer
+```
+
+Both tarballs already have the JDK and component binaries staged into their `ansible/roles/*/files/` directories, so the playbook ships them to every host without any extra `cp`.
+
+The download is idempotent — re-running `build-with-comps.sh` skips files already present, so an interrupted build resumes cheaply. Force a re-download by deleting the target file first.
+
+## 2. Carry the bundle to the controller and extract it
+
+If the controller is the same connected machine you built on, skip to step 3. For an **air-gapped cluster**, copy the single bundle tarball across the boundary, then extract the with-comps tarball (it carries the full `ansible/` layout with role `files/` pre-staged) on the controller:
+
+```bash
+# on the air-gapped controller
+tar -xzf chango-bundle-3.0.0.tar.gz
+tar -xzf chango-bundle-3.0.0/chango-with-comps-3.0.0.tar.gz
+cd chango-3.0.0
+```
+
+The lean `chango-3.0.0.tar.gz` inside the bundle is what the playbook pushes to the node-manager hosts — you do not extract it by hand.
+
+## 3. Install ansible-core on the controller
 
 The bundle ships ansible RPMs for offline install:
 
@@ -69,7 +111,7 @@ ansible --version
 
 If the controller has internet access, `sudo dnf install -y ansible-core` is equivalent.
 
-## 3. Prepare the inventory
+## 4. Prepare the inventory
 
 Copy the example and edit it:
 
@@ -128,7 +170,7 @@ Notes:
 
 If you really want a single-box install (eval, lab, vagrant), drop both masters / zk count to 1 — put the same host into all three groups. `inventory-vagrant.yml` is shipped pre-wired for that.
 
-## 4. Generate the cluster master key
+## 5. Generate the cluster master key
 
 Once, on the controller:
 
@@ -138,7 +180,7 @@ export CHANGO_MASTER_KEY=$(openssl rand -base64 48 | head -c 48)
 
 Treat this value as a root credential — it is the root of trust for every secret chango stores. Move it into a real secret manager (Vault, AWS Secrets Manager, a hardware-backed password manager) immediately after first install. You must re-supply this **exact** value on every master / NM restart and at every later scale-out.
 
-## 5. Run the install playbook
+## 6. Run the install playbook
 
 ```bash
 ansible-playbook -i inventory.yml install.yml
@@ -164,7 +206,7 @@ sudo shred -u /opt/chango/.master-key-bootstrap
 
 After that, the chango runtime never reads any persistent key file again. Every later start requires the operator to supply `CHANGO_MASTER_KEY` from their secret manager.
 
-## 6. Verify
+## 7. Verify
 
 ```bash
 curl -s http://<master>:8080/admin/api/auth/login \
@@ -220,6 +262,23 @@ ansible-playbook -i inventory.yml add-nodemanager.yml --limit <new-nm-host>
 ```
 
 Same prompt behavior as `add-master.yml`. The playbook installs `node-prep` + Java 17/25 + chango on the new host and runs first-boot start with the master key in env only. The NM registers itself in ZooKeeper and shows up in the admin UI within seconds.
+
+## Uninstall — `uninstall.yml`
+
+`uninstall.yml` only cleans disk; it does **not** drive lifecycle. Stop every chango process yourself first (ansible no longer manages running processes), then run the playbook to remove the install / data / log directories on every host.
+
+```bash
+# 1. On each host, stop the processes (as the chango user):
+sudo -u chango /opt/chango/bin/stop-master.sh          # master hosts
+sudo -u chango /opt/chango/bin/stop-zk.sh              # ZK hosts
+sudo -u chango /opt/chango/bin/stop-node-manager.sh    # NM hosts
+# confirm with `ps -ef | grep chango` that nothing is left running.
+
+# 2. From the controller, wipe the directories cluster-wide:
+ansible-playbook -i inventory.yml uninstall.yml
+```
+
+This removes `chango_install_dir` (`/opt/chango`), `chango_data_dir` (`/var/lib/chango`), and `chango_log_dir` (`/var/log/chango`) on every host. The JDKs under `/opt` and the `chango` OS user are left in place — remove them by hand if you want a full teardown.
 
 ## Next
 
