@@ -572,23 +572,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-start-the-master-host" class="md-nav__link">
-    6. Start the master host
+  <a href="#6-start-the-bundled-zookeeper-quorum" class="md-nav__link">
+    6. Start the bundled ZooKeeper quorum
   </a>
   
-    <nav class="md-nav" aria-label="6. Start the master host">
+    <nav class="md-nav" aria-label="6. Start the bundled ZooKeeper quorum">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#start-the-bundled-zookeeper" class="md-nav__link">
-    Start the bundled ZooKeeper
+  <a href="#configure-the-quorum" class="md-nav__link">
+    Configure the quorum
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#start-the-chango-master" class="md-nav__link">
-    Start the chango master
+  <a href="#start-zk-on-each-host" class="md-nav__link">
+    Start ZK on each host
   </a>
   
 </li>
@@ -599,15 +599,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-start-each-node-manager" class="md-nav__link">
-    7. Start each node manager
+  <a href="#7-start-the-chango-masters" class="md-nav__link">
+    7. Start the chango master(s)
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-verify" class="md-nav__link">
-    8. Verify
+  <a href="#8-start-each-node-manager" class="md-nav__link">
+    8. Start each node manager
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-verify" class="md-nav__link">
+    9. Verify
   </a>
   
 </li>
@@ -1339,12 +1346,14 @@
 <p>This page brings up a chango cluster by running shell commands directly on each host — no ansible, no automation. Use it when you want full visibility of every step, when you are evaluating chango on a single host, or when ansible is not available on the controller (truly air-gapped, restricted network policy, etc.).</p>
 <p>The end state is identical to the <a href="../automated/">automated install</a>: masters running on the chosen master hosts, a bundled ZooKeeper quorum running on the chosen ZK hosts (master and ZK groups are independent — master count is decoupled from ZK count), a node manager on every host, no systemd units, the cluster master key held only in operator-controlled secret storage.</p>
 <h2 id="what-you-will-install-on-each-host">What you will install on each host</h2>
+<p>A host can play more than one role — in the HA default, host1/host2 are master + ZK + node manager, host3 is ZK + node manager. The columns below are the three roles, not three machines.</p>
 <table>
 <thead>
 <tr>
 <th>Step</th>
-<th>Master host</th>
-<th>Node-manager host</th>
+<th>Master</th>
+<th>ZooKeeper</th>
+<th>Node manager</th>
 </tr>
 </thead>
 <tbody>
@@ -1352,9 +1361,11 @@
 <td>Rocky 9 prep (SELinux / ulimit / sysctl)</td>
 <td>✓</td>
 <td>✓</td>
+<td>✓</td>
 </tr>
 <tr>
 <td>Java 11 (for Spark + Livy)</td>
+<td>✓</td>
 <td>✓</td>
 <td>✓</td>
 </tr>
@@ -1362,9 +1373,11 @@
 <td>Java 17</td>
 <td>✓</td>
 <td>✓</td>
+<td>✓</td>
 </tr>
 <tr>
 <td>Java 25 (for Trino)</td>
+<td>✓</td>
 <td>✓</td>
 <td>✓</td>
 </tr>
@@ -1372,20 +1385,30 @@
 <td>chango distribution under <code>/opt/chango</code></td>
 <td>✓</td>
 <td>✓</td>
+<td>✓</td>
 </tr>
 <tr>
-<td>chango master + bundled ZK first start</td>
+<td>bundled ZooKeeper first start (<code>start-zk.sh</code>)</td>
+<td>—</td>
 <td>✓</td>
 <td>—</td>
 </tr>
 <tr>
-<td>chango node manager first start</td>
+<td>chango master first start (<code>start-master.sh</code>)</td>
+<td>✓</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>chango node manager first start (<code>start-node-manager.sh</code>)</td>
+<td>—</td>
 <td>—</td>
 <td>✓</td>
 </tr>
 </tbody>
 </table>
-<p>The chango tarball is the same on master and node-manager hosts. Roles are decided by which shell script you run, not which package you install.</p>
+<p>The chango tarball is identical on every host. A host's role is decided by which start script you run there, not by which package you install — so install the same distribution everywhere and start the right processes per role.</p>
+<p>The HA-default end state is <strong>2 masters + 3-node ZooKeeper quorum + 3 node managers</strong>, matching the <a href="../automated/">automated install</a>. For a quick single-host eval, run all three roles on one box.</p>
 <h2 id="1-rocky-9-host-prep">1. Rocky 9 host prep</h2>
 <p>On <strong>every</strong> host (master + node managers), follow <a href="../node-preparation/">Node Preparation</a> — SELinux disabled, ulimit and sysctl drop-ins, dedicated <code>/opt</code> mount. Quick recap of the manual steps:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># SELinux</span>
@@ -1459,41 +1482,70 @@
 <li>on every node-manager restart,</li>
 <li>when adding any new host later.</li>
 </ul>
-<h2 id="6-start-the-master-host">6. Start the master host</h2>
-<p>On the master host, two shells (or two <code>tmux</code> windows / two <code>screen</code> windows / a <code>systemd-run --scope</code> per process):</p>
-<h3 id="start-the-bundled-zookeeper">Start the bundled ZooKeeper</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>manager&gt;
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/openlogic-openjdk-17.0.7+7-linux-x64
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-zk.sh
+<h2 id="6-start-the-bundled-zookeeper-quorum">6. Start the bundled ZooKeeper quorum</h2>
+<p>Chango ships its own ZooKeeper — you do not install ZK separately. For the HA default (3-node quorum), do this on <strong>every ZK host</strong>; for a single-host eval, do it once on the one host.</p>
+<h3 id="configure-the-quorum">Configure the quorum</h3>
+<p>On each ZK host, write <code>conf/zk/zoo.cfg</code> listing <strong>every</strong> quorum member, and write that host's own id into <code>myid</code>. The two extra ports are the ZK peer (<code>2888</code>) and leader-election (<code>3888</code>) ports.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># /opt/chango/conf/zk/zoo.cfg — identical on every ZK host</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>tee<span class="w"> </span>/opt/chango/conf/zk/zoo.cfg<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="s">tickTime=2000</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="s">initLimit=10</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="s">syncLimit=5</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="s">dataDir=/var/lib/chango/zookeeper</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="s">clientPort=2181</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="s">4lw.commands.whitelist=*</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="s">admin.enableServer=false</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="s">maxClientCnxns=200</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="s">server.1=&lt;zk-host1&gt;:2888:3888</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="s">server.2=&lt;zk-host2&gt;:2888:3888</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="s">server.3=&lt;zk-host3&gt;:2888:3888</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="s">EOF</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1"># myid — UNIQUE per host: 1 on zk-host1, 2 on zk-host2, 3 on zk-host3</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>/var/lib/chango/zookeeper
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>tee<span class="w"> </span>/var/lib/chango/zookeeper/myid<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
 </code></pre></div>
-<h3 id="start-the-chango-master">Start the chango master</h3>
+<p>For a <strong>single-host eval</strong>, the quorum is one line — <code>server.1=&lt;host&gt;:2888:3888</code> — and <code>myid</code> is <code>1</code>.</p>
+<h3 id="start-zk-on-each-host">Start ZK on each host</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>manager&gt;
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/openlogic-openjdk-17.0.7+7-linux-x64
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-master.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span>&lt;master-host&gt;:2181
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-zk.sh
 </code></pre></div>
-<p>The master binds:</p>
+<p>Start all ZK hosts, then confirm the quorum formed (<code>echo stat | nc &lt;zk-host&gt; 2181</code> reports one <code>leader</code> and the rest <code>follower</code>). ZK binds <code>:2181</code> (client), <code>:2888</code> (peer), <code>:3888</code> (leader election).</p>
+<h2 id="7-start-the-chango-masters">7. Start the chango master(s)</h2>
+<p>The ZK server list every master and node manager connects to is the <strong>comma-separated client endpoints of all ZK hosts</strong>. Define it once:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">ZK_LIST</span><span class="o">=</span>&lt;zk-host1&gt;:2181,&lt;zk-host2&gt;:2181,&lt;zk-host3&gt;:2181<span class="w">   </span><span class="c1"># one entry for a single-host eval</span>
+</code></pre></div>
+<p>On <strong>each master host</strong> (host1 and host2 in the HA default):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>manager&gt;
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/openlogic-openjdk-17.0.7+7-linux-x64
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-master.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span><span class="nv">$ZK_LIST</span>
+</code></pre></div>
+<p>Each master binds:</p>
 <ul>
 <li><code>:8080</code> — admin HTTP (web UI + REST)</li>
 <li><code>:19999</code> — internal NIO (master ↔ NM, encrypted with the cluster master key)</li>
 </ul>
-<p>The first time the master starts, the KMS RocksDB under <code>/var/lib/chango/kms</code> is created and seeded from <code>CHANGO_MASTER_KEY</code>. From that point on, every later start of the same master needs the <strong>same</strong> master key to decrypt it.</p>
-<h2 id="7-start-each-node-manager">7. Start each node manager</h2>
-<p>On every node-manager host:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>manager&gt;
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/openlogic-openjdk-17.0.7+7-linux-x64
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-node-manager.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span>&lt;master-host&gt;:2181
+<p>With two masters, the pair runs leader-election over ZooKeeper: one becomes leader, the other a warm follower that takes over on failure. Leadership is sticky — a restarted incumbent rejoins as leader without a needless toggle.</p>
+<p>The first time a master starts, the KMS RocksDB under <code>/var/lib/chango/kms</code> is created and seeded from <code>CHANGO_MASTER_KEY</code>. From that point on, every later start of that master needs the <strong>same</strong> master key to decrypt it.</p>
+<h2 id="8-start-each-node-manager">8. Start each node manager</h2>
+<p>On every node-manager host (all three in the HA default):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>manager&gt;
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/openlogic-openjdk-17.0.7+7-linux-x64
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-node-manager.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span><span class="nv">$ZK_LIST</span>
 </code></pre></div>
-<p>The NM binds <code>:19998</code> (internal NIO). It registers itself in ZooKeeper, the master picks it up, and the admin UI shows it as a target for new components.</p>
-<h2 id="8-verify">8. Verify</h2>
+<p>The NM binds <code>:19998</code> (internal NIO). It registers itself in ZooKeeper, the leader master picks it up, and the admin UI shows it as a target for new components.</p>
+<h2 id="9-verify">9. Verify</h2>
 <p>From any host that can reach the master's <code>:8080</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://&lt;master&gt;:8080/admin/api/auth/login<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://&lt;master&gt;:8080/admin/api/auth/login<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin&quot;}&#39;</span>
 </code></pre></div>
 <p>A response containing <code>accessToken</code> means chango is up. The default login is <code>admin</code> / <code>admin</code>; the first login forces a password change.</p>
 <p>Web UI: <code>http://&lt;master&gt;:8080/admin/</code></p>

@@ -558,25 +558,39 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-download-the-chango-bundle-on-the-controller" class="md-nav__link">
-    1. Download the chango bundle on the controller
+  <a href="#the-install-artifact-download-bundle-ansible" class="md-nav__link">
+    The install artifact: download → bundle → ansible
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-install-ansible-core-on-the-controller" class="md-nav__link">
-    2. Install ansible-core on the controller
+  <a href="#1-download-the-lean-release-and-build-the-bundle" class="md-nav__link">
+    1. Download the lean release and build the bundle
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-prepare-the-inventory" class="md-nav__link">
-    3. Prepare the inventory
+  <a href="#2-carry-the-bundle-to-the-controller-and-extract-it" class="md-nav__link">
+    2. Carry the bundle to the controller and extract it
   </a>
   
-    <nav class="md-nav" aria-label="3. Prepare the inventory">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-ansible-core-on-the-controller" class="md-nav__link">
+    3. Install ansible-core on the controller
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-prepare-the-inventory" class="md-nav__link">
+    4. Prepare the inventory
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Prepare the inventory">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -592,22 +606,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-generate-the-cluster-master-key" class="md-nav__link">
-    4. Generate the cluster master key
+  <a href="#5-generate-the-cluster-master-key" class="md-nav__link">
+    5. Generate the cluster master key
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-run-the-install-playbook" class="md-nav__link">
-    5. Run the install playbook
+  <a href="#6-run-the-install-playbook" class="md-nav__link">
+    6. Run the install playbook
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-verify" class="md-nav__link">
-    6. Verify
+  <a href="#7-verify" class="md-nav__link">
+    7. Verify
   </a>
   
 </li>
@@ -629,6 +643,13 @@
         <li class="md-nav__item">
   <a href="#adding-a-node-manager-later-add-nodemanageryml" class="md-nav__link">
     Adding a node manager later — add-nodemanager.yml
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uninstall-uninstallyml" class="md-nav__link">
+    Uninstall — uninstall.yml
   </a>
   
 </li>
@@ -1395,65 +1416,93 @@
 - <strong>3 NMs</strong> — every host that should run component workloads (Trino workers, Ontul masters/workers, Shannon data nodes, etc.). NM is singleton-per-host.</p>
 <p>Hosts can also be added later via <code>add-master.yml</code> / <code>add-nodemanager.yml</code> (see the bottom of this page). The chango-zookeeper role does not have a dedicated <code>add-</code> playbook — see the <em>Adding a ZK node later</em> section.</p>
 <p>Each host's <code>chango_master_zk_id</code> and <code>chango_zk_id</code> is a distinct positive integer. When a host is in both groups (host1, host2 in the table above) the two ids may be the same value (the master role's id only matters to chango's own master election; the ZK id is the actual ZooKeeper quorum <code>myid</code>). Keep them aligned for sanity — it makes the inventory easier to read.</p>
-<h2 id="1-download-the-chango-bundle-on-the-controller">1. Download the chango bundle on the controller</h2>
-<p>The ansible controller is typically the future master host. Download the lean tarball:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span>https://github.com/cloudcheflabs/chango-pack/releases/download/chango-archive/chango-3.0.0.tar.gz
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>chango-3.0.0.tar.gz
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>chango-3.0.0
+<h2 id="the-install-artifact-download-bundle-ansible">The install artifact: download → bundle → ansible</h2>
+<p>Chango is a closed-source product. You never clone a repository — you <strong>download a signed release tarball</strong> from the cloudcheflabs distribution, <strong>assemble a bundle</strong> from it on a machine with internet access, then <strong>carry that bundle to the cluster</strong> and let ansible install it. The whole pipeline is three steps:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>download  chango-3.0.0.tar.gz                 (lean — chango software only, a few hundred MB)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>   │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   ▼  bash build-with-comps/build-with-comps.sh   (downloads JDKs + every component package)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>bundle    chango-bundle-3.0.0/                 (a directory holding two tarballs)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>          ├── chango-3.0.0.tar.gz              → node-manager hosts (lean)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>          └── chango-with-comps-3.0.0.tar.gz   → master host (chango + JDKs + components)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   │       (also tarred as chango-bundle-3.0.0.tar.gz for air-gapped transfer)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>   ▼  ansible-playbook -i inventory.yml install.yml
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>install   masters + ZK quorum + node managers, all first-booted
 </code></pre></div>
-<p>Then build the <strong>with-comps</strong> bundle (component tarballs + JDKs + ansible RPMs):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>bash<span class="w"> </span>build-with-comps/build-with-comps.sh
+<p>Why two tarballs: node managers only need the chango runtime (the master ships component binaries to them over the internal NIO protocol at component-install time), while the master also carries the JDKs and the component packages that ansible installs and that the master later distributes. <code>build-with-comps.sh</code> produces both and stages each one into the matching ansible role's <code>files/</code> directory, so <code>install.yml</code> finds them with no manual copying.</p>
+<h2 id="1-download-the-lean-release-and-build-the-bundle">1. Download the lean release and build the bundle</h2>
+<p>Do this on a machine <strong>with internet access</strong> — typically the future master host, or a staging box if the cluster is air-gapped. Download the lean release tarball from the cloudcheflabs distribution (no git, no registry login):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span>https://github.com/cloudcheflabs/chango-pack/releases/download/chango-archive/chango-3.0.0.tar.gz
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>chango-3.0.0.tar.gz
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">cd</span><span class="w"> </span>chango-3.0.0
 </code></pre></div>
-<p>This produces <code>chango-with-comps-3.0.0.tar.gz</code> (≈ 4.4 GB). The build step downloads every component package and the three JDKs (Java 11 for Spark/Livy + Java 17 + Java 25 for Trino) into the ansible role's <code>files/</code> directories so the playbook can ship them to every host. If your controller is air-gapped, run the same script on a connected machine and transfer the resulting bundle.</p>
-<h2 id="2-install-ansible-core-on-the-controller">2. Install ansible-core on the controller</h2>
+<p>Now assemble the bundle. <code>build-with-comps.sh</code> downloads the three JDKs (Java 11 for Spark/Livy, Java 17 for chango + most components, Java 25 for Trino) and every component package (Spark, Flink, Kafka, Trino, Polaris, PostgreSQL, ansible-core, plus the cloudcheflabs components ShannonStore / NeorunBase / ItdaStream / Ontul / kiok), then packs everything into one place:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>bash<span class="w"> </span>build-with-comps/build-with-comps.sh
+</code></pre></div>
+<p>When it finishes you have, <strong>next to</strong> the <code>chango-3.0.0/</code> directory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>chango-bundle-3.0.0/
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── chango-3.0.0.tar.gz              # lean — for node-manager hosts
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>└── chango-with-comps-3.0.0.tar.gz   # + JDKs + components — for the master host (≈ 4.4 GB)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>chango-bundle-3.0.0.tar.gz           # the directory above, tarred, for air-gapped transfer
+</code></pre></div>
+<p>Both tarballs already have the JDK and component binaries staged into their <code>ansible/roles/*/files/</code> directories, so the playbook ships them to every host without any extra <code>cp</code>.</p>
+<p>The download is idempotent — re-running <code>build-with-comps.sh</code> skips files already present, so an interrupted build resumes cheaply. Force a re-download by deleting the target file first.</p>
+<h2 id="2-carry-the-bundle-to-the-controller-and-extract-it">2. Carry the bundle to the controller and extract it</h2>
+<p>If the controller is the same connected machine you built on, skip to step 3. For an <strong>air-gapped cluster</strong>, copy the single bundle tarball across the boundary, then extract the with-comps tarball (it carries the full <code>ansible/</code> layout with role <code>files/</code> pre-staged) on the controller:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># on the air-gapped controller</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>chango-bundle-3.0.0.tar.gz
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>chango-bundle-3.0.0/chango-with-comps-3.0.0.tar.gz
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">cd</span><span class="w"> </span>chango-3.0.0
+</code></pre></div>
+<p>The lean <code>chango-3.0.0.tar.gz</code> inside the bundle is what the playbook pushes to the node-manager hosts — you do not extract it by hand.</p>
+<h2 id="3-install-ansible-core-on-the-controller">3. Install ansible-core on the controller</h2>
 <p>The bundle ships ansible RPMs for offline install:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/tmp/ansible-bundle
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>components/ansible/ansible-core-rocky9-x86_64.tar.gz<span class="w"> </span>-C<span class="w"> </span>/tmp/ansible-bundle
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">cd</span><span class="w"> </span>/tmp/ansible-bundle
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--disablerepo<span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="w"> </span>./*.rpm
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>ansible<span class="w"> </span>--version
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/tmp/ansible-bundle
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>components/ansible/ansible-core-rocky9-x86_64.tar.gz<span class="w"> </span>-C<span class="w"> </span>/tmp/ansible-bundle
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">cd</span><span class="w"> </span>/tmp/ansible-bundle
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--disablerepo<span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="w"> </span>./*.rpm
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>ansible<span class="w"> </span>--version
 </code></pre></div>
 <p>If the controller has internet access, <code>sudo dnf install -y ansible-core</code> is equivalent.</p>
-<h2 id="3-prepare-the-inventory">3. Prepare the inventory</h2>
+<h2 id="4-prepare-the-inventory">4. Prepare the inventory</h2>
 <p>Copy the example and edit it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>ansible
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cp<span class="w"> </span>inventory.yml.example<span class="w"> </span>inventory.yml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>ansible
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>cp<span class="w"> </span>inventory.yml.example<span class="w"> </span>inventory.yml
 </code></pre></div>
 <p>The shipped <code>inventory.yml.example</code> is already the 2-master + 3-ZK + 3-NM default. Edit <code>ansible_host</code> per host and you have a production inventory:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">all</span><span class="p">:</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">ansible_user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rocky</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">ansible_ssh_private_key_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.ssh/your-key.pem</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">ansible_python_interpreter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/bin/python3</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">ansible_ssh_common_args</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;-o</span><span class="nv"> </span><span class="s">StrictHostKeyChecking=no&#39;</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="nt">children</span><span class="p">:</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nt">chango_masters</span><span class="p">:</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">        </span><span class="nt">chango-host1</span><span class="p">:</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.11</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">          </span><span class="nt">chango_master_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="nt">chango-host2</span><span class="p">:</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.12</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">          </span><span class="nt">chango_master_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="nt">chango_zookeepers</span><span class="p">:</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">        </span><span class="nt">chango-host1</span><span class="p">:</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.11</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">          </span><span class="nt">chango_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">        </span><span class="nt">chango-host2</span><span class="p">:</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.12</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">          </span><span class="nt">chango_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">        </span><span class="nt">chango-host3</span><span class="p">:</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.13</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">          </span><span class="nt">chango_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="nt">chango_nodemanagers</span><span class="p">:</span>
-<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
-<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">        </span><span class="nt">chango-host1</span><span class="p">:</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.11</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">        </span><span class="nt">chango-host2</span><span class="p">:</span>
-<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.12</span>
-<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">        </span><span class="nt">chango-host3</span><span class="p">:</span>
-<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.13</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">all</span><span class="p">:</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">ansible_user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rocky</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">ansible_ssh_private_key_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.ssh/your-key.pem</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">ansible_python_interpreter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/bin/python3</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="nt">ansible_ssh_common_args</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;-o</span><span class="nv"> </span><span class="s">StrictHostKeyChecking=no&#39;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">children</span><span class="p">:</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="nt">chango_masters</span><span class="p">:</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">        </span><span class="nt">chango-host1</span><span class="p">:</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.11</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">          </span><span class="nt">chango_master_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">        </span><span class="nt">chango-host2</span><span class="p">:</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.12</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">          </span><span class="nt">chango_master_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="nt">chango_zookeepers</span><span class="p">:</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">        </span><span class="nt">chango-host1</span><span class="p">:</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.11</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">          </span><span class="nt">chango_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">        </span><span class="nt">chango-host2</span><span class="p">:</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.12</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">          </span><span class="nt">chango_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">        </span><span class="nt">chango-host3</span><span class="p">:</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.13</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">          </span><span class="nt">chango_zk_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">    </span><span class="nt">chango_nodemanagers</span><span class="p">:</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="w">      </span><span class="nt">hosts</span><span class="p">:</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="w">        </span><span class="nt">chango-host1</span><span class="p">:</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.11</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="w">        </span><span class="nt">chango-host2</span><span class="p">:</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.12</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="w">        </span><span class="nt">chango-host3</span><span class="p">:</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a><span class="w">          </span><span class="nt">ansible_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.0.13</span>
 </code></pre></div>
 <p>Notes:</p>
 <ul>
@@ -1464,13 +1513,13 @@
 </ul>
 <h3 id="single-host-eval-dev">Single-host (eval / dev)</h3>
 <p>If you really want a single-box install (eval, lab, vagrant), drop both masters / zk count to 1 — put the same host into all three groups. <code>inventory-vagrant.yml</code> is shipped pre-wired for that.</p>
-<h2 id="4-generate-the-cluster-master-key">4. Generate the cluster master key</h2>
+<h2 id="5-generate-the-cluster-master-key">5. Generate the cluster master key</h2>
 <p>Once, on the controller:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">48</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">48</span><span class="k">)</span>
 </code></pre></div>
 <p>Treat this value as a root credential — it is the root of trust for every secret chango stores. Move it into a real secret manager (Vault, AWS Secrets Manager, a hardware-backed password manager) immediately after first install. You must re-supply this <strong>exact</strong> value on every master / NM restart and at every later scale-out.</p>
-<h2 id="5-run-the-install-playbook">5. Run the install playbook</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml
+<h2 id="6-run-the-install-playbook">6. Run the install playbook</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml
 </code></pre></div>
 <p>The playbook runs seven plays in order:</p>
 <ol>
@@ -1484,23 +1533,23 @@
 </ol>
 <p>Expected runtime: 5 – 10 minutes for a 3-host cluster (component extraction dominates).</p>
 <p>The last task of the master play is an operator-note debug block printing the bootstrap file path on the master host. Read it carefully — that is the one moment a chango-controlled file holds the master key. Move the value into your secret manager, then:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>shred<span class="w"> </span>-u<span class="w"> </span>/opt/chango/.master-key-bootstrap
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>shred<span class="w"> </span>-u<span class="w"> </span>/opt/chango/.master-key-bootstrap
 </code></pre></div>
 <p>After that, the chango runtime never reads any persistent key file again. Every later start requires the operator to supply <code>CHANGO_MASTER_KEY</code> from their secret manager.</p>
-<h2 id="6-verify">6. Verify</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://&lt;master&gt;:8080/admin/api/auth/login<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin&quot;}&#39;</span>
+<h2 id="7-verify">7. Verify</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://&lt;master&gt;:8080/admin/api/auth/login<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin&quot;}&#39;</span>
 </code></pre></div>
 <p>A response containing <code>accessToken</code> means chango is up. Default login is <code>admin</code> / <code>admin</code>; the first login forces a password change.</p>
 <p>Web UI: <code>http://&lt;master&gt;:8080/admin/</code></p>
 <h2 id="adding-a-master-later-add-masteryml">Adding a master later — <code>add-master.yml</code></h2>
 <p>Use this when you grow the cluster beyond the 2-master default — e.g. a third master in a new failure domain — or to replace a master after a hardware loss.</p>
 <p>If you do <strong>not</strong> also want to add a ZK node, the existing 3-node ZK quorum stays as-is; the new master just connects to that quorum. The <code>add-master.yml</code> playbook only touches the new master host's chango distribution + first-boot start.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 1. Append the new master to inventory.yml under chango_masters: with a distinct</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1">#    chango_master_zk_id (e.g. 3 if you already had 1 and 2).</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># 2. Run, limited to the new host:</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-master.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-master-host&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 1. Append the new master to inventory.yml under chango_masters: with a distinct</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1">#    chango_master_zk_id (e.g. 3 if you already had 1 and 2).</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># 2. Run, limited to the new host:</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-master.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-master-host&gt;
 </code></pre></div>
 <p>The playbook prompts for <code>CHANGO MASTER KEY</code> — type the same value you used at first install. The key is <code>private</code> (not echoed) and is passed through to first-boot start <strong>in memory only</strong>; the bootstrap file is not created on the new host.</p>
 <p>CI / non-interactive use: set <code>CHANGO_MASTER_KEY</code> in the controller's environment; the prompt uses that as its default and the playbook runs without an interactive shell.</p>
@@ -1512,18 +1561,30 @@
 <li>Write <code>&lt;id&gt;</code> into <code>/var/lib/chango/zookeeper/myid</code> on the new host (an empty install does this automatically — but if you are re-introducing a known id, set it first).</li>
 <li>Roll-restart <code>start-zk.sh</code> / <code>stop-zk.sh</code> on each existing ZK host one by one, waiting for the quorum to re-form before moving on. See <a href="../../operations/cluster-operations/">Cluster Operations</a>.</li>
 <li>Run the install playbook scoped to the new host so its chango distribution, <code>zoo.cfg</code>, and <code>myid</code> land properly:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-zk-host&gt;<span class="w"> </span>--tags<span class="w"> </span>chango-zookeeper
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-zk-host&gt;<span class="w"> </span>--tags<span class="w"> </span>chango-zookeeper
 </code></pre></div>
    (The <code>chango-zookeeper</code> role only renders config + starts ZK; safe to re-run on existing hosts as well.)</li>
 </ol>
 <p>Shrinking a quorum (3 → 1) is allowed only when you have isolated downtime — chango treats it like any other roll. Never go from 3 → 2; majority is now both nodes and you have worse availability than 1.</p>
 <h2 id="adding-a-node-manager-later-add-nodemanageryml">Adding a node manager later — <code>add-nodemanager.yml</code></h2>
 <p>Use this for any horizontal scale-out — more capacity for component instances, a new failure domain, a replacement after a hardware loss.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># 1. Append the new node to inventory.yml under chango_nodemanagers:.</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># 2. Run, limited to the new host:</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-nodemanager.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-nm-host&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># 1. Append the new node to inventory.yml under chango_nodemanagers:.</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># 2. Run, limited to the new host:</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-nodemanager.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-nm-host&gt;
 </code></pre></div>
 <p>Same prompt behavior as <code>add-master.yml</code>. The playbook installs <code>node-prep</code> + Java 17/25 + chango on the new host and runs first-boot start with the master key in env only. The NM registers itself in ZooKeeper and shows up in the admin UI within seconds.</p>
+<h2 id="uninstall-uninstallyml">Uninstall — <code>uninstall.yml</code></h2>
+<p><code>uninstall.yml</code> only cleans disk; it does <strong>not</strong> drive lifecycle. Stop every chango process yourself first (ansible no longer manages running processes), then run the playbook to remove the install / data / log directories on every host.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># 1. On each host, stop the processes (as the chango user):</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-master.sh<span class="w">          </span><span class="c1"># master hosts</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-zk.sh<span class="w">              </span><span class="c1"># ZK hosts</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-node-manager.sh<span class="w">    </span><span class="c1"># NM hosts</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># confirm with `ps -ef | grep chango` that nothing is left running.</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1"># 2. From the controller, wipe the directories cluster-wide:</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>uninstall.yml
+</code></pre></div>
+<p>This removes <code>chango_install_dir</code> (<code>/opt/chango</code>), <code>chango_data_dir</code> (<code>/var/lib/chango</code>), and <code>chango_log_dir</code> (<code>/var/log/chango</code>) on every host. The JDKs under <code>/opt</code> and the <code>chango</code> OS user are left in place — remove them by hand if you want a full teardown.</p>
 <h2 id="next">Next</h2>
 <ul>
 <li><a href="../getting-started/">Getting Started</a> — first login + first managed component.</li>
