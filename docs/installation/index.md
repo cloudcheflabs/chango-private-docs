@@ -6,9 +6,8 @@ Chango ships as a tarball and supports three install paths:
 |---|---|---|
 | [Manual install](manual.md) | Single-host evaluation, a controlled bring-up where you want to see every step, or an air-gapped host you cannot reach with ansible. | Shell commands directly on each host. |
 | [Automated install with ansible](automated.md) | Production. Multi-host clusters. Repeatable bring-up and host scale-out. | `ansible-playbook install.yml` from a controller (typically the future master host). |
-| [Local Docker cluster](docker.md) | Quick functional / RBAC / tutorial validation on a developer laptop. Not for production. | `bash tests/cluster/run.sh` — one command, three Rocky 9 containers. |
 
-The first two paths produce the **same** end state on real hosts — masters on the hosts in `chango_masters` (default: 2 for HA), a bundled ZooKeeper quorum on the hosts in `chango_zookeepers` (default: 3 for write-availability), a node manager on every host that runs component workloads, no systemd units, the cluster master key held only in the operator's secret manager and in the JVM process environment. The Docker path produces an equivalent layout inside Rocky 9 systemd containers so you can run the [tutorials](../tutorials/index.md) end-to-end on one machine.
+Both paths produce the **same** end state on real hosts — masters on the hosts in `chango_masters` (default: 2 for HA), a bundled ZooKeeper quorum on the hosts in `chango_zookeepers` (default: 3 for write-availability), a node manager on every host that runs component workloads, no systemd units, the cluster master key held only in the operator's secret manager and in the JVM process environment.
 
 ## Shared prerequisites
 
