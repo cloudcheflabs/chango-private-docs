@@ -64,6 +64,8 @@ All three data-plane engines delegate to the same Ontul authz model, but they do
 
 Only Trino exposes a plan-rewrite hook the plugin can use to inject row filters and column masks without re-implementing Calcite. Spark and Flink authorize at the table level: a policy's `Condition` and `Columns` fields are simply ignored for those engines. For fine-grained control on a streaming (Flink) read, filter at the source instead — e.g. a topic-per-tenant layout with Kafka ACLs.
 
+Ontul's **own** SQL engine (queries issued directly to Ontul over Arrow Flight SQL / REST, not through Trino/Spark/Flink) enforces the same policy graph, and does so fail-closed on both the tables a statement **reads** (`data:Select` on each source) and the table it **writes** — `INSERT` / `CREATE TABLE … AS SELECT` / `MERGE` need `data:Insert` on the target, `UPDATE` needs `data:Update`, `DELETE` needs `data:Delete`. A `data:Select` grant alone therefore never permits a write. See [Ontul IAM — query-time enforcement](https://cloudcheflabs.github.io/ontul-docs/1.0.0/features/iam/#query-time-enforcement-reads-and-writes) for the full read/write authorization matrix.
+
 ## Default bootstrap
 
 On the very first start of a fresh cluster, the leader creates exactly one user / group / policy:
