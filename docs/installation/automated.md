@@ -172,20 +172,29 @@ If you really want a single-box install (eval, lab, vagrant), drop both masters 
 
 ## 5. Generate the cluster master key
 
-Once, on the controller. The extracted bundle already ships the chango CLI, so use its purpose-built generator (it enforces the length + charset chango's KMS envelope expects):
+Once, on the controller. At this point no JDK is installed yet (the playbook installs Java in step 6), so generate the key with `openssl`:
 
 ```bash
-export CHANGO_MASTER_KEY=$(chango-3.0.0/bin/chango-cli.sh master-key generate)
+export CHANGO_MASTER_KEY=$(openssl rand -base64 48 | head -c 48)
 ```
 
-`openssl rand -base64 48 | head -c 48` also works if you prefer, but the CLI is the supported path — after the cluster is up you can confirm every master holds the **same** key without exposing it by comparing fingerprints:
+Treat this value as a root credential — it is the root of trust for every secret chango stores, including the master keys of the managed products (Ontul, ShannonStore, …) it later installs.
+
+Once the cluster is up (Java is now present), the shipped CLI gives you two things over the raw value:
 
 ```bash
 export CHANGO_MASTER_KEY=<from your secret store>
-/opt/chango/bin/chango-cli.sh master-key fingerprint   # run on each master — values must match
+
+# Confirm every master holds the SAME key without exposing it — run on each master:
+/opt/chango/bin/chango-cli.sh master-key fingerprint
+
+# Retrieve a managed product's own master key (gated by this fingerprint + the
+# root-owned admin socket) — e.g. after installing Ontul or ShannonStore:
+/opt/chango/bin/chango-cli.sh master-key list
+/opt/chango/bin/chango-cli.sh master-key show --cluster <cluster-id>
 ```
 
-Treat this value as a root credential — it is the root of trust for every secret chango stores, including the master keys of the managed products (Ontul, ShannonStore, …) it installs, which an operator holding the correct `CHANGO_MASTER_KEY` can later retrieve with `chango-cli master-key list` / `master-key show --cluster <id>`. Move it into a real secret manager (Vault, AWS Secrets Manager, a hardware-backed password manager) immediately after first install. You must re-supply this **exact** value on every master / NM restart and at every later scale-out.
+Move the value into a real secret manager (Vault, AWS Secrets Manager, a hardware-backed password manager) immediately after first install. You must re-supply this **exact** value on every master / NM restart and at every later scale-out.
 
 ## 6. Run the install playbook
 
