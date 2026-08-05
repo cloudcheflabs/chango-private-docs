@@ -14,7 +14,7 @@
         <link rel="prev" href="../manual/">
       
       
-        <link rel="next" href="../docker/">
+        <link rel="next" href="../getting-started/">
       
       
         
@@ -948,34 +948,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../docker/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Local Docker Cluster
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -2414,12 +2386,16 @@
 <h3 id="single-host-eval-dev">Single-host (eval / dev)</h3>
 <p>If you really want a single-box install (eval, lab, vagrant), drop both masters / zk count to 1 — put the same host into all three groups. <code>inventory-vagrant.yml</code> is shipped pre-wired for that.</p>
 <h2 id="5-generate-the-cluster-master-key">5. Generate the cluster master key</h2>
-<p>Once, on the controller:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">48</span><span class="k">)</span>
+<p>Once, on the controller. The extracted bundle already ships the chango CLI, so use its purpose-built generator (it enforces the length + charset chango's KMS envelope expects):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span><span class="k">$(</span>chango-3.0.0/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>generate<span class="k">)</span>
 </code></pre></div>
-<p>Treat this value as a root credential — it is the root of trust for every secret chango stores. Move it into a real secret manager (Vault, AWS Secrets Manager, a hardware-backed password manager) immediately after first install. You must re-supply this <strong>exact</strong> value on every master / NM restart and at every later scale-out.</p>
+<p><code>openssl rand -base64 48 | head -c 48</code> also works if you prefer, but the CLI is the supported path — after the cluster is up you can confirm every master holds the <strong>same</strong> key without exposing it by comparing fingerprints:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>store&gt;
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>fingerprint<span class="w">   </span><span class="c1"># run on each master — values must match</span>
+</code></pre></div>
+<p>Treat this value as a root credential — it is the root of trust for every secret chango stores, including the master keys of the managed products (Ontul, ShannonStore, …) it installs, which an operator holding the correct <code>CHANGO_MASTER_KEY</code> can later retrieve with <code>chango-cli master-key list</code> / <code>master-key show --cluster &lt;id&gt;</code>. Move it into a real secret manager (Vault, AWS Secrets Manager, a hardware-backed password manager) immediately after first install. You must re-supply this <strong>exact</strong> value on every master / NM restart and at every later scale-out.</p>
 <h2 id="6-run-the-install-playbook">6. Run the install playbook</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml
 </code></pre></div>
 <p>The playbook runs seven plays in order:</p>
 <ol>
@@ -2433,23 +2409,23 @@
 </ol>
 <p>Expected runtime: 5 – 10 minutes for a 3-host cluster (component extraction dominates).</p>
 <p>The last task of the master play is an operator-note debug block printing the bootstrap file path on the master host. Read it carefully — that is the one moment a chango-controlled file holds the master key. Move the value into your secret manager, then:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>shred<span class="w"> </span>-u<span class="w"> </span>/opt/chango/.master-key-bootstrap
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>shred<span class="w"> </span>-u<span class="w"> </span>/opt/chango/.master-key-bootstrap
 </code></pre></div>
 <p>After that, the chango runtime never reads any persistent key file again. Every later start requires the operator to supply <code>CHANGO_MASTER_KEY</code> from their secret manager.</p>
 <h2 id="7-verify">7. Verify</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://&lt;master&gt;:8080/admin/api/auth/login<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://&lt;master&gt;:8080/admin/api/auth/login<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin&quot;}&#39;</span>
 </code></pre></div>
 <p>A response containing <code>accessToken</code> means chango is up. Default login is <code>admin</code> / <code>admin</code>; the first login forces a password change.</p>
 <p>Web UI: <code>http://&lt;master&gt;:8080/admin/</code></p>
 <h2 id="adding-a-master-later-add-masteryml">Adding a master later — <code>add-master.yml</code></h2>
 <p>Use this when you grow the cluster beyond the 2-master default — e.g. a third master in a new failure domain — or to replace a master after a hardware loss.</p>
 <p>If you do <strong>not</strong> also want to add a ZK node, the existing 3-node ZK quorum stays as-is; the new master just connects to that quorum. The <code>add-master.yml</code> playbook only touches the new master host's chango distribution + first-boot start.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 1. Append the new master to inventory.yml under chango_masters: with a distinct</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1">#    chango_master_zk_id (e.g. 3 if you already had 1 and 2).</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># 2. Run, limited to the new host:</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-master.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-master-host&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># 1. Append the new master to inventory.yml under chango_masters: with a distinct</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1">#    chango_master_zk_id (e.g. 3 if you already had 1 and 2).</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># 2. Run, limited to the new host:</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-master.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-master-host&gt;
 </code></pre></div>
 <p>The playbook prompts for <code>CHANGO MASTER KEY</code> — type the same value you used at first install. The key is <code>private</code> (not echoed) and is passed through to first-boot start <strong>in memory only</strong>; the bootstrap file is not created on the new host.</p>
 <p>CI / non-interactive use: set <code>CHANGO_MASTER_KEY</code> in the controller's environment; the prompt uses that as its default and the playbook runs without an interactive shell.</p>
@@ -2461,28 +2437,28 @@
 <li>Write <code>&lt;id&gt;</code> into <code>/var/lib/chango/zookeeper/myid</code> on the new host (an empty install does this automatically — but if you are re-introducing a known id, set it first).</li>
 <li>Roll-restart <code>start-zk.sh</code> / <code>stop-zk.sh</code> on each existing ZK host one by one, waiting for the quorum to re-form before moving on. See <a href="../../operations/cluster-operations/">Cluster Operations</a>.</li>
 <li>Run the install playbook scoped to the new host so its chango distribution, <code>zoo.cfg</code>, and <code>myid</code> land properly:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-zk-host&gt;<span class="w"> </span>--tags<span class="w"> </span>chango-zookeeper
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-zk-host&gt;<span class="w"> </span>--tags<span class="w"> </span>chango-zookeeper
 </code></pre></div>
    (The <code>chango-zookeeper</code> role only renders config + starts ZK; safe to re-run on existing hosts as well.)</li>
 </ol>
 <p>Shrinking a quorum (3 → 1) is allowed only when you have isolated downtime — chango treats it like any other roll. Never go from 3 → 2; majority is now both nodes and you have worse availability than 1.</p>
 <h2 id="adding-a-node-manager-later-add-nodemanageryml">Adding a node manager later — <code>add-nodemanager.yml</code></h2>
 <p>Use this for any horizontal scale-out — more capacity for component instances, a new failure domain, a replacement after a hardware loss.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># 1. Append the new node to inventory.yml under chango_nodemanagers:.</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># 2. Run, limited to the new host:</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-nodemanager.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-nm-host&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># 1. Append the new node to inventory.yml under chango_nodemanagers:.</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># 2. Run, limited to the new host:</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>add-nodemanager.yml<span class="w"> </span>--limit<span class="w"> </span>&lt;new-nm-host&gt;
 </code></pre></div>
 <p>Same prompt behavior as <code>add-master.yml</code>. The playbook installs <code>node-prep</code> + Java 17/25 + chango on the new host and runs first-boot start with the master key in env only. The NM registers itself in ZooKeeper and shows up in the admin UI within seconds.</p>
 <h2 id="uninstall-uninstallyml">Uninstall — <code>uninstall.yml</code></h2>
 <p><code>uninstall.yml</code> only cleans disk; it does <strong>not</strong> drive lifecycle. Stop every chango process yourself first (ansible no longer manages running processes), then run the playbook to remove the install / data / log directories on every host.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># 1. On each host, stop the processes (as the chango user):</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-master.sh<span class="w">          </span><span class="c1"># master hosts</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-zk.sh<span class="w">              </span><span class="c1"># ZK hosts</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-node-manager.sh<span class="w">    </span><span class="c1"># NM hosts</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># confirm with `ps -ef | grep chango` that nothing is left running.</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1"># 2. From the controller, wipe the directories cluster-wide:</span>
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>uninstall.yml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># 1. On each host, stop the processes (as the chango user):</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-master.sh<span class="w">          </span><span class="c1"># master hosts</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-zk.sh<span class="w">              </span><span class="c1"># ZK hosts</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-node-manager.sh<span class="w">    </span><span class="c1"># NM hosts</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="c1"># confirm with `ps -ef | grep chango` that nothing is left running.</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># 2. From the controller, wipe the directories cluster-wide:</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>uninstall.yml
 </code></pre></div>
 <p>This removes <code>chango_install_dir</code> (<code>/opt/chango</code>), <code>chango_data_dir</code> (<code>/var/lib/chango</code>), and <code>chango_log_dir</code> (<code>/var/log/chango</code>) on every host. The JDKs under <code>/opt</code> and the <code>chango</code> OS user are left in place — remove them by hand if you want a full teardown.</p>
 <h2 id="next">Next</h2>
