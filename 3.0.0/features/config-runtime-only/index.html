@@ -657,6 +657,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../lineage-audit/" class="md-nav__link">
+        Data Lineage & Audit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../role-based-access/" class="md-nav__link">
         Role-Based Access (Stage 1)
       </a>
@@ -1027,6 +1041,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../operations/jvm-tuning/" class="md-nav__link">
+        JVM & Heap Tuning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../operations/upgrade/" class="md-nav__link">
         Upgrade
       </a>
@@ -1294,6 +1322,7 @@
 <h2 id="install-time-properties-jvm">Install-time properties + JVM</h2>
 <p>If you need a configuration value baked in from the very first start — heap size, custom <code>ontul.master.…</code> property, custom <code>trino-extra.config.properties</code> line — set it at <strong>install</strong> time. Every component's CreatePanel (Install / Properties / JVM tabs) accepts a per-role JVM config block + a <code>properties</code> map that lands on disk <strong>before</strong> the first <code>start-*.sh</code> is called. See <a href="../../operations/component-operations/">Component Operations</a> for the install-request shape.</p>
 <p>The runtime-only policy is for <strong>post-install</strong> drift; install-time config is the right surface for first-start values.</p>
+<p>For heap specifically — including chango's node-proportional Trino default and how an explicit <code>-Xmx</code> override is merged onto the packaged flags — see <a href="../../operations/jvm-tuning/">JVM &amp; Heap Tuning</a>.</p>
 
 
 

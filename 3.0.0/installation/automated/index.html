@@ -617,6 +617,26 @@
     6. Run the install playbook
   </a>
   
+    <nav class="md-nav" aria-label="6. Run the install playbook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-the-node-manager-start-is-a-separate-final-play" class="md-nav__link">
+    Why the node-manager start is a separate, final play
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-the-master-tarball-reaches-every-master" class="md-nav__link">
+    How the master tarball reaches every master
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -797,6 +817,20 @@
     <li class="md-nav__item">
       <a href="../../features/iam/" class="md-nav__link">
         Identity & Access Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/lineage-audit/" class="md-nav__link">
+        Data Lineage & Audit
       </a>
     </li>
   
@@ -1105,6 +1139,20 @@
     <li class="md-nav__item">
       <a href="../../operations/nginx-proxy/" class="md-nav__link">
         Nginx Reverse Proxy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operations/jvm-tuning/" class="md-nav__link">
+        JVM & Heap Tuning
       </a>
     </li>
   
@@ -1519,17 +1567,31 @@
 <h2 id="6-run-the-install-playbook">6. Run the install playbook</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>install.yml
 </code></pre></div>
-<p>The playbook runs seven plays in order:</p>
+<p>The playbook runs eight plays in order:</p>
 <ol>
 <li><strong><code>node-prep</code></strong> — SELinux disabled + ulimit + sysctl on every host (masters + ZK + NMs).</li>
 <li><strong><code>java11</code></strong> — extracts Java 11 under <code>/opt</code> on every host (Spark + Livy runtime).</li>
 <li><strong><code>java17</code></strong> — extracts Java 17 under <code>/opt</code> on every host (chango self + most components).</li>
 <li><strong><code>java25</code></strong> — extracts Java 25 under <code>/opt</code> on every host (Trino's runtime).</li>
-<li><strong><code>chango-nodemanager</code></strong> — installs chango on the NM hosts, starts the NM once. NM hosts <strong>never</strong> get the master key bootstrap file. Distribution is extracted here, so later plays (<code>chango-zookeeper</code>, <code>chango-master</code>) only add their role-specific files on top.</li>
-<li><strong><code>chango-zookeeper</code></strong> — renders <code>zoo.cfg</code> from the <code>chango_zookeepers</code> group + writes <code>myid</code> + first-boot starts ZK on each ZK host. Has to run after NM (which extracts the distribution) and before master (which connects to ZK on startup).</li>
+<li><strong><code>chango-nodemanager</code> — extract only</strong> — installs chango on the NM hosts with <code>chango_nodemanager_firstboot: false</code>, so the distribution is unpacked but the NM is <strong>not</strong> started yet. NM hosts <strong>never</strong> get the master key bootstrap file. Extracting here means the later plays (<code>chango-zookeeper</code>, <code>chango-master</code>) only add their role-specific files on top.</li>
+<li><strong><code>chango-zookeeper</code></strong> — renders <code>zoo.cfg</code> from the <code>chango_zookeepers</code> group + writes <code>myid</code> + first-boot starts ZK on each ZK host. Has to run after NM extraction and before master (which connects to ZK on startup).</li>
 <li><strong><code>chango-master</code></strong> — installs chango on the master hosts (idempotent over the NM extraction), stages the master key bootstrap file (master only, 0600 root), starts master once with <code>CHANGO_MASTER_KEY</code> from the controller's environment. The master immediately connects to the ZK quorum that play 6 brought up.</li>
+<li><strong><code>chango-nodemanager</code> — first-boot start</strong> — re-runs the NM role with <code>chango_nodemanager_firstboot: true</code>, now that the ZK quorum and a master leader exist, and starts every node manager. Each NM registers itself and shows up in the admin UI.</li>
 </ol>
 <p>Expected runtime: 5 – 10 minutes for a 3-host cluster (component extraction dominates).</p>
+<h3 id="why-the-node-manager-start-is-a-separate-final-play">Why the node-manager start is a separate, final play</h3>
+<p>A node manager that starts <em>before</em> the ZK quorum and the master leader exist cannot register itself. It notices the mismatch and self-shuts-down with <code>Expected state [STARTED] was [STOPPED]</code>, leaving the cluster reporting <code>nodeManagers: 0</code> and forcing the operator to restart every NM by hand after the install finished "successfully".</p>
+<p>Splitting the NM role into <strong>extract</strong> (play 5) and <strong>start</strong> (play 8) removes that ordering hazard: <code>install.yml</code> on its own brings up masters <em>and</em> registered node managers, with no operator follow-up. The split is driven by the <code>chango_nodemanager_firstboot</code> variable, so one role serves both plays.</p>
+<p><code>add-nodemanager.yml</code> leaves that variable at its default (<code>true</code>) — when you add a host later the cluster is already running, so extract-and-start in a single pass is the correct behaviour there.</p>
+<h3 id="how-the-master-tarball-reaches-every-master">How the master tarball reaches every master</h3>
+<p>The with-comps tarball is large (10 GB+ once the JDKs and every component package are in it). Ansible's <code>unarchive</code> module deliberately does not push a file that size over its own connection, so the master role uses <code>remote_src: yes</code> — which requires the tarball to already be <strong>on the master host</strong>. When the controller <em>is</em> the master that is trivially true; on a 2-master HA install the second master has no copy, and without staging the extract fails with <em>"Source does not exist"</em>.</p>
+<p>The role therefore stages it first: an <code>rsync</code> task, delegated to the controller and run once per master host, ships <code>roles/chango-master/files/chango-with-comps-&lt;version&gt;.tar.gz</code> into the ssh user's home directory on that master (writable without sudo), and the extract / re-extract / cleanup tasks all point at that per-host copy. The staged copy is deleted at the end of the role to reclaim disk.</p>
+<p>Two practical requirements:</p>
+<ul>
+<li><strong><code>rsync</code> must exist on the controller and on every master host.</strong> It is present in a stock Rocky 9 install; if you trimmed the image, <code>dnf install -y rsync</code> before running the playbook.</li>
+<li><strong>The transfer uses the inventory's ssh key file</strong> (<code>ansible_ssh_private_key_file</code>) directly rather than ansible's connection plugin, so that variable must point at a real, controller-readable key. An ssh-agent-only setup with no key file will not satisfy this task.</li>
+</ul>
+<p>The idiomatic choice would be <code>ansible.posix.synchronize</code>, but the shipped bundle carries only <code>ansible-core</code> with no extra collections — calling <code>rsync</code> directly keeps the air-gapped install dependency-free.</p>
 <p>The last task of the master play is an operator-note debug block printing the bootstrap file path on the master host. Read it carefully — that is the one moment a chango-controlled file holds the master key. Move the value into your secret manager, then:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>shred<span class="w"> </span>-u<span class="w"> </span>/opt/chango/.master-key-bootstrap
 </code></pre></div>

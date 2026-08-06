@@ -746,6 +746,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../features/lineage-audit/" class="md-nav__link">
+        Data Lineage & Audit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../features/role-based-access/" class="md-nav__link">
         Role-Based Access (Stage 1)
       </a>
@@ -1054,6 +1068,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../operations/jvm-tuning/" class="md-nav__link">
+        JVM & Heap Tuning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../operations/upgrade/" class="md-nav__link">
         Upgrade
       </a>
@@ -1273,7 +1301,7 @@
 
 
 <h1 id="architecture">Architecture</h1>
-<p>Chango is the <strong>control plane</strong> of a self-hosted Agentic AI Data Platform. It does not store data and does not execute queries itself — it installs, starts, scales, observes, and tears down every other component (object storage, streaming, data engines, OLTP / vector / graph store, workflow, agents) on a fleet of Rocky 9 hosts, through a single admin UI and REST API.</p>
+<p>Chango is the <strong>control plane</strong> of a self-hosted Agentic Data Platform. It does not store data and does not execute queries itself — it installs, starts, scales, observes, and tears down every other component (object storage, streaming, data engines, OLTP / vector / graph store, workflow, agents) on a fleet of Rocky 9 hosts, through a single admin UI and REST API.</p>
 <p>The cluster is composed of three logical tiers — a control tier, an agent tier, and a coordination tier — each scalable independently.</p>
 <h2 id="chango-cluster">Chango Cluster</h2>
 <h3 id="control-tier-master">Control Tier (Master)</h3>

@@ -14,7 +14,7 @@
         <link rel="prev" href="../cluster-readiness/">
       
       
-        <link rel="next" href="../role-based-access/">
+        <link rel="next" href="../lineage-audit/">
       
       <link rel="icon" href="../../images/logo/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
@@ -747,6 +747,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../lineage-audit/" class="md-nav__link">
+        Data Lineage & Audit
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../role-based-access/" class="md-nav__link">
         Role-Based Access (Stage 1)
       </a>
@@ -1055,6 +1069,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../operations/jvm-tuning/" class="md-nav__link">
+        JVM & Heap Tuning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../operations/upgrade/" class="md-nav__link">
         Upgrade
       </a>
@@ -1336,7 +1364,7 @@
 <ul>
 <li>The chango installer wires every Trino / Spark / Flink cluster to an Ontul endpoint + a long-lived access key (OTOK).</li>
 <li>Inside the engine, the first-party authz plugin (<code>chango-trino-authz</code>, <code>chango-spark-authz</code>, <code>chango-flink-authz</code>) calls <code>POST &lt;ontul&gt;/v1/api/authz/check-batch</code> for every query, with <code>(user, action, resource)</code> tuples and gets back <code>ALLOW</code> / <code>DENY</code> / <code>ABSTAIN</code> decisions.</li>
-<li>The same plugin then reports the outcome to Ontul's audit + lineage store (<code>POST &lt;ontul&gt;/v1/api/audit</code>, <code>/v1/api/lineage</code>) so activity from every engine is collected centrally. <strong>Both allowed and denied accesses are audited</strong> — a refused query is recorded with <code>decision=DENY</code> (and the refusal reason) before the plugin fails it, so a probing or misconfigured user leaves a trail. Lineage edges (<code>sources → target</code>) are emitted only for successful writes (CTAS / <code>INSERT</code>), never for a denied one. See <a href="https://cloudcheflabs.github.io/ontul-docs/1.0.0/features/audit-log/">Ontul Audit Log</a> for the collected schema and the <code>decision</code> field.</li>
+<li>The same plugin then reports the outcome to Ontul's audit + lineage store (<code>POST &lt;ontul&gt;/v1/api/audit</code>, <code>/v1/api/lineage</code>) so activity from every engine is collected centrally. <strong>Both allowed and denied accesses are audited</strong> — a refused query is recorded with <code>decision=DENY</code> (and the refusal reason) before the plugin fails it, so a probing or misconfigured user leaves a trail. Lineage edges (<code>sources → target</code>) are emitted only for successful writes (CTAS / <code>INSERT</code>), never for a denied one. See <a href="../lineage-audit/">Data Lineage &amp; Audit</a> for what each event carries, the per-engine coverage differences, the <code>lineage.audit.enabled</code> switch, and how to verify it on a live cluster — and <a href="https://cloudcheflabs.github.io/ontul-docs/1.0.0/features/audit-log/">Ontul Audit Log</a> for the collected schema and the <code>decision</code> field.</li>
 </ul>
 <p>So chango's own IAM governs the admin UI and the REST API. Ontul's IAM governs query-time access to the data. Chango and Ontul are deliberately separate authorities — chango can be re-provisioned without invalidating Ontul tokens, and Ontul can be re-bootstrapped without re-issuing chango admin sessions.</p>
 <h2 id="engine-coverage">Engine coverage</h2>

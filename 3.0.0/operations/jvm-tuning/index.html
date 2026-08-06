@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/features/logging/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/operations/jvm-tuning/">
       
       
-        <link rel="prev" href="../monitoring/">
+        <link rel="prev" href="../nginx-proxy/">
       
       
-        <link rel="next" href="../backup/">
+        <link rel="next" href="../upgrade/">
       
       <link rel="icon" href="../../images/logo/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Logging - Chango</title>
+        <title>JVM & Heap Tuning - Chango</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#logging" class="md-skip">
+        <a href="#jvm-heap-tuning" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Logging
+              JVM & Heap Tuning
             
           </span>
         </div>
@@ -243,15 +243,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../control-plane/" class="md-tabs__link md-tabs__link--active">
+      <a href="../../features/control-plane/" class="md-tabs__link">
         Features
       </a>
     </li>
@@ -277,13 +275,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../operations/cluster-operations/" class="md-tabs__link">
+      <a href="../cluster-operations/" class="md-tabs__link md-tabs__link--active">
         Operations
       </a>
     </li>
@@ -542,16 +542,14 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
       
       
       
@@ -560,7 +558,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Features
@@ -573,7 +571,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../control-plane/" class="md-nav__link">
+      <a href="../../features/control-plane/" class="md-nav__link">
         Control Plane
       </a>
     </li>
@@ -587,7 +585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../topology/" class="md-nav__link">
+      <a href="../../features/topology/" class="md-nav__link">
         Cluster Topology
       </a>
     </li>
@@ -601,7 +599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sticky-leader/" class="md-nav__link">
+      <a href="../../features/sticky-leader/" class="md-nav__link">
         Sticky Leader Election
       </a>
     </li>
@@ -615,7 +613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../leader-forward/" class="md-nav__link">
+      <a href="../../features/leader-forward/" class="md-nav__link">
         Leader Forwarding
       </a>
     </li>
@@ -629,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cluster-readiness/" class="md-nav__link">
+      <a href="../../features/cluster-readiness/" class="md-nav__link">
         Cluster Readiness
       </a>
     </li>
@@ -643,7 +641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../iam/" class="md-nav__link">
+      <a href="../../features/iam/" class="md-nav__link">
         Identity & Access Management
       </a>
     </li>
@@ -657,7 +655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lineage-audit/" class="md-nav__link">
+      <a href="../../features/lineage-audit/" class="md-nav__link">
         Data Lineage & Audit
       </a>
     </li>
@@ -671,7 +669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../role-based-access/" class="md-nav__link">
+      <a href="../../features/role-based-access/" class="md-nav__link">
         Role-Based Access (Stage 1)
       </a>
     </li>
@@ -685,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../admin-password-recovery/" class="md-nav__link">
+      <a href="../../features/admin-password-recovery/" class="md-nav__link">
         Admin Password Recovery
       </a>
     </li>
@@ -699,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kms/" class="md-nav__link">
+      <a href="../../features/kms/" class="md-nav__link">
         Encryption & Key Management
       </a>
     </li>
@@ -713,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../port-allocator/" class="md-nav__link">
+      <a href="../../features/port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
     </li>
@@ -727,7 +725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hosts-sync/" class="md-nav__link">
+      <a href="../../features/hosts-sync/" class="md-nav__link">
         Hosts Sync
       </a>
     </li>
@@ -741,7 +739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ui-proxy/" class="md-nav__link">
+      <a href="../../features/ui-proxy/" class="md-nav__link">
         UI Proxy
       </a>
     </li>
@@ -755,7 +753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../monitoring/" class="md-nav__link">
+      <a href="../../features/monitoring/" class="md-nav__link">
         Monitoring & Metrics
       </a>
     </li>
@@ -767,94 +765,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Logging
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../features/logging/" class="md-nav__link">
         Logging
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#where-chango-writes-its-own-logs" class="md-nav__link">
-    Where chango writes its own logs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-managed-component-logs-live" class="md-nav__link">
-    Where managed component logs live
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tailing-from-the-admin-ui" class="md-nav__link">
-    Tailing from the admin UI
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rest-surface" class="md-nav__link">
-    REST surface
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-not-in-chango-logs" class="md-nav__link">
-    What is not in chango logs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#log-level" class="md-nav__link">
-    Log level
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#shipping-logs-out" class="md-nav__link">
-    Shipping logs out
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -866,7 +781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../backup/" class="md-nav__link">
+      <a href="../../features/backup/" class="md-nav__link">
         Backup & Restore
       </a>
     </li>
@@ -880,7 +795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../patch-system/" class="md-nav__link">
+      <a href="../../features/patch-system/" class="md-nav__link">
         Patch System
       </a>
     </li>
@@ -894,7 +809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../license/" class="md-nav__link">
+      <a href="../../features/license/" class="md-nav__link">
         License Manager
       </a>
     </li>
@@ -908,7 +823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../config-runtime-only/" class="md-nav__link">
+      <a href="../../features/config-runtime-only/" class="md-nav__link">
         Config Runtime-Only Policy
       </a>
     </li>
@@ -991,14 +906,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
@@ -1007,7 +924,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Operations
@@ -1020,7 +937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/cluster-operations/" class="md-nav__link">
+      <a href="../cluster-operations/" class="md-nav__link">
         Cluster Operations
       </a>
     </li>
@@ -1034,7 +951,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/component-operations/" class="md-nav__link">
+      <a href="../component-operations/" class="md-nav__link">
         Component Operations
       </a>
     </li>
@@ -1048,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/nginx-proxy/" class="md-nav__link">
+      <a href="../nginx-proxy/" class="md-nav__link">
         Nginx Reverse Proxy
       </a>
     </li>
@@ -1060,11 +977,121 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../operations/jvm-tuning/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          JVM & Heap Tuning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         JVM & Heap Tuning
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-jvm-settings-come-from" class="md-nav__link">
+    Where JVM settings come from
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rendering-rules" class="md-nav__link">
+    Rendering rules
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trino-the-ram-percentage-default" class="md-nav__link">
+    Trino: the RAM-percentage default
+  </a>
+  
+    <nav class="md-nav" aria-label="Trino: the RAM-percentage default">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-heap-floor" class="md-nav__link">
+    The heap floor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-an-explicit-heap-override-is-merged" class="md-nav__link">
+    How an explicit heap override is merged
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-a-change" class="md-nav__link">
+    Applying a change
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifying-on-the-host" class="md-nav__link">
+    Verifying on the host
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sizing-guidance" class="md-nav__link">
+    Sizing guidance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    Related
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1076,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../operations/upgrade/" class="md-nav__link">
+      <a href="../upgrade/" class="md-nav__link">
         Upgrade
       </a>
     </li>
@@ -1294,77 +1321,151 @@
                   
 
 
-<h1 id="logging">Logging</h1>
-<p>Chango's own logs and every managed component's logs are accessible from the admin UI and from disk. Chango itself uses logback; managed components keep their own log frameworks and chango exposes their log files for tailing without changing what they write.</p>
-<h2 id="where-chango-writes-its-own-logs">Where chango writes its own logs</h2>
-<p><code>/var/log/chango/</code> on every chango host (<code>chango.log.path</code> in <code>chango.properties</code>). The master and the node manager each write their own files:</p>
+<h1 id="jvm-heap-tuning">JVM &amp; Heap Tuning</h1>
+<p>Nearly every component chango manages is a JVM process, and on a chango cluster <strong>several of them usually share a host</strong>. That is the single fact that drives chango's JVM defaults: a component must never size itself as if it owned the machine. This page covers where JVM settings live, what chango's defaults are, how an operator override is merged, and how to verify the result on the host.</p>
+<h2 id="where-jvm-settings-come-from">Where JVM settings come from</h2>
 <table>
 <thead>
 <tr>
-<th>File</th>
-<th>Source</th>
+<th>Layer</th>
+<th>What it is</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>/var/log/chango/chango-master.log</code></td>
-<td>Chango master JVM (rolling)</td>
+<td><strong>Packaged default</strong></td>
+<td>Whatever the upstream distribution ships. Chango overwrites this for components where the upstream default is unsafe in a co-located layout.</td>
 </tr>
 <tr>
-<td><code>/var/log/chango/chango-nodemanager.log</code></td>
-<td>Chango node manager JVM (rolling)</td>
+<td><strong>Chango default</strong></td>
+<td>The <code>jvm.conf</code> / <code>jvm.config</code> chango renders at install time. Marked <code># Managed by chango — edit via the admin UI (Configure Cluster).</code></td>
 </tr>
 <tr>
-<td><code>/var/log/chango/chango-zk.log</code></td>
-<td>Bundled ZooKeeper on master hosts</td>
-</tr>
-<tr>
-<td><code>/var/log/chango/_ops.log</code></td>
-<td>Per-NM ops log — every shell command the NM ran on behalf of an install / start / stop, with exit codes</td>
+<td><strong>Operator override</strong></td>
+<td>A per-role <code>JvmConfig</code> block — <code>{heapMin, heapMax, extra}</code> — supplied on the <strong>Create</strong> panel's <em>JVM</em> tab at install, or on <strong>Configure</strong> afterwards.</td>
 </tr>
 </tbody>
 </table>
-<p>Rolling is logback's default policy — daily, with <code>.gz</code> retention. Tune in <code>conf/logback.xml</code>.</p>
-<h2 id="where-managed-component-logs-live">Where managed component logs live</h2>
-<p>Each component writes under its own install dir:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/opt/components/&lt;instanceId&gt;/logs/...
-</code></pre></div>
-<p>The path inside <code>logs/</code> is component-specific (<code>server.log</code> for Trino, <code>master.log</code> for Spark, …). The admin UI's "Logs" panel knows the right path per component type and shows a tail in the browser.</p>
-<h2 id="tailing-from-the-admin-ui">Tailing from the admin UI</h2>
-<p>Every component page in the admin UI has a "Logs" button per instance. Click it and the master opens a streaming tail over the internal NIO protocol against the NM that hosts the instance. The tail is read-only — you can scroll, search, and copy, but not write.</p>
-<p>The chango master itself can also be tailed from the admin UI's Master log page (driven by an in-memory <code>RingBufferAppender</code> that holds the last N log lines).</p>
-<h2 id="rest-surface">REST surface</h2>
-<table>
-<thead>
-<tr>
-<th>Endpoint</th>
-<th>Returns</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>GET /admin/api/components/&lt;instanceId&gt;/logs?lines=N</code></td>
-<td>Last N lines of the given component instance</td>
-</tr>
-<tr>
-<td><code>GET /admin/api/nodes/logs?nodeId=&lt;id&gt;&amp;which=master&amp;lines=N</code></td>
-<td>Last N lines of <code>chango-master.log</code> on a master node (or <code>which=nm</code> for the NM log)</td>
-</tr>
-</tbody>
-</table>
-<p>Both routes stream the tail via internal NIO from the relevant host (master or NM), so the leader does not need to live on the same disk as the log file.</p>
-<h2 id="what-is-not-in-chango-logs">What is <em>not</em> in chango logs</h2>
+<p>The override is <strong>per role</strong>, not per cluster: <code>coordinatorJvm</code> / <code>workerJvm</code> for Trino, <code>masterJvm</code> / <code>workerJvm</code> for Ontul, <code>apiJvm</code> / <code>dataJvm</code> for ShannonStore, <code>serverJvm</code> for Polaris, <code>gatewayJvm</code> for Trino Gateway, and so on. A coordinator and a worker on the same host can therefore be sized completely differently — which is normally what you want, since only the workers do the heavy lifting.</p>
+<p>Because it is available on the <strong>Create</strong> panel, a fully tuned cluster can be installed in one pass; there is no need to install first and Configure second. See <a href="../component-operations/">Component Operations</a> for the install-request shape.</p>
+<h2 id="rendering-rules">Rendering rules</h2>
+<p><code>JvmConfig</code> renders one JVM option per line:</p>
 <ul>
-<li><strong>Component data-plane logs</strong> that the component does not write to the install dir. Trino's query history is in Trino's metastore. Spark application logs from a finished job live in the configured event log directory (typically on S3 / ShannonStore).</li>
-<li><strong>System logs</strong> (<code>journalctl</code>, <code>dmesg</code>). The chango master + NM services do log to journald via their systemd units; chango does not re-shove those into the admin UI. Use <code>journalctl -u chango-master</code> directly when you need them.</li>
+<li><code>heapMin</code> → <code>-Xms&lt;value&gt;</code>; <code>heapMax</code> → <code>-Xmx&lt;value&gt;</code>. Blank means "omit the line", not "zero".</li>
+<li>Each <code>extra</code> entry becomes one line. A <strong>blank value</strong> yields a bare switch (<code>-XX:+UseG1GC</code>); a <strong>non-blank value</strong> yields <code>key=value</code> (<code>-XX:MaxMetaspaceSize=256m</code>).</li>
+<li>The rendered file always starts with the <code># Managed by chango</code> comment, so an operator reading the host can tell at a glance which file chango owns.</li>
 </ul>
-<h2 id="log-level">Log level</h2>
-<p>The default level is <code>INFO</code>. To raise (or quiet) a specific logger, edit <code>conf/logback.xml</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;com.cloudcheflabs.chango.master.component.ShannonStoreClusterService&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">/&gt;</span>
+<p>Values are passed through verbatim after trimming — chango does not validate that <code>-Xmx3g</code> is achievable on the node. A heap larger than physical RAM produces a JVM that fails to start, and the component lands in <code>FAILED</code> with the JVM's own error in the component log.</p>
+<h2 id="trino-the-ram-percentage-default">Trino: the RAM-percentage default</h2>
+<p>Trino is the one component whose heap default has a real history, because Trino's own packaged <code>jvm.config</code> assumes a dedicated node.</p>
+<p>Chango's rendered <code>etc/jvm.config</code> sets:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-XX:InitialRAMPercentage=30
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>-XX:MaxRAMPercentage=30
 </code></pre></div>
-<p>Reload the logback config without restart with <code>kill -HUP &lt;chango-master pid&gt;</code> (logback's <code>&lt;jmxConfigurator/&gt;</code> is on) or by re-touching the file (logback's <code>scanPeriod</code> is 30 s).</p>
-<h2 id="shipping-logs-out">Shipping logs out</h2>
-<p>The admin UI is a debugging surface, not a log lake. For real log aggregation, point a customer agent (Vector, Fluent Bit, …) at <code>/var/log/chango/</code> and <code>/opt/components/*/logs/</code> on every host. Chango does not bundle one — operators typically already have their own.</p>
+<p>Rather than a fixed <code>-Xmx</code>. The reasoning, in order:</p>
+<ul>
+<li><strong>80% (the value chango shipped earlier) is wrong here.</strong> It is right for a dedicated Trino node and badly wrong on a chango host that also runs Ontul, ShannonStore data nodes, a Kafka broker, and a node manager. Trino would claim almost the whole machine and starve its neighbours.</li>
+<li><strong>A fixed <code>-Xmx</code> is wrong as a <em>default</em>.</strong> It is correct only for the node size the author had in mind and silently over- or under-commits every other machine in the fleet.</li>
+<li><strong>Leaving heap unset is also wrong.</strong> The JVM's implicit default (roughly 25% of RAM) varies by JVM version, so the cluster's memory behaviour would change under a JDK upgrade with nothing in the config to explain it.</li>
+</ul>
+<p>30% is bounded, node-proportional, scales predictably across heterogeneous hosts, and is version-stable. An operator who <em>does</em> have a dedicated Trino node should raise it — either with a higher <code>MaxRAMPercentage</code> via <code>extra</code>, or with an explicit <code>-Xmx</code>.</p>
+<h3 id="the-heap-floor">The heap floor</h3>
+<p>Trino refuses to start if the heap is below <code>query.max-memory-per-node + memory.heap-headroom-per-node</code>. Chango's defaults are <code>1GB</code> and <code>512MB</code>, so the floor is <strong>1.5 GB</strong> — meaning 30% of RAM clears it on a node of roughly 5 GB or more. On a smaller node you must either lower those two properties on the <em>Properties</em> tab or set an explicit <code>-Xmx</code> above the floor. A Trino instance that dies immediately after <code>start</code> with a memory-configuration error is almost always this.</p>
+<h3 id="how-an-explicit-heap-override-is-merged">How an explicit heap override is merged</h3>
+<p>When you set <code>heapMin</code> and/or <code>heapMax</code> for Trino, chango does <strong>not</strong> simply append your lines to the default file. It merges, with three rules:</p>
+<ol>
+<li><strong>The two <code>RAMPercentage</code> knobs are dropped.</strong> They are mutually exclusive with an explicit heap. Crucially this applies even to a <em>min-only</em> override — otherwise <code>MaxRAMPercentage</code> would survive and cap max heap at the percentage regardless of what you asked for.</li>
+<li><strong>Every other flag Trino needs is preserved.</strong> <code>-XX:G1HeapRegionSize</code>, <code>-XX:+ExitOnOutOfMemoryError</code>, <code>-Djdk.attach.allowAttachSelf</code>, <code>-XX:+EnableDynamicAgentLoading</code>, and the rest of the required set stay exactly as chango wrote them. Overriding heap must never silently drop a flag Trino needs to run.</li>
+<li><strong>Lines are deduped by flag key.</strong> <code>-XX:MaxRAMPercentage=80</code> and <code>-XX:MaxRAMPercentage=30</code> are the <em>same</em> key; <code>-Xms512m</code> and <code>-Xms2g</code> are both <code>-Xms</code>. Insertion order follows the chango default; an <code>extra</code> entry that names an existing flag replaces its value in place, and a genuinely new flag is appended.</li>
+</ol>
+<p>Rule 3 exists because the admin UI's Configure panel loads the on-disk <code>jvm.config</code> and echoes <strong>every</strong> line back as <code>extra</code> when you save. Without dedup, each save appended the whole default set again — the file grew without bound on every edit, and re-introduced the very <code>RAMPercentage</code> lines a heap override was supposed to remove. Heap is owned by <code>heapMin</code> / <code>heapMax</code>: an <code>-Xms</code> / <code>-Xmx</code> typed into <code>extra</code> is ignored rather than fighting the dedicated fields.</p>
+<h2 id="applying-a-change">Applying a change</h2>
+<p>JVM configuration is not hot-reloadable — the JVM reads it once at process start.</p>
+<ol>
+<li>Open the cluster in the admin UI → <strong>Configure</strong> → <em>JVM</em> tab (per role).</li>
+<li>Set <code>heapMin</code> / <code>heapMax</code>, add any <code>extra</code> flags, Save.</li>
+<li><strong>Restart</strong> the affected instances. Chango rewrites the config file on save but does not bounce the process for you; a rolling restart, role by role, keeps the cluster serving.</li>
+</ol>
+<p>The cluster must be <code>RUNNING</code> for the edit to be accepted — see <a href="../../features/config-runtime-only/">Config Runtime-Only Policy</a> for why chango refuses to stage configuration against a stopped cluster.</p>
+<h2 id="verifying-on-the-host">Verifying on the host</h2>
+<p>Read the rendered file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Trino</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>cat<span class="w"> </span>/opt/components/&lt;instanceId&gt;/etc/jvm.config
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Most other components</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>sudo<span class="w"> </span>cat<span class="w"> </span>/opt/components/&lt;instanceId&gt;/conf/jvm.conf
+</code></pre></div>
+<p>Then confirm the running process actually picked it up — the file on disk is what chango <em>intends</em>, the command line is what the JVM <em>got</em>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ps<span class="w"> </span>-ef<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>&lt;instanceId&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;^-X&#39;</span>
+</code></pre></div>
+<p>And check the heap the JVM resolved, which is the only number that settles a <code>RAMPercentage</code> question:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># JDK 25 is extracted under /opt by the java25 ansible role —</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># /opt/openlogic-openjdk-25.0.3+9-linux-x64 for the shipped build.</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>-u<span class="w"> </span>trino<span class="w"> </span>/opt/openlogic-openjdk-25*/bin/jcmd<span class="w"> </span>&lt;pid&gt;<span class="w"> </span>VM.flags<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;MaxHeapSize|InitialHeapSize&#39;</span>
+</code></pre></div>
+<p><code>MaxHeapSize</code> is in bytes — divide by 1024³ for GB. On a 16 GB node with the 30% default you should see roughly 4.8 GB.</p>
+<h2 id="sizing-guidance">Sizing guidance</h2>
+<p>There is no universal answer, but a workable starting point on a shared chango host:</p>
+<table>
+<thead>
+<tr>
+<th>Component role</th>
+<th>Starting heap</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trino coordinator</td>
+<td>30% (default)</td>
+<td>Planning and coordination, not data. Rarely the bottleneck.</td>
+</tr>
+<tr>
+<td>Trino worker</td>
+<td>30% (default), raise on a dedicated node</td>
+<td>Raise <code>query.max-memory-per-node</code> together with the heap, or the extra heap goes unused.</td>
+</tr>
+<tr>
+<td>Ontul master</td>
+<td>1–2 GB</td>
+<td>Metadata, IAM, audit ingest.</td>
+</tr>
+<tr>
+<td>Ontul worker</td>
+<td>Scale with query concurrency</td>
+<td>The Arrow-native execution path is largely off-heap; do not equate heap with query capacity.</td>
+</tr>
+<tr>
+<td>ShannonStore data node</td>
+<td>1–2 GB</td>
+<td>Storage path is I/O-bound; heap is not the lever.</td>
+</tr>
+<tr>
+<td>ShannonStore API server</td>
+<td>1–2 GB</td>
+<td>Raise under heavy concurrent S3 traffic.</td>
+</tr>
+<tr>
+<td>Kafka broker</td>
+<td>1–4 GB</td>
+<td>Kafka relies on the OS page cache — leave RAM <em>unallocated</em> rather than growing the heap.</td>
+</tr>
+</tbody>
+</table>
+<p>Reserve headroom for the OS page cache on every host. Component processes that do bulk I/O (Kafka, ShannonStore, anything reading Parquet) get more from free page cache than from a larger heap.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li><strong>Component <code>FAILED</code> right after start, log shows an OOM or heap-configuration error.</strong> Compare the heap in the rendered file against the node's RAM and, for Trino, against the heap floor above.</li>
+<li><strong>Your <code>-Xmx</code> seems to be ignored on Trino.</strong> Confirm you set it in the <em>JVM</em> tab's <code>heapMax</code> field, not as an <code>extra</code> entry — <code>extra</code> deliberately ignores <code>-Xms</code> / <code>-Xmx</code>.</li>
+<li><strong><code>jvm.config</code> keeps growing with duplicate lines.</strong> That was the pre-dedup behaviour. Upgrade the master (see <a href="../upgrade/">Upgrade</a> or the <a href="../../features/patch-system/">Patch System</a>); the merge is fixed at the render layer, so the next Configure save produces a clean file.</li>
+<li><strong>Heap changed but nothing happened.</strong> The process was not restarted. Check the process start time against the file mtime.</li>
+</ul>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../component-operations/">Component Operations</a> — the install / configure request shape these blocks live in.</li>
+<li><a href="../../features/config-runtime-only/">Config Runtime-Only Policy</a> — why the cluster must be running to accept a config change.</li>
+<li><a href="../cluster-operations/">Cluster Operations</a> — rolling restarts and scale-out.</li>
+</ul>
 
 
 

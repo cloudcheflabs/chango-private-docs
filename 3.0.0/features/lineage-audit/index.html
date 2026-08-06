@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/features/logging/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/features/lineage-audit/">
       
       
-        <link rel="prev" href="../monitoring/">
+        <link rel="prev" href="../iam/">
       
       
-        <link rel="next" href="../backup/">
+        <link rel="next" href="../role-based-access/">
       
       <link rel="icon" href="../../images/logo/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Logging - Chango</title>
+        <title>Data Lineage & Audit - Chango</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#logging" class="md-skip">
+        <a href="#data-lineage-audit" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Logging
+              Data Lineage & Audit
             
           </span>
         </div>
@@ -655,11 +655,135 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../lineage-audit/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Data Lineage & Audit
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Data Lineage & Audit
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-it-lives-in-the-authz-plugin" class="md-nav__link">
+    Why it lives in the authz plugin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guarantees-and-non-guarantees" class="md-nav__link">
+    Guarantees and non-guarantees
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-an-audit-event-carries" class="md-nav__link">
+    What an audit event carries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-lineage-edge-carries" class="md-nav__link">
+    What a lineage edge carries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-engine-coverage" class="md-nav__link">
+    Per-engine coverage
+  </a>
+  
+    <nav class="md-nav" aria-label="Per-engine coverage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trino-callback-ordering" class="md-nav__link">
+    Trino — callback ordering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spark" class="md-nav__link">
+    Spark
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flink" class="md-nav__link">
+    Flink
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifying-on-a-live-cluster" class="md-nav__link">
+    Verifying on a live cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    Related
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -767,94 +891,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Logging
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
         Logging
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#where-chango-writes-its-own-logs" class="md-nav__link">
-    Where chango writes its own logs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-managed-component-logs-live" class="md-nav__link">
-    Where managed component logs live
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tailing-from-the-admin-ui" class="md-nav__link">
-    Tailing from the admin UI
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rest-surface" class="md-nav__link">
-    REST surface
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-not-in-chango-logs" class="md-nav__link">
-    What is not in chango logs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#log-level" class="md-nav__link">
-    Log level
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#shipping-logs-out" class="md-nav__link">
-    Shipping logs out
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1294,77 +1335,249 @@
                   
 
 
-<h1 id="logging">Logging</h1>
-<p>Chango's own logs and every managed component's logs are accessible from the admin UI and from disk. Chango itself uses logback; managed components keep their own log frameworks and chango exposes their log files for tailing without changing what they write.</p>
-<h2 id="where-chango-writes-its-own-logs">Where chango writes its own logs</h2>
-<p><code>/var/log/chango/</code> on every chango host (<code>chango.log.path</code> in <code>chango.properties</code>). The master and the node manager each write their own files:</p>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Source</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/var/log/chango/chango-master.log</code></td>
-<td>Chango master JVM (rolling)</td>
-</tr>
-<tr>
-<td><code>/var/log/chango/chango-nodemanager.log</code></td>
-<td>Chango node manager JVM (rolling)</td>
-</tr>
-<tr>
-<td><code>/var/log/chango/chango-zk.log</code></td>
-<td>Bundled ZooKeeper on master hosts</td>
-</tr>
-<tr>
-<td><code>/var/log/chango/_ops.log</code></td>
-<td>Per-NM ops log — every shell command the NM ran on behalf of an install / start / stop, with exit codes</td>
-</tr>
-</tbody>
-</table>
-<p>Rolling is logback's default policy — daily, with <code>.gz</code> retention. Tune in <code>conf/logback.xml</code>.</p>
-<h2 id="where-managed-component-logs-live">Where managed component logs live</h2>
-<p>Each component writes under its own install dir:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/opt/components/&lt;instanceId&gt;/logs/...
+<h1 id="data-lineage-audit">Data Lineage &amp; Audit</h1>
+<p>Every query that runs on a chango-managed engine passes through a first-party authorization plugin. Since 3.0.0 those plugins do not only <em>decide</em> — they also <strong>report</strong>. Each authorization outcome becomes an <strong>audit event</strong>, and every successful write becomes a <strong>lineage edge</strong>, both pushed into Ontul's replicated store. The result is one cross-engine record of <em>who touched which table, with which action, from which engine, and where the data came from</em> — without deploying a separate lineage collector, agent, or log shipper.</p>
+<p>This page describes what is collected, how it gets there, what each engine can and cannot contribute, and how to verify it on a live cluster.</p>
+<h2 id="why-it-lives-in-the-authz-plugin">Why it lives in the authz plugin</h2>
+<p>The authorization plugin is the only place in an engine that is guaranteed to see <strong>every</strong> table access, before execution, with the resolved identity attached. Log scraping sees SQL text but not the resolved principal or the post-planning table set; a metastore listener sees writes but not reads. By emitting from the authz hook, audit and lineage inherit the same completeness guarantee as the access check itself.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>   Trino / Spark / Flink
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>          │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>          │  authz check: POST /v1/api/authz/check-batch   (synchronous, blocking)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>          ▼
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    ┌────────────┐        ALLOW / DENY / ABSTAIN
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    │   Ontul    │◀───────────────────────────────┐
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    │ IAM + store│                                │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    └────────────┘                                │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>          ▲                                       │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>          │  POST /v1/api/audit     (async, best-effort)
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>          │  POST /v1/api/lineage   (async, best-effort)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>          └───────────────────────  LineageAuditReporter (bounded background pool)
 </code></pre></div>
-<p>The path inside <code>logs/</code> is component-specific (<code>server.log</code> for Trino, <code>master.log</code> for Spark, …). The admin UI's "Logs" panel knows the right path per component type and shows a tail in the browser.</p>
-<h2 id="tailing-from-the-admin-ui">Tailing from the admin UI</h2>
-<p>Every component page in the admin UI has a "Logs" button per instance. Click it and the master opens a streaming tail over the internal NIO protocol against the NM that hosts the instance. The tail is read-only — you can scroll, search, and copy, but not write.</p>
-<p>The chango master itself can also be tailed from the admin UI's Master log page (driven by an in-memory <code>RingBufferAppender</code> that holds the last N log lines).</p>
-<h2 id="rest-surface">REST surface</h2>
+<p>Both reporting calls reuse the <strong>same</strong> long-lived Ontul service credential the plugin already holds for the authz check — sent as <code>Authorization: Token &lt;OTOK&gt;</code>. The chango installer wires that credential into the engine at cluster-install time, so there is nothing extra to configure.</p>
+<p>Ontul routes all four paths to its <strong>leader</strong> (audit lives in the leader's RocksDB, lineage in the replicated metadata store); a follower transparently forwards. Both ingest endpoints are POST-only, and <code>/v1/api/audit</code> accepts either a single event object or an array of them.</p>
+<h2 id="guarantees-and-non-guarantees">Guarantees and non-guarantees</h2>
 <table>
 <thead>
 <tr>
-<th>Endpoint</th>
-<th>Returns</th>
+<th>Property</th>
+<th>Behaviour</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>GET /admin/api/components/&lt;instanceId&gt;/logs?lines=N</code></td>
-<td>Last N lines of the given component instance</td>
+<td><strong>Never blocks a query</strong></td>
+<td>Reporting is submitted to a small bounded thread pool (core 1 / max 2, queue 4096) and runs off the authorization path.</td>
 </tr>
 <tr>
-<td><code>GET /admin/api/nodes/logs?nodeId=&lt;id&gt;&amp;which=master&amp;lines=N</code></td>
-<td>Last N lines of <code>chango-master.log</code> on a master node (or <code>which=nm</code> for the NM log)</td>
+<td><strong>Never fails a query</strong></td>
+<td>Every post is wrapped — a network error, an Ontul 5xx, or a saturated pool is swallowed and logged at most. Authorization stays exact; reporting is advisory.</td>
+</tr>
+<tr>
+<td><strong>Lossy under extreme pressure</strong></td>
+<td>The pool's saturation policy is <code>DiscardOldest</code>. If an engine outruns Ontul's ingest, the oldest queued reports are dropped rather than growing memory without bound. Audit is not a transaction log — do not build billing on it.</td>
+</tr>
+<tr>
+<td><strong>Deny is recorded</strong></td>
+<td>A refused access is audited with <code>decision=DENY</code> <strong>before</strong> the plugin throws. A probing or misconfigured user always leaves a trail.</td>
+</tr>
+<tr>
+<td><strong>No lineage on deny</strong></td>
+<td>Nothing was written, so no edge is emitted. Lineage only ever describes data that actually moved.</td>
 </tr>
 </tbody>
 </table>
-<p>Both routes stream the tail via internal NIO from the relevant host (master or NM), so the leader does not need to live on the same disk as the log file.</p>
-<h2 id="what-is-not-in-chango-logs">What is <em>not</em> in chango logs</h2>
+<h2 id="what-an-audit-event-carries">What an audit event carries</h2>
+<p><code>POST &lt;ontul&gt;/v1/api/audit</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source</code></td>
+<td>The engine that produced the event — <code>trino</code>, <code>spark</code>, or <code>flink</code>.</td>
+</tr>
+<tr>
+<td><code>userId</code></td>
+<td>The resolved principal the engine authorized as.</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td>The IAM action — <code>data:Select</code>, <code>data:Insert</code>, <code>data:CreateTable</code>, …</td>
+</tr>
+<tr>
+<td><code>resource</code></td>
+<td>Fully-qualified <code>catalog.schema.table</code> (the <code>data:table:</code> prefix is stripped before reporting).</td>
+</tr>
+<tr>
+<td><code>tables</code></td>
+<td>The table set the event concerns — a single-element list for the per-table engines.</td>
+</tr>
+<tr>
+<td><code>decision</code></td>
+<td><code>ALLOW</code> for an authorized access, <code>DENY</code> for a refused one.</td>
+</tr>
+<tr>
+<td><code>details</code></td>
+<td>Which plugin emitted it, plus Ontul's raw verdict on a deny — e.g. <code>trino authz plugin (ontul: ABSTAIN)</code>.</td>
+</tr>
+<tr>
+<td><code>query</code></td>
+<td>The SQL text, when the engine exposes it at this layer. Trino's <code>SystemAccessControl</code> SPI does <strong>not</strong>, so Trino events omit it; who / engine / table / action are always present.</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>DENY</code> event distinguishes the two ways an access can be refused: an explicit <code>Effect: "Deny"</code> statement (<code>ontul: DENY</code>) and <em>no matching statement at all</em> (<code>ontul: ABSTAIN</code>). Both are failures for the user, but only the second usually means "the policy was never granted", which is the far more common misconfiguration.</p>
+<h2 id="what-a-lineage-edge-carries">What a lineage edge carries</h2>
+<p><code>POST &lt;ontul&gt;/v1/api/lineage</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target</code></td>
+<td>The table that was written — fully qualified.</td>
+</tr>
+<tr>
+<td><code>sources</code></td>
+<td>The set of tables read to produce it.</td>
+</tr>
+<tr>
+<td><code>operation</code></td>
+<td><code>CTAS</code> (<code>CREATE TABLE … AS SELECT</code>), <code>INSERT</code>, or <code>EXTERNAL</code> when the engine could not classify it.</td>
+</tr>
+</tbody>
+</table>
+<p>Ontul's lineage ingest <strong>replaces</strong> the target's source set on each POST rather than appending. That is what makes the re-emission strategy below safe.</p>
+<h2 id="per-engine-coverage">Per-engine coverage</h2>
+<table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Audit</th>
+<th>Lineage</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trino</strong></td>
+<td>Every allowed access (one event per table) + every denied one</td>
+<td><code>sources → target</code> per <code>queryId</code></td>
+<td>The plugin correlates per-query source reads with the write target.</td>
+</tr>
+<tr>
+<td><strong>Spark</strong></td>
+<td>Every target in the authorized plan + every denied one</td>
+<td><code>sources → target</code> for <code>INSERT</code> / <code>MERGE</code></td>
+<td>The plugin authorizes the whole analyzed plan at once, so sources and targets are known in a single shot.</td>
+</tr>
+<tr>
+<td><strong>Flink</strong></td>
+<td>Every authorized <code>TableLoader</code> (source and sink) + every denied one</td>
+<td><em>Not yet</em></td>
+<td>Each loader authorizes independently on its own TaskManager with no shared job key to correlate them. Job-level wiring is a planned follow-up.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="trino-callback-ordering">Trino — callback ordering</h3>
+<p>Trino does <strong>not</strong> guarantee that the source <code>SELECT</code> checks precede the write-target check. For <code>CREATE TABLE … AS SELECT</code> it invokes <code>checkCanCreateTable</code> <em>before</em> <code>checkCanSelectFromColumns</code>. A naive implementation that emits the edge from the write-target callback therefore sees an empty source set and emits nothing usable.</p>
+<p>The reporter instead keeps both the target <em>and</em> the accumulating sources on a per-<code>queryId</code> accumulator, and <strong>re-emits the full source set every time it holds a target plus at least one source</strong>. Because Ontul replaces the target's source set on each POST, the repeated emissions converge on the complete edge no matter which order Trino fires the callbacks in. The accumulator is bounded (20 000 queries) and self-evicting (5-minute TTL) so a long-running or abandoned query cannot leak memory.</p>
+<h3 id="spark">Spark</h3>
+<p><code>AuthzCheckRule</code> holds the entire plan's target list, so <code>report()</code> audits every <code>(action, table)</code> pair and emits one edge per write target from the plan's <code>SELECT</code> sources — no accumulator and no ordering hazard.</p>
+<h3 id="flink">Flink</h3>
+<p><code>ChangoAuthzTableLoader</code> audits each source and sink table as it authorizes it. Lineage is deliberately not emitted: Flink authorizes each loader independently on the TaskManager that owns it, and the plugin has no job-scoped key to join a source loader on one TM with a sink loader on another. Emitting a partial edge would be worse than emitting none.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Reporting is <strong>on by default</strong> on all three engines. The chango installer sets nothing extra; the key exists so an operator can turn reporting off (for a benchmark run, or while Ontul is being maintained) without removing the authz plugin.</p>
+<table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Key</th>
+<th>Where</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trino</td>
+<td><code>lineage.audit.enabled</code></td>
+<td><code>etc/access-control.properties</code> (the same file that carries the plugin's Ontul URL and token)</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>Spark</td>
+<td><code>spark.chango.authz.lineage.audit.enabled</code></td>
+<td>Spark conf (<code>spark-defaults.conf</code>, <code>--conf</code>, or the chango cluster's properties map)</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td>Flink</td>
+<td><code>lineageAuditEnabled</code> on <code>OntulAuthzConfig</code></td>
+<td>Carried by <code>ChangoAuthzTableLoader</code> in the job wiring</td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<p>Setting it to <code>false</code> disables <strong>both</strong> audit and lineage for that engine. It does not affect the authorization check itself — access control keeps working exactly as before.</p>
+<p>Editing the Trino key is a normal <a href="../../operations/component-operations/">component configuration</a> change: open the cluster, <strong>Configure</strong>, edit <code>access-control.properties</code>, and restart the coordinator. Because chango's <a href="../config-runtime-only/">Config Runtime-Only Policy</a> applies, the cluster must be <code>RUNNING</code> for the edit to be accepted.</p>
+<h2 id="verifying-on-a-live-cluster">Verifying on a live cluster</h2>
+<ol>
+<li>
+<p><strong>Run an allowed query</strong> as a non-admin user through Trino:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">lakehouse</span><span class="p">.</span><span class="n">demo</span><span class="p">.</span><span class="n">top_customers</span><span class="w"> </span><span class="k">AS</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">c_custkey</span><span class="p">,</span><span class="w"> </span><span class="n">c_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">lakehouse</span><span class="p">.</span><span class="n">demo</span><span class="p">.</span><span class="n">customer</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">c_acctbal</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">9000</span><span class="p">;</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>Run a query you expect to be refused</strong> — a table the user has no <code>data:Select</code> grant on:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">lakehouse</span><span class="p">.</span><span class="n">restricted</span><span class="p">.</span><span class="n">payroll</span><span class="p">;</span>
+</code></pre></div>
+<p>The query must fail with an access-denied error.</p>
+</li>
+<li>
+<p><strong>Read the audit log back from Ontul.</strong> <code>/v1/api/audit</code> and <code>/v1/api/lineage</code> are ingest-only (POST); the read surface is Ontul's admin API, so authenticate with an Ontul admin bearer token. Both queries should appear — the first as <code>decision=ALLOW</code> rows (one per table touched), the second as a single <code>decision=DENY</code> row whose <code>details</code> names the Ontul verdict:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$ONTUL_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$ONTUL</span><span class="s2">/admin/audit?limit=50&amp;engine=trino&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.[] | {source, userId, action, resource, decision, details}&#39;</span>
+</code></pre></div>
+<p><code>GET /admin/audit</code> filters on <code>limit</code> (default 200), <code>user</code>, <code>engine</code>, <code>table</code>, <code>action</code>, <code>query</code>, and a <code>from</code> / <code>to</code> epoch-millis window — enough to answer "everything alice did against <code>payroll</code> yesterday" without exporting the log.</p>
+</li>
+<li>
+<p><strong>Read the lineage edge.</strong> Ontul exposes the graph, not the raw edge list:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$ONTUL_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$ONTUL</span><span class="s2">/admin/lineage/graph?root=lakehouse.demo.top_customers&amp;depth=2&amp;direction=up&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.
+</code></pre></div>
+<p><code>direction=up</code> walks upstream (where did this table come from), <code>down</code> walks downstream, <code>both</code> returns the neighbourhood. Two companion endpoints answer the questions operators actually ask:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Which columns of this table came from where?</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$ONTUL_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ONTUL</span><span class="s2">/admin/lineage/columns?table=lakehouse.demo.top_customers&quot;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># If I change this table, what breaks?</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$ONTUL_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ONTUL</span><span class="s2">/admin/lineage/impact?table=lakehouse.demo.customer&quot;</span>
+</code></pre></div>
+<p>The denied query contributes nothing to the graph — nothing was written.</p>
+</li>
+</ol>
+<p>See <a href="https://cloudcheflabs.github.io/ontul-docs/1.0.0/features/audit-log/">Ontul Audit Log</a> for the stored schema, retention, and the optional Iceberg tiering of the audit table, and <a href="https://cloudcheflabs.github.io/ontul-docs/1.0.0/features/data-lineage/">Ontul Data Lineage</a> for the graph model the edges feed.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
 <ul>
-<li><strong>Component data-plane logs</strong> that the component does not write to the install dir. Trino's query history is in Trino's metastore. Spark application logs from a finished job live in the configured event log directory (typically on S3 / ShannonStore).</li>
-<li><strong>System logs</strong> (<code>journalctl</code>, <code>dmesg</code>). The chango master + NM services do log to journald via their systemd units; chango does not re-shove those into the admin UI. Use <code>journalctl -u chango-master</code> directly when you need them.</li>
+<li><strong>Audit events appear but no lineage edge for a CTAS.</strong> Confirm both the source <code>SELECT</code> and the write target were authorized in the same statement — an <code>INSERT</code> from a client-side literal set has no source and correctly produces no edge. If sources exist but the edge is missing, check that the plugin JAR is the 3.0.0 build: earlier builds emitted the edge only from the write-target callback and lost it on Trino's CTAS ordering.</li>
+<li><strong>Nothing at all reaches Ontul.</strong> The reporter shares the authz client, so if authorization works, connectivity works. Check <code>lineage.audit.enabled</code> first, then the engine log for <code>chango-*-lineage-audit</code> thread warnings.</li>
+<li><strong>Denied queries are missing from the audit log.</strong> Deny auditing landed with the 3.0.0 plugins. An older plugin JAR reports only allowed accesses — swap the JAR (see <a href="../patch-system/">Patch System</a>, which does exactly this without a reinstall) and restart the engine.</li>
+<li><strong>Audit volume is overwhelming Ontul.</strong> Every table of every query produces an event. Turn reporting off on the noisiest engine, or scale Ontul's ingest — the plugins will silently drop rather than back-pressure the engine.</li>
 </ul>
-<h2 id="log-level">Log level</h2>
-<p>The default level is <code>INFO</code>. To raise (or quiet) a specific logger, edit <code>conf/logback.xml</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;com.cloudcheflabs.chango.master.component.ShannonStoreClusterService&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">/&gt;</span>
-</code></pre></div>
-<p>Reload the logback config without restart with <code>kill -HUP &lt;chango-master pid&gt;</code> (logback's <code>&lt;jmxConfigurator/&gt;</code> is on) or by re-touching the file (logback's <code>scanPeriod</code> is 30 s).</p>
-<h2 id="shipping-logs-out">Shipping logs out</h2>
-<p>The admin UI is a debugging surface, not a log lake. For real log aggregation, point a customer agent (Vector, Fluent Bit, …) at <code>/var/log/chango/</code> and <code>/opt/components/*/logs/</code> on every host. Chango does not bundle one — operators typically already have their own.</p>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../iam/">Identity &amp; Access Management</a> — the authorization model these plugins enforce, and the per-engine granularity table.</li>
+<li><a href="../role-based-access/">Role-Based Access (Stage 1)</a> — chango's own control-plane RBAC, which is separate from engine-level authz.</li>
+<li><a href="../patch-system/">Patch System</a> — how to roll a new plugin JAR onto a running engine.</li>
+</ul>
 
 
 
