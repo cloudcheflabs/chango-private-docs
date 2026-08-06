@@ -50,6 +50,26 @@ When you scale the cluster (add or remove an instance), the leader's periodic ng
 
 If you stop or delete an instance manually, the reconciler removes it from the upstream within the next tick.
 
+## Trino Gateway — TLS and the public endpoint
+
+The Trino Gateway nginx is a special case: it is **always TLS**. Clients reach the gateway over `https://<nginxHost>:<nginxPort>`, and nginx terminates TLS in front of the gateway's plain-HTTP listener.
+
+That creates a subtlety Trino clients care about. A Trino query response carries `nextUri` / `infoUri` pointers that the client follows for subsequent pages. When a request arrives through nginx those are rewritten from the `X-Forwarded-*` headers, so they resolve correctly. But the gateway also has a `gateway.public.endpoint` property used as the **fallback** — and by any client that talks to a gateway directly — and that fallback must not point at the insecure raw listener.
+
+So on **Apply**, chango sets `gateway.public.endpoint = https://<nginxHost>:<nginxPort>` on every gateway instance behind the proxy and restarts it. On **Remove**, each previously-fronted gateway is reverted to its own raw `http://<host>:<listenPort>` address, since the TLS surface no longer exists.
+
+Two consequences worth planning for:
+
+- **Applying or removing the gateway nginx restarts the gateway instances.** The property is per-instance and only read at start. Expect a brief interruption; do it in a maintenance window if clients are live.
+- **The reconciliation is best-effort per instance.** If one gateway cannot be updated, chango logs a warning and continues with the rest rather than aborting the whole Apply — the nginx front still comes up. Re-Apply after fixing the failing instance.
+
+Verify the result on the host:
+
+```bash
+sudo grep public.endpoint /opt/components/<gatewayInstanceId>/conf/trino-gateway.properties
+# → gateway.public.endpoint=https://10.0.0.13:19240
+```
+
 ## Removing the proxy
 
 Open the same Nginx panel and Apply with zero instances checked, or click *Remove Proxy*. Chango removes the `chango_<component>_<clusterId>.conf` file and reloads nginx. The chosen host's nginx daemon stays installed (it may be in use by another component's proxy on the same host).

@@ -10,10 +10,10 @@ title: " "
   <img width="280" src="./images/logo/chango-logo-with-name.png" alt="Chango">
 </div>
 
-<h2 align="center" style="margin-top: 1.5rem;">Agentic AI Data Platform</h2>
+<h2 align="center" style="margin-top: 1.5rem;">Agentic Data Platform</h2>
 
 <p align="center" style="font-size: 1.1rem; max-width: 820px; margin: 1.5rem auto; color: #555;">
-  Chango is a unified, self-hosted Agentic AI Data Platform — seven natively-integrated layers spanning object storage, streaming, batch + SQL, OLTP / vector / graph, workflow orchestration, lakehouse catalogs, and a sovereign multi-agent runtime. One install, one admin UI, one identity plane.
+  Chango is a unified, self-hosted Agentic Data Platform — seven natively-integrated layers spanning object storage, streaming, batch + SQL, OLTP / vector / graph, workflow orchestration, lakehouse catalogs, and a sovereign multi-agent runtime. One install, one admin UI, one identity plane.
 </p>
 
 <p align="center" style="margin: 3rem 0;">

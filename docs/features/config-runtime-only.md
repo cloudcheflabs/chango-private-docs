@@ -62,3 +62,5 @@ The admin UI's Configure panels enforce the same flow — the **Save** button is
 If you need a configuration value baked in from the very first start — heap size, custom `ontul.master.…` property, custom `trino-extra.config.properties` line — set it at **install** time. Every component's CreatePanel (Install / Properties / JVM tabs) accepts a per-role JVM config block + a `properties` map that lands on disk **before** the first `start-*.sh` is called. See [Component Operations](../operations/component-operations.md) for the install-request shape.
 
 The runtime-only policy is for **post-install** drift; install-time config is the right surface for first-start values.
+
+For heap specifically — including chango's node-proportional Trino default and how an explicit `-Xmx` override is merged onto the packaged flags — see [JVM & Heap Tuning](../operations/jvm-tuning.md).
