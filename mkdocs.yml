@@ -50,6 +50,7 @@ nav:
       - "Leader Forwarding": features/leader-forward.md
       - "Cluster Readiness": features/cluster-readiness.md
       - "Identity & Access Management": features/iam.md
+      - "Data Lineage & Audit": features/lineage-audit.md
       - "Role-Based Access (Stage 1)": features/role-based-access.md
       - "Admin Password Recovery": features/admin-password-recovery.md
       - "Encryption & Key Management": features/kms.md
@@ -69,6 +70,7 @@ nav:
       - "Cluster Operations": operations/cluster-operations.md
       - "Component Operations": operations/component-operations.md
       - "Nginx Reverse Proxy": operations/nginx-proxy.md
+      - "JVM & Heap Tuning": operations/jvm-tuning.md
       - "Upgrade": operations/upgrade.md
   - "Tutorials":
       - "Overview": tutorials/index.md

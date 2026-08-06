@@ -1,6 +1,6 @@
 # Architecture
 
-Chango is the **control plane** of a self-hosted Agentic AI Data Platform. It does not store data and does not execute queries itself — it installs, starts, scales, observes, and tears down every other component (object storage, streaming, data engines, OLTP / vector / graph store, workflow, agents) on a fleet of Rocky 9 hosts, through a single admin UI and REST API.
+Chango is the **control plane** of a self-hosted Agentic Data Platform. It does not store data and does not execute queries itself — it installs, starts, scales, observes, and tears down every other component (object storage, streaming, data engines, OLTP / vector / graph store, workflow, agents) on a fleet of Rocky 9 hosts, through a single admin UI and REST API.
 
 The cluster is composed of three logical tiers — a control tier, an agent tier, and a coordination tier — each scalable independently.
 

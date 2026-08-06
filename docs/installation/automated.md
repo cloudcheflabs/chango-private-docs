@@ -202,17 +202,39 @@ Move the value into a real secret manager (Vault, AWS Secrets Manager, a hardwar
 ansible-playbook -i inventory.yml install.yml
 ```
 
-The playbook runs seven plays in order:
+The playbook runs eight plays in order:
 
 1. **`node-prep`** — SELinux disabled + ulimit + sysctl on every host (masters + ZK + NMs).
 2. **`java11`** — extracts Java 11 under `/opt` on every host (Spark + Livy runtime).
 3. **`java17`** — extracts Java 17 under `/opt` on every host (chango self + most components).
 4. **`java25`** — extracts Java 25 under `/opt` on every host (Trino's runtime).
-5. **`chango-nodemanager`** — installs chango on the NM hosts, starts the NM once. NM hosts **never** get the master key bootstrap file. Distribution is extracted here, so later plays (`chango-zookeeper`, `chango-master`) only add their role-specific files on top.
-6. **`chango-zookeeper`** — renders `zoo.cfg` from the `chango_zookeepers` group + writes `myid` + first-boot starts ZK on each ZK host. Has to run after NM (which extracts the distribution) and before master (which connects to ZK on startup).
+5. **`chango-nodemanager` — extract only** — installs chango on the NM hosts with `chango_nodemanager_firstboot: false`, so the distribution is unpacked but the NM is **not** started yet. NM hosts **never** get the master key bootstrap file. Extracting here means the later plays (`chango-zookeeper`, `chango-master`) only add their role-specific files on top.
+6. **`chango-zookeeper`** — renders `zoo.cfg` from the `chango_zookeepers` group + writes `myid` + first-boot starts ZK on each ZK host. Has to run after NM extraction and before master (which connects to ZK on startup).
 7. **`chango-master`** — installs chango on the master hosts (idempotent over the NM extraction), stages the master key bootstrap file (master only, 0600 root), starts master once with `CHANGO_MASTER_KEY` from the controller's environment. The master immediately connects to the ZK quorum that play 6 brought up.
+8. **`chango-nodemanager` — first-boot start** — re-runs the NM role with `chango_nodemanager_firstboot: true`, now that the ZK quorum and a master leader exist, and starts every node manager. Each NM registers itself and shows up in the admin UI.
 
 Expected runtime: 5 – 10 minutes for a 3-host cluster (component extraction dominates).
+
+### Why the node-manager start is a separate, final play
+
+A node manager that starts *before* the ZK quorum and the master leader exist cannot register itself. It notices the mismatch and self-shuts-down with `Expected state [STARTED] was [STOPPED]`, leaving the cluster reporting `nodeManagers: 0` and forcing the operator to restart every NM by hand after the install finished "successfully".
+
+Splitting the NM role into **extract** (play 5) and **start** (play 8) removes that ordering hazard: `install.yml` on its own brings up masters *and* registered node managers, with no operator follow-up. The split is driven by the `chango_nodemanager_firstboot` variable, so one role serves both plays.
+
+`add-nodemanager.yml` leaves that variable at its default (`true`) — when you add a host later the cluster is already running, so extract-and-start in a single pass is the correct behaviour there.
+
+### How the master tarball reaches every master
+
+The with-comps tarball is large (10 GB+ once the JDKs and every component package are in it). Ansible's `unarchive` module deliberately does not push a file that size over its own connection, so the master role uses `remote_src: yes` — which requires the tarball to already be **on the master host**. When the controller *is* the master that is trivially true; on a 2-master HA install the second master has no copy, and without staging the extract fails with *"Source does not exist"*.
+
+The role therefore stages it first: an `rsync` task, delegated to the controller and run once per master host, ships `roles/chango-master/files/chango-with-comps-<version>.tar.gz` into the ssh user's home directory on that master (writable without sudo), and the extract / re-extract / cleanup tasks all point at that per-host copy. The staged copy is deleted at the end of the role to reclaim disk.
+
+Two practical requirements:
+
+- **`rsync` must exist on the controller and on every master host.** It is present in a stock Rocky 9 install; if you trimmed the image, `dnf install -y rsync` before running the playbook.
+- **The transfer uses the inventory's ssh key file** (`ansible_ssh_private_key_file`) directly rather than ansible's connection plugin, so that variable must point at a real, controller-readable key. An ssh-agent-only setup with no key file will not satisfy this task.
+
+The idiomatic choice would be `ansible.posix.synchronize`, but the shipped bundle carries only `ansible-core` with no extra collections — calling `rsync` directly keeps the air-gapped install dependency-free.
 
 The last task of the master play is an operator-note debug block printing the bootstrap file path on the master host. Read it carefully — that is the one moment a chango-controlled file holds the master key. Move the value into your secret manager, then:
 

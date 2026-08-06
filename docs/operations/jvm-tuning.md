@@ -1,0 +1,125 @@
+# JVM & Heap Tuning
+
+Nearly every component chango manages is a JVM process, and on a chango cluster **several of them usually share a host**. That is the single fact that drives chango's JVM defaults: a component must never size itself as if it owned the machine. This page covers where JVM settings live, what chango's defaults are, how an operator override is merged, and how to verify the result on the host.
+
+## Where JVM settings come from
+
+| Layer | What it is |
+|---|---|
+| **Packaged default** | Whatever the upstream distribution ships. Chango overwrites this for components where the upstream default is unsafe in a co-located layout. |
+| **Chango default** | The `jvm.conf` / `jvm.config` chango renders at install time. Marked `# Managed by chango — edit via the admin UI (Configure Cluster).` |
+| **Operator override** | A per-role `JvmConfig` block — `{heapMin, heapMax, extra}` — supplied on the **Create** panel's *JVM* tab at install, or on **Configure** afterwards. |
+
+The override is **per role**, not per cluster: `coordinatorJvm` / `workerJvm` for Trino, `masterJvm` / `workerJvm` for Ontul, `apiJvm` / `dataJvm` for ShannonStore, `serverJvm` for Polaris, `gatewayJvm` for Trino Gateway, and so on. A coordinator and a worker on the same host can therefore be sized completely differently — which is normally what you want, since only the workers do the heavy lifting.
+
+Because it is available on the **Create** panel, a fully tuned cluster can be installed in one pass; there is no need to install first and Configure second. See [Component Operations](component-operations.md) for the install-request shape.
+
+## Rendering rules
+
+`JvmConfig` renders one JVM option per line:
+
+- `heapMin` → `-Xms<value>`; `heapMax` → `-Xmx<value>`. Blank means "omit the line", not "zero".
+- Each `extra` entry becomes one line. A **blank value** yields a bare switch (`-XX:+UseG1GC`); a **non-blank value** yields `key=value` (`-XX:MaxMetaspaceSize=256m`).
+- The rendered file always starts with the `# Managed by chango` comment, so an operator reading the host can tell at a glance which file chango owns.
+
+Values are passed through verbatim after trimming — chango does not validate that `-Xmx3g` is achievable on the node. A heap larger than physical RAM produces a JVM that fails to start, and the component lands in `FAILED` with the JVM's own error in the component log.
+
+## Trino: the RAM-percentage default
+
+Trino is the one component whose heap default has a real history, because Trino's own packaged `jvm.config` assumes a dedicated node.
+
+Chango's rendered `etc/jvm.config` sets:
+
+```
+-XX:InitialRAMPercentage=30
+-XX:MaxRAMPercentage=30
+```
+
+Rather than a fixed `-Xmx`. The reasoning, in order:
+
+- **80% (the value chango shipped earlier) is wrong here.** It is right for a dedicated Trino node and badly wrong on a chango host that also runs Ontul, ShannonStore data nodes, a Kafka broker, and a node manager. Trino would claim almost the whole machine and starve its neighbours.
+- **A fixed `-Xmx` is wrong as a *default*.** It is correct only for the node size the author had in mind and silently over- or under-commits every other machine in the fleet.
+- **Leaving heap unset is also wrong.** The JVM's implicit default (roughly 25% of RAM) varies by JVM version, so the cluster's memory behaviour would change under a JDK upgrade with nothing in the config to explain it.
+
+30% is bounded, node-proportional, scales predictably across heterogeneous hosts, and is version-stable. An operator who *does* have a dedicated Trino node should raise it — either with a higher `MaxRAMPercentage` via `extra`, or with an explicit `-Xmx`.
+
+### The heap floor
+
+Trino refuses to start if the heap is below `query.max-memory-per-node + memory.heap-headroom-per-node`. Chango's defaults are `1GB` and `512MB`, so the floor is **1.5 GB** — meaning 30% of RAM clears it on a node of roughly 5 GB or more. On a smaller node you must either lower those two properties on the *Properties* tab or set an explicit `-Xmx` above the floor. A Trino instance that dies immediately after `start` with a memory-configuration error is almost always this.
+
+### How an explicit heap override is merged
+
+When you set `heapMin` and/or `heapMax` for Trino, chango does **not** simply append your lines to the default file. It merges, with three rules:
+
+1. **The two `RAMPercentage` knobs are dropped.** They are mutually exclusive with an explicit heap. Crucially this applies even to a *min-only* override — otherwise `MaxRAMPercentage` would survive and cap max heap at the percentage regardless of what you asked for.
+2. **Every other flag Trino needs is preserved.** `-XX:G1HeapRegionSize`, `-XX:+ExitOnOutOfMemoryError`, `-Djdk.attach.allowAttachSelf`, `-XX:+EnableDynamicAgentLoading`, and the rest of the required set stay exactly as chango wrote them. Overriding heap must never silently drop a flag Trino needs to run.
+3. **Lines are deduped by flag key.** `-XX:MaxRAMPercentage=80` and `-XX:MaxRAMPercentage=30` are the *same* key; `-Xms512m` and `-Xms2g` are both `-Xms`. Insertion order follows the chango default; an `extra` entry that names an existing flag replaces its value in place, and a genuinely new flag is appended.
+
+Rule 3 exists because the admin UI's Configure panel loads the on-disk `jvm.config` and echoes **every** line back as `extra` when you save. Without dedup, each save appended the whole default set again — the file grew without bound on every edit, and re-introduced the very `RAMPercentage` lines a heap override was supposed to remove. Heap is owned by `heapMin` / `heapMax`: an `-Xms` / `-Xmx` typed into `extra` is ignored rather than fighting the dedicated fields.
+
+## Applying a change
+
+JVM configuration is not hot-reloadable — the JVM reads it once at process start.
+
+1. Open the cluster in the admin UI → **Configure** → *JVM* tab (per role).
+2. Set `heapMin` / `heapMax`, add any `extra` flags, Save.
+3. **Restart** the affected instances. Chango rewrites the config file on save but does not bounce the process for you; a rolling restart, role by role, keeps the cluster serving.
+
+The cluster must be `RUNNING` for the edit to be accepted — see [Config Runtime-Only Policy](../features/config-runtime-only.md) for why chango refuses to stage configuration against a stopped cluster.
+
+## Verifying on the host
+
+Read the rendered file:
+
+```bash
+# Trino
+sudo cat /opt/components/<instanceId>/etc/jvm.config
+# Most other components
+sudo cat /opt/components/<instanceId>/conf/jvm.conf
+```
+
+Then confirm the running process actually picked it up — the file on disk is what chango *intends*, the command line is what the JVM *got*:
+
+```bash
+ps -ef | grep <instanceId> | tr ' ' '\n' | grep -E '^-X'
+```
+
+And check the heap the JVM resolved, which is the only number that settles a `RAMPercentage` question:
+
+```bash
+# JDK 25 is extracted under /opt by the java25 ansible role —
+# /opt/openlogic-openjdk-25.0.3+9-linux-x64 for the shipped build.
+sudo -u trino /opt/openlogic-openjdk-25*/bin/jcmd <pid> VM.flags \
+  | tr ' ' '\n' | grep -E 'MaxHeapSize|InitialHeapSize'
+```
+
+`MaxHeapSize` is in bytes — divide by 1024³ for GB. On a 16 GB node with the 30% default you should see roughly 4.8 GB.
+
+## Sizing guidance
+
+There is no universal answer, but a workable starting point on a shared chango host:
+
+| Component role | Starting heap | Notes |
+|---|---|---|
+| Trino coordinator | 30% (default) | Planning and coordination, not data. Rarely the bottleneck. |
+| Trino worker | 30% (default), raise on a dedicated node | Raise `query.max-memory-per-node` together with the heap, or the extra heap goes unused. |
+| Ontul master | 1–2 GB | Metadata, IAM, audit ingest. |
+| Ontul worker | Scale with query concurrency | The Arrow-native execution path is largely off-heap; do not equate heap with query capacity. |
+| ShannonStore data node | 1–2 GB | Storage path is I/O-bound; heap is not the lever. |
+| ShannonStore API server | 1–2 GB | Raise under heavy concurrent S3 traffic. |
+| Kafka broker | 1–4 GB | Kafka relies on the OS page cache — leave RAM *unallocated* rather than growing the heap. |
+
+Reserve headroom for the OS page cache on every host. Component processes that do bulk I/O (Kafka, ShannonStore, anything reading Parquet) get more from free page cache than from a larger heap.
+
+## Troubleshooting
+
+- **Component `FAILED` right after start, log shows an OOM or heap-configuration error.** Compare the heap in the rendered file against the node's RAM and, for Trino, against the heap floor above.
+- **Your `-Xmx` seems to be ignored on Trino.** Confirm you set it in the *JVM* tab's `heapMax` field, not as an `extra` entry — `extra` deliberately ignores `-Xms` / `-Xmx`.
+- **`jvm.config` keeps growing with duplicate lines.** That was the pre-dedup behaviour. Upgrade the master (see [Upgrade](upgrade.md) or the [Patch System](../features/patch-system.md)); the merge is fixed at the render layer, so the next Configure save produces a clean file.
+- **Heap changed but nothing happened.** The process was not restarted. Check the process start time against the file mtime.
+
+## Related
+
+- [Component Operations](component-operations.md) — the install / configure request shape these blocks live in.
+- [Config Runtime-Only Policy](../features/config-runtime-only.md) — why the cluster must be running to accept a config change.
+- [Cluster Operations](cluster-operations.md) — rolling restarts and scale-out.
