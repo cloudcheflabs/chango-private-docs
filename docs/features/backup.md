@@ -10,7 +10,7 @@ The archive stores **absolute paths**, so it extracts back over the same locatio
 |---|---|---|
 | KMS RocksDB | `<base.data.dir>/master/kms` | The keystore — versioned KEKs, sealed under the master key |
 | IAM RocksDB | `<base.data.dir>/master/iam` | Users, groups, policies, access keys |
-| Metadata RocksDB | `<base.data.dir>/metadata` | Component inventory, per-cluster settings (including managed product master keys), gateway topology, nginx state, `backup.s3.*` config, retired product keys |
+| Metadata RocksDB | `<base.data.dir>/master/metadata` | Component inventory, per-cluster settings (including managed product master keys), gateway topology, nginx state, `backup.s3.*` config, retired product keys |
 | Patch library | `<base.data.dir>/master/patches` | Every patch tarball uploaded via `POST /admin/api/patch/upload`, plus its parsed manifest. Included only if the directory exists |
 | `manifest.json` | generated | See below |
 

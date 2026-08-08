@@ -31,8 +31,17 @@ Chango then:
 
 The only path is the master's local Unix domain socket (mode 600), and it requires **two** factors:
 
-1. **OS-level access** — you must be able to connect to `<base.data.dir>/master/admin.sock`, i.e. run as the master's own filesystem identity.
-2. **Proof of chango's master key** — the CLI sends the *fingerprint* of `$CHANGO_MASTER_KEY` (never the raw key) and the master matches it against its own.
+1. **OS-level access** — you must be able to connect to the master's admin socket
+   (`<base.data.dir>/master/admin.sock` by default), i.e. run as the master's own
+   filesystem identity. You do not have to know that path: the running master
+   publishes the one it actually bound to into `<chango.home>/bin/master.socket`
+   and the CLI reads it from there, so a relocated data dir needs no extra flags.
+   See [Admin Password Recovery](admin-password-recovery.md#how-the-cli-finds-the-socket)
+   for the full resolution order.
+2. **Proof of chango's master key** — the CLI sends the *fingerprint* of `$CHANGO_MASTER_KEY` (never the raw key) and the master matches it against its own. Export it before running any `master-key` subcommand; without it the master rejects the request.
+
+Note `sudo -E`: it preserves `CHANGO_MASTER_KEY` across the user switch. Plain
+`sudo -u chango` drops the variable and the command fails on factor 2.
 
 ```bash
 $ export CHANGO_MASTER_KEY=<from your secret store>
