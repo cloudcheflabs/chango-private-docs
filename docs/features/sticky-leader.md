@@ -103,4 +103,4 @@ In the admin UI's **Cluster → Nodes** view, the leader's `nodeId` should remai
 
 - **Self-patch (v2)** depends on this. The 3-phase fan-out restarts the leader **last**; the helper script preserves `CHANGO_MASTER_KEY` and the original `-Dchango.*` system props and lets sticky-back re-elect the same node. See [Patch System](patch-system.md#chango-self-patch-v2).
 - **Rolling restart** of the masters relies on cold-start deference + hot-restart sticky to keep leadership on the original host across the whole roll — restart followers first, then the leader.
-- **Reset** (`/var/lib/chango/{kms,iam,metadata,zookeeper}/*` wiped) clears the persistent `master-leader-id` node along with everything else. Sticky-back resumes on the next leadership lands.
+- **Reset** (`<install_dir>/data/{master/kms,master/iam,metadata}/*` and `/var/lib/chango/zookeeper/*` wiped) clears the persistent `master-leader-id` node along with everything else. Sticky-back resumes on the next leadership lands.

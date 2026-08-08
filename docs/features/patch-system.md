@@ -168,7 +168,7 @@ Returns the list of patches whose `.bak/` is still present on the cluster — ap
 ## On-disk layout
 
 ```
-/var/lib/chango/data/master/patches/
+<install_dir>/data/master/patches/
     <patchId>.tgz                ← the raw uploaded tarball
     <patchId>.json               ← parsed manifest + sha256
 
@@ -202,7 +202,7 @@ This is also what makes the patch system survive a backup / restore: when a fres
 ```json
 {
   "backupId":       "20260530-…",
-  "patchesDir":     "/var/lib/chango/data/master/patches",
+  "patchesDir":     "/opt/chango/data/master/patches",
   "patchesIncluded": true,
   ...
 }

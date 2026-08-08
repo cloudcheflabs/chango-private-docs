@@ -20,7 +20,7 @@ Chango's masters and node managers talk over a custom binary protocol on TCP. Th
 - `length` — total frame length in bytes, big-endian.
 - `code` — `OpCode` (see below).
 - `correlation id` — opaque request / response pairing; the responder echoes the request's id so the caller can match.
-- `payload` — opcode-specific. If KMS-envelope encryption is enabled (`chango.kms.internal.protocol.encrypt = true`, default), the payload is `{ wrappedDek || iv || ciphertext || gcmTag }`. The wrappedDek is unwrapped by the receiver using the KMS provider, the ciphertext is AES-256-GCM with the unwrapped DEK.
+- `payload` — opcode-specific. If KMS-envelope encryption is enabled (`chango.kms.encrypt.internal.protocol = true`, default), the payload is `{ wrappedDek || iv || ciphertext || gcmTag }`. The wrappedDek is unwrapped by the receiver using the KMS provider, the ciphertext is AES-256-GCM with the unwrapped DEK.
 
 ## Opcodes
 
@@ -71,7 +71,7 @@ The NM writes each chunk straight to a temp file on its `/opt` volume so the mas
 
 ## KMS envelope on the wire
 
-When `chango.kms.internal.protocol.encrypt = true` (default), every `InternalMessage` payload is AES-256-GCM:
+When `chango.kms.encrypt.internal.protocol = true` (default), every `InternalMessage` payload is AES-256-GCM:
 
 1. Sender requests a wrapped DEK from chango's KMS provider for the wire key (`internal-protocol`).
 2. AES-GCM-encrypts the cleartext payload with the unwrapped DEK and a fresh 96-bit IV.
@@ -82,7 +82,7 @@ A wrong key (the cluster root secret diverged between master and NM, for example
 
 ## When to disable encryption
 
-`chango.kms.internal.protocol.encrypt = false` exists for **diagnosis only**. It removes the envelope and sends payloads in cleartext, which lets you tcpdump the wire to see what's actually being sent during a slow install. Never run with this disabled in production.
+`chango.kms.encrypt.internal.protocol = false` exists for **diagnosis only**. It removes the envelope and sends payloads in cleartext, which lets you tcpdump the wire to see what's actually being sent during a slow install. Never run with this disabled in production.
 
 ## Sync push + pull cadence
 

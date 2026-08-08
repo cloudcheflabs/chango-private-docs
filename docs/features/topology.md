@@ -66,7 +66,7 @@ Used when control-plane and workload need physical isolation (compliance, blast 
 
 Default identifiers are derived from the host and the role:
 
-- Master: `master-<sanitized-hostname>-<adminPort>` — the admin port is what makes a second master on the same host distinct (currently a deploy-layer limitation — single master per host is what the bundled systemd unit supports today).
+- Master: `master-<sanitized-hostname>-<adminPort>` — the admin port is what makes a second master on the same host distinct (a deploy-layer convention: the ansible inventory places one master per host, and each master needs a distinct admin port).
 - Node manager: `nm-<sanitized-hostname>-<internalPort>` — the internal port is in the id for stable backwards compatibility with component records; since only one NM per host is allowed at runtime, the port is effectively constant.
 
 Both are overridable via `chango.master.nodeId` / `chango.nodemanager.nodeId` in `chango.properties` for environments that need explicit naming.
