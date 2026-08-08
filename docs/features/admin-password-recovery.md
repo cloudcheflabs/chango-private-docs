@@ -101,26 +101,77 @@ bin/chango-cli.sh iam:reset-password --user some-user --new-password 'NewPass123
 
 ## Configuration
 
-The recovery socket is enabled by default. To disable it (for example, in a
-hardened production deployment), set:
+These are the shipped defaults in `conf/chango.properties` — the recovery socket
+is **on** out of the box:
 
 ```properties
 # conf/chango.properties
-chango.admin.socket.enabled = false
+chango.admin.socket.enabled = true
 chango.admin.socket.path    = ${chango.base.data.dir}/master/admin.sock
 chango.iam.audit.dir        = ${chango.base.data.dir}/master/iam-audit
 ```
 
-The CLI resolves the socket path in this order:
+To remove the local recovery path entirely (for example in a hardened
+production deployment), set the one key:
 
-1. `--socket /path/to/admin.sock` command-line flag
-2. `CHANGO_ADMIN_SOCKET` environment variable (must be an absolute path)
-3. `chango.admin.socket.path` in `conf/chango.properties`
-4. `<chango.base.data.dir>/master/admin.sock` (the default that matches the master)
+```properties
+chango.admin.socket.enabled = false
+```
 
-Use the explicit override (1 or 2) whenever the CLI is launched from a
-directory other than the master's working directory — relative paths in
-`chango.properties` do not resolve under a different `cwd`.
+### How the CLI finds the socket
+
+Re-deriving the socket path from `conf/chango.properties` is not reliable on its
+own: `chango.base.data.dir` can be overridden with `-D` at launch or edited after
+startup, and the file records nothing about which value the live process used. So
+the master **publishes the absolute path it actually bound to** into
+`<chango.home>/bin/master.socket` when the socket comes up, and deletes that file
+on shutdown. `bin/chango-cli.sh` prefers it.
+
+Resolution order, highest priority first:
+
+1. `--socket /path/to/admin.sock` — read by the Java CLI, always wins.
+2. `$CHANGO_ADMIN_SOCKET` — if exported in the caller's shell. Must be absolute.
+3. `<chango.home>/bin/master.socket` — the path published by the running master.
+   Used only when the file exists *and* the path inside it is a live socket.
+4. `chango.admin.socket.path` from `conf/chango.properties`, with both
+   `${chango.base.data.dir}` and `${chango.home}` expanded. A value still holding
+   a `${...}` placeholder is rejected rather than used literally.
+5. `<chango.base.data.dir>/master/admin.sock`, then `<package>/data/master/admin.sock`.
+
+Step 3 is what makes a relocated data dir work without extra flags: start the
+master with `-Dchango.base.data.dir=/var/lib/chango/data` and the socket moves to
+`/var/lib/chango/data/master/admin.sock` while `chango.properties` still reads
+`./data` — only the marker knows where the live master bound.
+
+```bash
+cat /opt/chango/bin/master.socket
+# /var/lib/chango/data/master/admin.sock
+bin/chango-cli.sh ping
+# pong
+```
+
+Unlike ontul/kiok/mium/itdastream/neorunbase/shannonstore, chango has **no**
+`admin.socket.marker.file` key — the marker name is fixed at `master.socket`.
+
+It is also no longer necessary to pass `--socket` just because the CLI is invoked
+from another directory: the marker holds an absolute path, so `cwd` does not
+matter. Use `--socket` only when the master is stopped (no marker) or you are
+reaching a socket the marker does not describe.
+
+### When the master key is needed
+
+`ping` and `iam:reset-password` do **not** need `CHANGO_MASTER_KEY` — the running
+master holds the unsealed key and does the work.
+
+The key **is** required for the subcommands the master gates on it server-side
+(`master-key show/rotate`, `kms rewrap`, `backup s3-config`): the CLI sends a
+fingerprint of `$CHANGO_MASTER_KEY`, never the raw key, and the master rejects the
+request if it does not match its own active key.
+
+```bash
+export CHANGO_MASTER_KEY='…the cluster master key…'
+bin/chango-cli.sh master-key status
+```
 
 ## Security model
 
