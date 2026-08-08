@@ -21,7 +21,7 @@ Each phase **brings up only the components it needs** and stops the heavy ones i
 
 These tutorials assume you have finished [Installation](../installation/index.md). Specifically:
 
-- master + at least two node managers are ready — `/admin/api/cluster/info` returns `ready: true`
+- master + at least two node managers are ready — `/api/v1/cluster/info` returns `ready: true`
 - you can log in to the admin UI as `admin/admin` (or whatever you changed the password to)
 - the operator is holding `CHANGO_MASTER_KEY` in a real secret manager
 

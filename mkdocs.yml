@@ -54,6 +54,7 @@ nav:
       - "Role-Based Access (Stage 1)": features/role-based-access.md
       - "Admin Password Recovery": features/admin-password-recovery.md
       - "Encryption & Key Management": features/kms.md
+      - "Product Master Keys": features/product-master-keys.md
       - "Port Allocator": features/port-allocator.md
       - "Hosts Sync": features/hosts-sync.md
       - "UI Proxy": features/ui-proxy.md

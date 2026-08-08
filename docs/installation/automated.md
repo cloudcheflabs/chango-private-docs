@@ -316,7 +316,7 @@ sudo -u chango /opt/chango/bin/stop-node-manager.sh    # NM hosts
 ansible-playbook -i inventory.yml uninstall.yml
 ```
 
-This removes `chango_install_dir` (`/opt/chango`), `chango_data_dir` (`/var/lib/chango`), and `chango_log_dir` (`/var/log/chango`) on every host. The JDKs under `/opt` and the `chango` OS user are left in place — remove them by hand if you want a full teardown.
+This removes `chango_install_dir` (`/opt/chango` — which contains chango's own RocksDB stores under `data/`), `chango_data_dir` (`/var/lib/chango`, the bundled ZooKeeper's data dir), and `chango_log_dir` (`/var/log/chango`) on every host. The JDKs under `/opt` and the `chango` OS user are left in place — remove them by hand if you want a full teardown.
 
 ## Next
 

@@ -43,7 +43,7 @@ Both routes stream the tail via internal NIO from the relevant host (master or N
 ## What is *not* in chango logs
 
 - **Component data-plane logs** that the component does not write to the install dir. Trino's query history is in Trino's metastore. Spark application logs from a finished job live in the configured event log directory (typically on S3 / ShannonStore).
-- **System logs** (`journalctl`, `dmesg`). The chango master + NM services do log to journald via their systemd units; chango does not re-shove those into the admin UI. Use `journalctl -u chango-master` directly when you need them.
+- **System logs** (`dmesg`, the OS journal). Chango ships **no** systemd units — the master and NM are started by `bin/start-master.sh` / `bin/start-node-manager.sh`, which redirect stdout/stderr to `<chango.log.path>/master.out` and `nodemanager.out`. `journalctl -u chango-master` returns nothing; read those `.out` files (and `chango.log`) instead.
 
 ## Log level
 

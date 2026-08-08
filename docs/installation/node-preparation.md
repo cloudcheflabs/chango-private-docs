@@ -75,7 +75,8 @@ Chango defaults its data path to `/opt`:
 |---|---|
 | `/opt/chango` | Chango master/NM install dir |
 | `/opt/components/<instanceId>` | Each managed component instance |
-| `/var/lib/chango` | RocksDB stores (KMS, IAM, metadata) on the master |
+| `<install_dir>/data` | RocksDB stores on the master — `master/kms`, `master/iam`, `metadata` |
+| `/var/lib/chango` | Bundled ZooKeeper's data dir |
 | `/var/log/chango` | Chango master + NM log files |
 
 Mount a dedicated data volume at `/opt`:

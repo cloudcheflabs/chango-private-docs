@@ -89,7 +89,8 @@ See [Component Catalog](../components/catalog.md) for the full per-component ins
 | `/opt/chango` | Chango master + node manager install dirs |
 | `/opt/chango/bin/*.pid` | Chango process pid files (master / zk / nodemanager, one per running instance) |
 | `/opt/components/<instanceId>` | Each managed component's install dir |
-| `/var/lib/chango` | Chango master's RocksDB stores (KMS, IAM, metadata) |
+| `<install_dir>/data` | Chango's RocksDB stores — `master/kms`, `master/iam`, `metadata` (`chango.base.data.dir`, default `./data` relative to the install dir) |
+| `/var/lib/chango/zookeeper` | Bundled ZooKeeper's data dir (`chango_data_dir` in ansible) |
 | `/var/log/chango` | Chango master + NM + ZK logs |
 
 Per-component logs live under `/opt/components/<instanceId>/logs/` (or the component-specific log path) and are also tailable from the admin UI's Logs panel.

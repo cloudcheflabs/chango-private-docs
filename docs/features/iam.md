@@ -80,7 +80,11 @@ If the leader's IAM RocksDB ever looks empty on a non-first boot (disk corruptio
 
 IAM state is one of three RocksDB stores the chango master keeps locally:
 
-- `/var/lib/chango/iam/` (default `chango.iam.rocksdb.path`).
+- `<chango.base.data.dir>/master/iam` on a master (`chango.master.iam.rocksdb.path`) and
+  `<chango.base.data.dir>/nm/iam` on a node manager (`chango.nm.iam.rocksdb.path`). With the
+  packaged default `chango.base.data.dir = ./data` and an install at `/opt/chango`, the master's
+  store is `/opt/chango/data/master/iam`. The two roles use separate sub-trees on purpose — they
+  are co-located on most hosts and would otherwise contend for the same RocksDB `LOCK`.
 - The store is plain RocksDB — no KMS envelope on read, since the leader needs synchronous access. Sensitive fields (password hashes, access key secrets) are stored hashed / encrypted at the field level.
 - Followers and node managers cache the state and pull a fresh copy from the leader on every restart and on every change at runtime — single source of truth.
 

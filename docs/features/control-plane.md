@@ -8,9 +8,9 @@ The master holds three authoritative pieces of state, all in local RocksDB on th
 
 | Store | Default path | What it contains |
 |---|---|---|
-| IAM | `/var/lib/chango/iam/` | Users · groups · policies · access keys |
-| KMS | `/var/lib/chango/kms/` | KEKs that wrap component DEKs |
-| Metadata | `/var/lib/chango/metadata/` | Component inventory · per-cluster settings · nginx state · gateway topology |
+| IAM | `<install_dir>/data/master/iam` | Users · groups · policies · access keys |
+| KMS | `<install_dir>/data/master/kms` | KEKs that wrap component DEKs |
+| Metadata | `<install_dir>/data/metadata` | Component inventory · per-cluster settings · nginx state · gateway topology |
 
 ZooKeeper holds **ephemeral** topology — who is alive right now — under `/chango/nodes/{masters,node-managers}/<nodeId>`. Persistent state never lives in ZooKeeper.
 

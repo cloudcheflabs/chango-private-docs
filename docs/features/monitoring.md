@@ -88,6 +88,6 @@ If a component process dies outside of chango's control (OOM, segfault, manual k
 |---|---|---|
 | `chango.metrics.collect.interval.seconds` | 10 | How often the leader walks every component and asks each NM for samples |
 | `chango.metrics.retention.seconds` | 3600 | How long the in-memory history is kept |
-| `chango.component.op.timeout.ms` | 120000 | Timeout for individual `COMPONENT_METRICS_REQ` to a slow NM — keep high enough to not race |
+| `chango.master.component.op.timeout.ms` | 120000 | Timeout for individual `COMPONENT_METRICS_REQ` to a slow NM — keep high enough to not race |
 
 Increasing the interval lowers admin-side overhead at the cost of chart resolution; raising the retention buys longer history at the cost of leader JVM heap (each sample is ~64 bytes).
