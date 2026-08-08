@@ -713,6 +713,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1554,7 +1568,7 @@
 </code></pre></div>
 <p>Returns the list of patches whose <code>.bak/</code> is still present on the cluster — applied in newest-first order, one row per <code>(patchId, host)</code>. The admin UI uses this to drive the PatchHistoryCard on each component page.</p>
 <h2 id="on-disk-layout">On-disk layout</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>/var/lib/chango/data/master/patches/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&lt;install_dir&gt;/data/master/patches/
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &lt;patchId&gt;.tgz                ← the raw uploaded tarball
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &lt;patchId&gt;.json               ← parsed manifest + sha256
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
@@ -1580,7 +1594,7 @@
 <p><code>BackupService.packTarball</code> includes <code>data/master/patches/</code> in the cluster-state backup whenever the directory exists. The manifest reflects this:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;backupId&quot;</span><span class="p">:</span><span class="w">       </span><span class="s2">&quot;20260530-…&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;patchesDir&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;/var/lib/chango/data/master/patches&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;patchesDir&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;/opt/chango/data/master/patches&quot;</span><span class="p">,</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">&quot;patchesIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="err">...</span>
 <a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>

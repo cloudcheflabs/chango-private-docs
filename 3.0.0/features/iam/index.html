@@ -803,6 +803,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1408,7 +1422,11 @@
 <h2 id="where-state-lives">Where state lives</h2>
 <p>IAM state is one of three RocksDB stores the chango master keeps locally:</p>
 <ul>
-<li><code>/var/lib/chango/iam/</code> (default <code>chango.iam.rocksdb.path</code>).</li>
+<li><code>&lt;chango.base.data.dir&gt;/master/iam</code> on a master (<code>chango.master.iam.rocksdb.path</code>) and
+  <code>&lt;chango.base.data.dir&gt;/nm/iam</code> on a node manager (<code>chango.nm.iam.rocksdb.path</code>). With the
+  packaged default <code>chango.base.data.dir = ./data</code> and an install at <code>/opt/chango</code>, the master's
+  store is <code>/opt/chango/data/master/iam</code>. The two roles use separate sub-trees on purpose — they
+  are co-located on most hosts and would otherwise contend for the same RocksDB <code>LOCK</code>.</li>
 <li>The store is plain RocksDB — no KMS envelope on read, since the leader needs synchronous access. Sensitive fields (password hashes, access key secrets) are stored hashed / encrypted at the field level.</li>
 <li>Followers and node managers cache the state and pull a fresh copy from the leader on every restart and on every change at runtime — single source of truth.</li>
 </ul>

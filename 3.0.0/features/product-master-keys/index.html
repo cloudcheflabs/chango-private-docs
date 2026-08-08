@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/features/kms/">
+        <link rel="canonical" href="https://cloudcheflabs.github.io/chango-private-docs/3.0.0/features/product-master-keys/">
       
       
-        <link rel="prev" href="../admin-password-recovery/">
+        <link rel="prev" href="../kms/">
       
       
-        <link rel="next" href="../product-master-keys/">
+        <link rel="next" href="../port-allocator/">
       
       <link rel="icon" href="../../images/logo/chango-logo.png">
       <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
-        <title>Encryption & Key Management - Chango</title>
+        <title>Product Master Keys - Chango</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#encryption-key-management" class="md-skip">
+        <a href="#product-master-keys" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Encryption & Key Management
+              Product Master Keys
             
           </span>
         </div>
@@ -697,6 +697,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../kms/" class="md-nav__link">
+        Encryption & Key Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -709,12 +723,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Encryption & Key Management
+          Product Master Keys
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Encryption & Key Management
+        Product Master Keys
       </a>
       
         
@@ -733,44 +747,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-encrypted" class="md-nav__link">
-    What is encrypted
+  <a href="#where-the-key-lives" class="md-nav__link">
+    Where the key lives
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#envelope-encryption-model" class="md-nav__link">
-    Envelope encryption model
+  <a href="#reading-a-key-back" class="md-nav__link">
+    Reading a key back
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#algorithms" class="md-nav__link">
-    Algorithms
+  <a href="#deleting-a-cluster-retires-the-key" class="md-nav__link">
+    Deleting a cluster retires the key
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#root-of-trust-the-master-key" class="md-nav__link">
-    Root of trust — the master key
+  <a href="#reinstalling-over-surviving-data" class="md-nav__link">
+    Reinstalling over surviving data
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-master-key-keyring" class="md-nav__link">
-    The master-key keyring
-  </a>
-  
-    <nav class="md-nav" aria-label="The master-key keyring">
+    <nav class="md-nav" aria-label="Reinstalling over surviving data">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#inspecting-keyring-state" class="md-nav__link">
-    Inspecting keyring state
+  <a href="#reusing-the-retired-key" class="md-nav__link">
+    Reusing the retired key
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discarding-the-data-instead" class="md-nav__link">
+    Discarding the data instead
   </a>
   
 </li>
@@ -781,36 +795,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rotating-the-master-key" class="md-nav__link">
-    Rotating the master key
+  <a href="#retention" class="md-nav__link">
+    Retention
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#rotating-a-kek" class="md-nav__link">
-    Rotating a KEK
+  <a href="#storage-and-replication" class="md-nav__link">
+    Storage and replication
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#rest-surface" class="md-nav__link">
-    REST surface
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#state-location" class="md-nav__link">
-    State location
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-not-in-changos-kms" class="md-nav__link">
-    What is NOT in chango's KMS
+  <a href="#product-key-vs-chango-key-quick-reference" class="md-nav__link">
+    Product key vs chango key — quick reference
   </a>
   
 </li>
@@ -819,20 +819,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../product-master-keys/" class="md-nav__link">
-        Product Master Keys
-      </a>
     </li>
   
 
@@ -1342,238 +1328,196 @@
                   
 
 
-<h1 id="encryption-key-management">Encryption &amp; Key Management</h1>
-<p>Chango encrypts every cluster-wide secret at rest and every internal NIO message in flight. The KMS layer is built in — no external KMS service is required to bring chango up — and follows a standard envelope-encryption model so external KMS providers can be plugged in later without changing the on-disk format.</p>
-<h2 id="what-is-encrypted">What is encrypted</h2>
-<table>
-<thead>
-<tr>
-<th>Surface</th>
-<th>Encrypted with</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>KMS RocksDB (the keystore)</td>
-<td>The whole keystore blob is AES-GCM sealed under a key derived from <code>$CHANGO_MASTER_KEY</code></td>
-<td>Holds the versioned KEKs that wrap everything else</td>
-</tr>
-<tr>
-<td>Metadata RocksDB</td>
-<td>Every row is envelope-encrypted under the <code>metadata-encryption</code> KEK</td>
-<td>Component inventory, per-cluster settings (including managed product master keys), gateway topology, backup S3 credentials</td>
-</tr>
-<tr>
-<td>IAM RocksDB</td>
-<td>Same envelope, under the same KEK path</td>
-<td>Users, groups, policies, access keys</td>
-</tr>
-<tr>
-<td>Internal NIO protocol (master ↔ NM, master ↔ master)</td>
-<td>Each <code>InternalMessage</code> body is AES-GCM with a DEK wrapped by the <code>internal-protocol</code> KEK</td>
-<td><code>chango.kms.encrypt.internal.protocol = true</code> by default; <code>KMS_*</code> opcodes are exempt because a node fetching the keystore has no key yet</td>
-</tr>
-<tr>
-<td>Backup archive uploaded to S3</td>
-<td>Contents are already envelope-encrypted; server-side encryption is requested on top when the endpoint supports it</td>
-<td>See <a href="../backup/">Backup &amp; Restore</a></td>
-</tr>
-</tbody>
-</table>
-<p>Rows in the metadata store are encrypted whole, not field-by-field: opening the RocksDB without the master key yields nothing usable, not "the non-sensitive half".</p>
-<h2 id="envelope-encryption-model">Envelope encryption model</h2>
-<p>Chango uses the standard two-key model, plus a third layer for the root:</p>
-<ul>
-<li><strong>Data Encryption Key (DEK)</strong> — a fresh AES-256 key per payload (one per message, one per row).</li>
-<li><strong>Key Encryption Key (KEK)</strong> — wraps DEKs. Each KEK id owns a monotonically-versioned list of versions; the newest ACTIVE version wraps new DEKs while older versions stay decryptable until REVOKED. KEKs live in the KMS RocksDB.</li>
-<li><strong>Master key</strong> — <code>$CHANGO_MASTER_KEY</code>. Seals the keystore that holds the KEKs. Never persisted anywhere by chango.</li>
-</ul>
-<p>To encrypt a payload chango generates a DEK, encrypts with it (AES-256-GCM, random 96-bit IV), wraps the DEK under the ACTIVE KEK version, and stores <code>version ‖ iv ‖ wrappedDek ‖ ciphertext</code> together. To decrypt it reads the KEK version out of the envelope, resolves that exact version, unwraps the DEK, and decrypts.</p>
-<p>Because the envelope names its KEK <strong>version</strong>, rotating a KEK never invalidates existing ciphertext.</p>
-<h2 id="algorithms">Algorithms</h2>
-<table>
-<thead>
-<tr>
-<th>Operation</th>
-<th>Algorithm</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Payload / DEK / KEK cipher</td>
-<td>AES-256-GCM, 128-bit tag</td>
-</tr>
-<tr>
-<td>Random IVs</td>
-<td>96-bit, from <code>SecureRandom</code></td>
-</tr>
-<tr>
-<td>Master-key derivation</td>
-<td>PBKDF2-HMAC-SHA256, <code>chango.kms.pbkdf2.iterations</code> (default 200000), 256-bit output, fresh 32-byte salt per save</td>
-</tr>
-<tr>
-<td>Master-key fingerprint</td>
-<td><code>SHA-256("chango-master-key-fingerprint:v1:" + key)</code> truncated to 64 bits</td>
-</tr>
-<tr>
-<td>Admin JWT signing</td>
-<td>HS256, key derived from the master key</td>
-</tr>
-</tbody>
-</table>
-<p>GCM authentication tags guard against tampering: a wrong key or a flipped bit fails with an AEAD tag error rather than returning garbage plaintext.</p>
+<h1 id="product-master-keys">Product master keys</h1>
+<p>Every managed product — ontul, kiok, shannonstore, neorunbase, itdastream, mium — encrypts its <strong>own</strong> state under its <strong>own</strong> master key: its IAM store, saved connections, per-bucket DEKs, job history. Chango installs those products, so chango is where that key is entered, stored and retrieved.</p>
+<p>This page covers the whole lifecycle: where the key lives, how to read it back, what happens to it when you delete a cluster, and why a reinstall over surviving data must present the same key.</p>
+<p>Not to be confused with chango's <em>own</em> master key (<code>$CHANGO_MASTER_KEY</code>), which protects chango's control plane — see <a href="../kms/">Encryption &amp; Key Management</a>.</p>
+<h2 id="where-the-key-lives">Where the key lives</h2>
+<p>At install time the key is a required field (minimum 32 characters):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="err">POST</span><span class="w"> </span><span class="err">/admi</span><span class="kc">n</span><span class="err">/api/o</span><span class="kc">ntul</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;clusterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ontul-prod&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&quot;masterKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;…at least 32 chars…&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&quot;zkNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nm-…&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;masterNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nm-…&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;workerNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nm-…&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>Chango then:</p>
+<ol>
+<li>Stores it in the cluster record as <code>settings.masterKey</code>, inside the metadata RocksDB — which is itself envelope-encrypted under chango's own KMS (see <a href="../kms/">KMS</a>). Reading the RocksDB files without <code>$CHANGO_MASTER_KEY</code> yields nothing.</li>
+<li>Passes it to every instance of that cluster as an environment variable (<code>ONTUL_MASTER_KEY</code>, <code>KIOK_MASTER_KEY</code>, …) in the component's launch config, so the product derives its own keys from it.</li>
+<li>Replicates the record to follower masters over the normal metadata sync.</li>
+</ol>
+<p><strong>The key is never returned over REST.</strong> Cluster GETs filter <code>settings.masterKey</code> out, alongside <code>pgPassword</code>, <code>clientSecret</code>, <code>s3SecretKey</code> and friends. The admin UI never sees it after the install form is submitted.</p>
+<h2 id="reading-a-key-back">Reading a key back</h2>
+<p>The only path is the master's local Unix domain socket (mode 600), and it requires <strong>two</strong> factors:</p>
+<ol>
+<li><strong>OS-level access</strong> — you must be able to connect to <code>&lt;base.data.dir&gt;/master/admin.sock</code>, i.e. run as the master's own filesystem identity.</li>
+<li><strong>Proof of chango's master key</strong> — the CLI sends the <em>fingerprint</em> of <code>$CHANGO_MASTER_KEY</code> (never the raw key) and the master matches it against its own.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>store&gt;
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>list
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>CLUSTER-ID<span class="w">                   </span>PRODUCT<span class="w">        </span>STATUS<span class="w">     </span>VERSION<span class="w">    </span>MASTER-KEY
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>ontul-prod<span class="w">                   </span>ontul<span class="w">          </span>RUNNING<span class="w">    </span><span class="m">1</span>.0.0<span class="w">      </span>yes
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>kiok-prod<span class="w">                    </span>kiok<span class="w">           </span>RUNNING<span class="w">    </span><span class="m">1</span>.0.0<span class="w">      </span>yes
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>$<span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>show<span class="w"> </span>--cluster<span class="w"> </span>ontul-prod
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>ontul-prod<span class="w"> </span><span class="o">(</span>ontul<span class="o">)</span><span class="w"> </span>master<span class="w"> </span>key:
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>…the<span class="w"> </span>key…
+</code></pre></div>
+<p>On a TTY the output is labelled; piped or redirected it prints the key alone, so <code>show … &gt; key.txt</code> is safe to script.</p>
 <div class="admonition note">
-<p class="admonition-title">The fingerprint is domain-separated on purpose</p>
-<p>It is deliberately <em>not</em> <code>SHA-256(masterKey)</code> — that value is the JWT signing key. The fingerprint uses its own domain prefix so publishing it (in logs, in a backup manifest, in <code>master-key status</code>) can never leak a key that is used for anything else.</p>
+<p class="admonition-title">Run it on the leader</p>
+<p>The socket serves that master's <strong>local</strong> metadata store. A follower trails the leader by one snapshot broadcast, so a cluster installed or deleted seconds ago may not be visible yet. Reads on a follower print a warning naming the leader; mutating commands (<code>rotate</code>, <code>purge</code>) are refused there outright.</p>
 </div>
-<h2 id="root-of-trust-the-master-key">Root of trust — the master key</h2>
-<p>The master key is supplied as an <strong>environment variable</strong> to <code>bin/start-master.sh</code> / <code>bin/start-node-manager.sh</code> and lives only in process memory. Chango never writes it to disk, and there is no systemd unit or sysconfig file involved — ansible deliberately creates neither.</p>
-<p>Ansible stages the key once at first install in <code>&lt;install_dir&gt;/.master-key-bootstrap</code> (mode 0600, root) purely so the operator can move it into a secret store and shred the file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>cat<span class="w"> </span>/opt/chango/.master-key-bootstrap<span class="w">     </span><span class="c1"># read once</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># → move the value into Vault / AWS Secrets Manager / a password manager</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>shred<span class="w"> </span>-u<span class="w"> </span>/opt/chango/.master-key-bootstrap
-</code></pre></div>
-<p>Every master and every node manager must hold the <strong>same</strong> master key. Confirm without revealing it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>store&gt;
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>fingerprint<span class="w">     </span><span class="c1"># run on each node, compare</span>
-</code></pre></div>
-<p>If the master key is lost, the keystore — and therefore the metadata and IAM stores and every backup — is mathematically undecryptable. Chango refuses to start rather than re-initialising an unreadable keystore, because silently treating it as empty would let the first leader overwrite it with fresh keys and destroy every existing row:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>KMS keystore at /opt/chango/data/master/kms exists but cannot be loaded —
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>no key in this node&#39;s keyring opens it. Accepted fingerprints: [a3f91c04d5e6b7c8].
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Supply the right key via $CHANGO_MASTER_KEY, or add the retired one to
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$CHANGO_MASTER_KEY_PREVIOUS (comma-separated).
-</code></pre></div>
-<h2 id="the-master-key-keyring">The master-key keyring</h2>
-<p>The KEK layer has always been versioned, but the master key used to be a single unversioned value — exactly one key could open the keystore at any moment. That made rotation impossible, and it meant an archive sealed under an older key could only be opened by giving up access to the live one.</p>
-<p>The keyring fixes both:</p>
+<h2 id="deleting-a-cluster-retires-the-key">Deleting a cluster retires the key</h2>
+<p><code>DELETE /admin/api/&lt;product&gt;/&lt;clusterId&gt;</code> stops every instance and removes their install directories. It does <strong>not</strong> remove state kept outside those directories:</p>
 <table>
 <thead>
 <tr>
-<th>Env var</th>
-<th>Role</th>
+<th>Product</th>
+<th>Durable state outside the install dir</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>$CHANGO_MASTER_KEY</code></td>
-<td><strong>ACTIVE</strong> — everything is written under this key</td>
+<td>neorunbase, mium</td>
+<td>Their catalog in an <strong>external PostgreSQL</strong>, which delete never drops — so their state <em>always</em> survives</td>
 </tr>
 <tr>
-<td><code>$CHANGO_MASTER_KEY_PREVIOUS</code></td>
-<td>Zero or more retired keys, comma-separated, accepted for <strong>reading only</strong></td>
+<td>ontul, kiok, shannonstore, itdastream</td>
+<td>Only if <code>&lt;product&gt;.base.data.dir</code> was overridden to an absolute path. The default <code>./data</code> sits inside the install dir and is wiped with it — but pointing it at a separate data disk, as production ShannonStore does, makes the data outlive the cluster</td>
 </tr>
 </tbody>
 </table>
-<p>The env var name for retired keys is configurable via <code>chango.kms.master.key.previous.env</code> if your secret delivery names it differently.</p>
-<p>Sealed payloads carry a self-describing header — <code>CKMS</code> magic, a version byte, and the master-key fingerprint — so the right keyring entry is chosen directly instead of by trial, and so tooling can report <em>which key an archive needs before a restore is attempted</em>.</p>
-<div class="admonition tip">
-<p class="admonition-title">Upgrading from an earlier release needs no migration</p>
-<p>Keystores written before the keyring existed have no header. They are still opened by trying each keyring entry in turn, and they gain the header the next time they are saved. Nothing has to be re-encrypted, and a downgrade window is not required.</p>
-</div>
-<h3 id="inspecting-keyring-state">Inspecting keyring state</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>status
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>active<span class="w"> </span>master<span class="w"> </span>key<span class="w">      </span>:<span class="w"> </span>251b8c532ce30e9b
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>keystore<span class="w"> </span>sealed<span class="w"> </span>under<span class="w">  </span>:<span class="w"> </span>ea65f9199a78782a
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>accepted<span class="w"> </span><span class="k">for</span><span class="w"> </span>reading<span class="w">   </span>:<span class="w"> </span>251b8c532ce30e9b,<span class="w"> </span>ea65f9199a78782a
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>rewrap<span class="w"> </span>needed<span class="w">          </span>:<span class="w"> </span>YES
+<p>Surviving ciphertext plus a destroyed key is unrecoverable. So delete <strong>retires</strong> the key instead of destroying it, recording the fingerprint, the deletion time, and <em>what the key was protecting</em>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>retired
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>DELETED-CLUSTER<span class="w">              </span>PRODUCT<span class="w">        </span>KEY-FINGERPRINT<span class="w">    </span>DELETED<span class="w">      </span>STILL-PROTECTS
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>nb-prod<span class="w">                      </span>neorunbase<span class="w">     </span>51e8dbe099c0c9db<span class="w">   </span><span class="m">2026</span>-08-08<span class="w">   </span>PostgreSQL<span class="w"> </span><span class="m">10</span>.0.1.5:5432<span class="w"> </span>database<span class="w"> </span><span class="s1">&#39;neorunbase&#39;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>kiok-old<span class="w">                     </span>kiok<span class="w">           </span>988fd73d505dbffc<span class="w">   </span><span class="m">2026</span>-08-08<span class="w">   </span>data<span class="w"> </span>directory<span class="w"> </span>/data/kiok<span class="w"> </span>on<span class="w"> </span><span class="o">[</span>nm-…-19998<span class="o">]</span>
 </code></pre></div>
-<p>Every value is a non-secret fingerprint. <code>rewrap needed: YES</code> means the keystore is still sealed under a key that is no longer ACTIVE — i.e. a rotation is staged but not finished.</p>
-<h2 id="rotating-the-master-key">Rotating the master key</h2>
-<p>Because only the keystore blob is master-key wrapped, rotation re-seals exactly one blob. KEKs and every row they protect are untouched, so there is no bulk re-encryption and no downtime window proportional to your data size.</p>
-<p>The blob is also the <code>KMS_SYNC_PUSH</code> payload, so a leader-side rewrap propagates to followers and node managers over the existing sync path — there is no separate rotation opcode.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1. Generate the new key</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">NEW</span><span class="o">=</span><span class="k">$(</span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>generate<span class="k">)</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 2. Restart EVERY master and node manager with the new key ACTIVE and the</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">#    outgoing key still accepted. This is safe: the keystore is still sealed</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">#    under the old key at this point and opens via the PREVIOUS entry.</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span><span class="nv">$NEW</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY_PREVIOUS</span><span class="o">=</span>&lt;outgoing<span class="w"> </span>key&gt;
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-master.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span>host1:2181,host2:2181,host3:2181<span class="w"> </span>-Dchango.zk.rootPath<span class="o">=</span>/chango
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-node-manager.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span>host1:2181,host2:2181,host3:2181<span class="w"> </span>-Dchango.zk.rootPath<span class="o">=</span>/chango
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="c1"># 3. On the LEADER, re-seal the keystore</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>rotate
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="c1">#   keystore re-sealed: ea65f9199a78782a → 251b8c532ce30e9b</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c1"># 4. Confirm on every node</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>status<span class="w">     </span><span class="c1"># rewrap needed: no</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1"># 5. Only then drop CHANGO_MASTER_KEY_PREVIOUS from the start environment</span>
+<p><code>master-key show --cluster &lt;deleted-cluster&gt;</code> keeps working after the delete — it falls back to the retired vault — so "back the key up before deleting" is no longer something you have to remember in advance.</p>
+<p>Retired keys are also listed over REST, <strong>fingerprints only, never key material</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOK</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BASE</span><span class="s2">/admin/api/retired-keys?componentType=ontul&quot;</span>
 </code></pre></div>
-<p>A few properties of this flow worth knowing:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">[{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;clusterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ontul-old&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;componentType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ontul&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&quot;fingerprint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a3f91c04d5e6b7c8&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">&quot;deletedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1786150178485</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="nt">&quot;retainUntil&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2101510178485</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="nt">&quot;retainElapsed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nt">&quot;boundTo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;data directory /data/ontul on [nm-…-19998]&quot;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}]</span>
+</code></pre></div>
+<h2 id="reinstalling-over-surviving-data">Reinstalling over surviving data</h2>
+<p>If an install would sit on state a retired key protects, chango refuses it — <strong>before touching any node</strong> — rather than producing a cluster that cannot read its own data:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>HTTP 400
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>This install reuses PostgreSQL 10.0.1.5:5432 database &#39;neorunbase&#39;, which still holds
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>state encrypted by deleted neorunbase cluster &#39;nb-prod&#39; (master key fp=51e8dbe099c0c9db).
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>The supplied key (fp=84187e1a992e2c53) cannot decrypt it. Either reuse that key — pass
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>&quot;retiredKeyRef&quot;:&quot;nb-prod&quot; instead of a raw masterKey — or, if the surviving state is
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>meant to be discarded, drop it first (the PostgreSQL database / the data directory) and
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>purge the retired key with &#39;chango-cli master-key purge --cluster nb-prod&#39;.
+</code></pre></div>
+<p>Two bindings count as "the same state", and only these two, because they are the ones that genuinely survive:</p>
 <ul>
-<li><strong>Order is enforced, not assumed.</strong> <code>rotate</code> compares the key in your shell against the master's ACTIVE key and refuses if they differ, because a JVM picks up its environment at launch — editing the env without restarting changes nothing.</li>
-<li><strong>Leader only.</strong> <code>rotate</code> is refused on a follower: a follower's local write neither replicates nor survives the next leader snapshot, so it would report success and change nothing.</li>
-<li><strong><code>rotate</code> refuses an empty keystore</strong>, so a keystore that failed to open can never be replaced by a blank one.</li>
-<li><strong>Keep the retired key.</strong> Backups taken before the rotation are still sealed under it. <code>chango-cli backup inspect</code> reports which fingerprint a given archive needs; see <a href="../backup/#which-key-does-this-archive-need">Backup &amp; Restore</a>.</li>
+<li><strong>The same external PostgreSQL endpoint <em>and</em> database.</strong></li>
+<li><strong>The same absolute <code>base.data.dir</code> on a host the old cluster used.</strong></li>
 </ul>
-<h2 id="rotating-a-kek">Rotating a KEK</h2>
-<p>Independent of the master key, an individual KEK can be rotated. Existing ciphertext keeps naming the older version and stays readable:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOK</span><span class="s2">&quot;</span><span class="w"> </span><span class="nv">$BASE</span>/admin/api/kms/rotate/metadata-encryption
+<p>An install base dir alone does <em>not</em> count — every cluster gets its own <code>&lt;installBaseDir&gt;/&lt;instanceId&gt;</code> subtree, so reusing the base dir reuses nothing. Installing with a fresh key at a <em>different</em> data dir is allowed and untouched.</p>
+<h3 id="reusing-the-retired-key">Reusing the retired key</h3>
+<p>Pass <code>retiredKeyRef</code> — the deleted cluster's id — instead of <code>masterKey</code>. The master substitutes the key server-side, so raw key material never crosses the REST boundary:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="err">POST</span><span class="w"> </span><span class="err">/admi</span><span class="kc">n</span><span class="err">/api/</span><span class="kc">ne</span><span class="err">oru</span><span class="kc">n</span><span class="err">base</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;clusterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nb-prod-2&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">&quot;retiredKeyRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nb-prod&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">&quot;zkNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nm-…&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;coordinatorNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nm-…&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;datanodeNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nm-…&quot;</span><span class="p">],</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">&quot;pgHost&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10.0.1.5&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;pgDatabase&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;neorunbase&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;pgUser&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;pgPassword&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;…&quot;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="rest-surface">REST surface</h2>
+<p>The admin UI does this for you: when retired keys exist for the product you are installing, the create form lists them by fingerprint and what each still protects, with "use a new master key" as the default. Selecting one sends <code>retiredKeyRef</code>.</p>
+<h3 id="discarding-the-data-instead">Discarding the data instead</h3>
+<p>If the surviving state is genuinely meant to go away, drop it and purge the key — in that order:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># 1. Drop the data the key protects</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>psql<span class="w"> </span>-h<span class="w"> </span><span class="m">10</span>.0.1.5<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;DROP DATABASE neorunbase;&#39;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">#    …or remove the absolute data directory on each host</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># 2. Then destroy the key (leader only, irreversible)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>purge<span class="w"> </span>--cluster<span class="w"> </span>nb-prod
+</code></pre></div>
+<p><code>purge</code> asks for confirmation on a TTY (<code>--yes</code> to skip) and is <strong>refused on a follower</strong>: a follower's local delete neither replicates nor survives the next leader snapshot, so it would report a key destroyed that still exists. The REST equivalent, <code>DELETE /admin/api/retired-keys/{clusterId}</code>, is leader-only for the same reason.</p>
+<h2 id="retention">Retention</h2>
+<p><strong>Nothing expires a retired key automatically.</strong> <code>retainUntil</code> is advisory only — it appears in the REST listing so a UI can flag old entries, and nothing acts on it.</p>
+<p>That is deliberate. Silently destroying a key on a timer would recreate exactly the failure this mechanism exists to prevent, and the key may still be the only thing that can open a backup archive.</p>
+<p>The hint is computed as:</p>
 <table>
 <thead>
 <tr>
-<th>Endpoint</th>
-<th>Purpose</th>
+<th>Situation</th>
+<th><code>retainUntil</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>GET  /admin/api/kms/list</code></td>
-<td>List KEK ids with current version, version count, last rotation</td>
+<td><code>backup.retention.days &gt; 0</code></td>
+<td><code>max(backup.retention.days, chango.retired.key.min.retention.days)</code> from the deletion date</td>
 </tr>
 <tr>
-<td><code>GET  /admin/api/kms/status/{keyId}</code></td>
-<td>Version metadata for one KEK — version numbers, states, creation times</td>
-</tr>
-<tr>
-<td><code>POST /admin/api/kms/create</code></td>
-<td>Create a KEK (normally driven by a component install)</td>
-</tr>
-<tr>
-<td><code>POST /admin/api/kms/rotate/{keyId}</code></td>
-<td>Bump a KEK to a new ACTIVE version</td>
+<td><code>backup.retention.days = 0</code> (archives kept forever)</td>
+<td><code>chango.retired.key.max.retention.days</code> (default 3650)</td>
 </tr>
 </tbody>
 </table>
-<p>Mutating routes are leader-only. <strong>Encrypt / decrypt are not exposed over REST</strong> — wrapping is done in-process on behalf of components, and the wrapped DEKs are persisted into the component's own metadata by the master.</p>
-<p>Key material — raw KEKs, raw master keys — is never returned by any REST route. The one way to read a managed product's master key is the local admin socket, which requires OS-level access <em>and</em> proof of the chango master key; see <a href="../product-master-keys/">Product master keys</a>.</p>
-<h2 id="state-location">State location</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># chango.properties</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="na">chango.retired.key.min.retention.days</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">30      # floor even with backups disabled</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="na">chango.retired.key.max.retention.days</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3650    # used when archives never expire</span>
+</code></pre></div>
+<p>The tie to <a href="../backup/#retention">backup retention</a> is the point: an archive is worthless without the key that opens it, so a key must not be considered stale while archives sealed under it still exist.</p>
+<h2 id="storage-and-replication">Storage and replication</h2>
+<p>Retired keys are ordinary config rows (<code>retired-key:&lt;clusterId&gt;</code>) in the metadata store, so they inherit its envelope encryption and leader → follower replication. Deleting one on the leader propagates; a follower restart does not resurrect it.</p>
+<p>They are included in the <a href="../backup/">backup archive</a> along with the rest of the metadata store — which means a restored control plane still knows how to open the data of clusters that were deleted before the backup was taken.</p>
+<h2 id="product-key-vs-chango-key-quick-reference">Product key vs chango key — quick reference</h2>
 <table>
 <thead>
 <tr>
-<th>Path (default)</th>
-<th>Config key</th>
-<th>Contents</th>
+<th></th>
+<th>Product master key</th>
+<th>chango master key</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>&lt;base.data.dir&gt;/master/kms</code></td>
-<td><code>chango.master.kms.rocksdb.path</code></td>
-<td>The master's keystore</td>
+<td>Protects</td>
+<td>That product's own state (IAM, connections, per-bucket DEKs)</td>
+<td>chango's control plane (KMS keystore → metadata + IAM)</td>
 </tr>
 <tr>
-<td><code>&lt;base.data.dir&gt;/nm/kms</code></td>
-<td><code>chango.nm.kms.rocksdb.path</code></td>
-<td>A node manager's local keystore copy</td>
+<td>Supplied</td>
+<td>Install form / <code>masterKey</code> in the install request</td>
+<td><code>$CHANGO_MASTER_KEY</code> env on every chango process</td>
+</tr>
+<tr>
+<td>Stored by chango</td>
+<td>Yes — <code>settings.masterKey</code>, envelope-encrypted</td>
+<td><strong>No</strong> — process memory only</td>
+</tr>
+<tr>
+<td>Read back with</td>
+<td><code>chango-cli master-key show --cluster &lt;id&gt;</code></td>
+<td>Never; compare <code>master-key fingerprint</code> instead</td>
+</tr>
+<tr>
+<td>Rotation</td>
+<td>Product-specific; chango does not rotate it for you</td>
+<td><code>chango-cli master-key rotate</code> — see <a href="../kms/#rotating-the-master-key">KMS</a></td>
+</tr>
+<tr>
+<td>On cluster delete</td>
+<td>Retired, not destroyed</td>
+<td>Unaffected</td>
 </tr>
 </tbody>
 </table>
-<p>With the packaged default <code>chango.base.data.dir = ./data</code> and an install at <code>/opt/chango</code>, the master keystore is <code>/opt/chango/data/master/kms</code>.</p>
-<p>Master and NM use separate sub-trees deliberately: the two processes are co-located on most hosts and would otherwise fight over the same RocksDB <code>LOCK</code>.</p>
-<p>Both are included in the <a href="../backup/">backup artifact</a>.</p>
-<h2 id="what-is-not-in-changos-kms">What is NOT in chango's KMS</h2>
-<ul>
-<li><strong>Application data at rest</strong> — the data plane's concern. ShannonStore, NeoRunBase and Iceberg-on-S3 each manage their own at-rest encryption, mostly under <em>their own</em> master keys, which chango stores for them (see <a href="../product-master-keys/">Product master keys</a>).</li>
-<li><strong>TLS</strong> — the NIO protocol does AES-GCM at the message layer rather than wrapping the socket. Terminate TLS for the admin HTTP surface at the ingress (UI Proxy or a customer-supplied reverse proxy).</li>
-</ul>
 
 
 

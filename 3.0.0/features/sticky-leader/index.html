@@ -796,6 +796,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1410,7 +1424,7 @@
 <ul>
 <li><strong>Self-patch (v2)</strong> depends on this. The 3-phase fan-out restarts the leader <strong>last</strong>; the helper script preserves <code>CHANGO_MASTER_KEY</code> and the original <code>-Dchango.*</code> system props and lets sticky-back re-elect the same node. See <a href="../patch-system/#chango-self-patch-v2">Patch System</a>.</li>
 <li><strong>Rolling restart</strong> of the masters relies on cold-start deference + hot-restart sticky to keep leadership on the original host across the whole roll — restart followers first, then the leader.</li>
-<li><strong>Reset</strong> (<code>/var/lib/chango/{kms,iam,metadata,zookeeper}/*</code> wiped) clears the persistent <code>master-leader-id</code> node along with everything else. Sticky-back resumes on the next leadership lands.</li>
+<li><strong>Reset</strong> (<code>&lt;install_dir&gt;/data/{master/kms,master/iam,metadata}/*</code> and <code>/var/lib/chango/zookeeper/*</code> wiped) clears the persistent <code>master-leader-id</code> node along with everything else. Sticky-back resumes on the next leadership lands.</li>
 </ul>
 
 

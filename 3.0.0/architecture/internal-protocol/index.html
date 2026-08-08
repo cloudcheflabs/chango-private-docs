@@ -803,6 +803,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../features/product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../features/port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1319,7 +1333,7 @@
 <li><code>length</code> — total frame length in bytes, big-endian.</li>
 <li><code>code</code> — <code>OpCode</code> (see below).</li>
 <li><code>correlation id</code> — opaque request / response pairing; the responder echoes the request's id so the caller can match.</li>
-<li><code>payload</code> — opcode-specific. If KMS-envelope encryption is enabled (<code>chango.kms.internal.protocol.encrypt = true</code>, default), the payload is <code>{ wrappedDek || iv || ciphertext || gcmTag }</code>. The wrappedDek is unwrapped by the receiver using the KMS provider, the ciphertext is AES-256-GCM with the unwrapped DEK.</li>
+<li><code>payload</code> — opcode-specific. If KMS-envelope encryption is enabled (<code>chango.kms.encrypt.internal.protocol = true</code>, default), the payload is <code>{ wrappedDek || iv || ciphertext || gcmTag }</code>. The wrappedDek is unwrapped by the receiver using the KMS provider, the ciphertext is AES-256-GCM with the unwrapped DEK.</li>
 </ul>
 <h2 id="opcodes">Opcodes</h2>
 <p>The opcode set is small. The ones that matter most:</p>
@@ -1460,7 +1474,7 @@
 <li>Long-running ops (install of a multi-GB tarball, slow cluster start) use a longer per-operation timeout configured per provisioner.</li>
 </ul>
 <h2 id="kms-envelope-on-the-wire">KMS envelope on the wire</h2>
-<p>When <code>chango.kms.internal.protocol.encrypt = true</code> (default), every <code>InternalMessage</code> payload is AES-256-GCM:</p>
+<p>When <code>chango.kms.encrypt.internal.protocol = true</code> (default), every <code>InternalMessage</code> payload is AES-256-GCM:</p>
 <ol>
 <li>Sender requests a wrapped DEK from chango's KMS provider for the wire key (<code>internal-protocol</code>).</li>
 <li>AES-GCM-encrypts the cleartext payload with the unwrapped DEK and a fresh 96-bit IV.</li>
@@ -1469,7 +1483,7 @@
 </ol>
 <p>A wrong key (the cluster root secret diverged between master and NM, for example) fails to decrypt with <code>AEADBadTagException</code>. The NM logs the failure and refuses the message — no plaintext fallback.</p>
 <h2 id="when-to-disable-encryption">When to disable encryption</h2>
-<p><code>chango.kms.internal.protocol.encrypt = false</code> exists for <strong>diagnosis only</strong>. It removes the envelope and sends payloads in cleartext, which lets you tcpdump the wire to see what's actually being sent during a slow install. Never run with this disabled in production.</p>
+<p><code>chango.kms.encrypt.internal.protocol = false</code> exists for <strong>diagnosis only</strong>. It removes the envelope and sends payloads in cleartext, which lets you tcpdump the wire to see what's actually being sent during a slow install. Never run with this disabled in production.</p>
 <h2 id="sync-push-pull-cadence">Sync push + pull cadence</h2>
 <p>State propagation from leader to followers / NMs is dual:</p>
 <ul>

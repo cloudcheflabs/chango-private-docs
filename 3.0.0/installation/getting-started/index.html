@@ -803,6 +803,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../features/product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../features/port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1384,8 +1398,12 @@
 <td>Each managed component's install dir</td>
 </tr>
 <tr>
-<td><code>/var/lib/chango</code></td>
-<td>Chango master's RocksDB stores (KMS, IAM, metadata)</td>
+<td><code>&lt;install_dir&gt;/data</code></td>
+<td>Chango's RocksDB stores — <code>master/kms</code>, <code>master/iam</code>, <code>metadata</code> (<code>chango.base.data.dir</code>, default <code>./data</code> relative to the install dir)</td>
+</tr>
+<tr>
+<td><code>/var/lib/chango/zookeeper</code></td>
+<td>Bundled ZooKeeper's data dir (<code>chango_data_dir</code> in ansible)</td>
 </tr>
 <tr>
 <td><code>/var/log/chango</code></td>

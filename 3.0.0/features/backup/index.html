@@ -713,6 +713,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -821,6 +835,19 @@
     What is in a backup
   </a>
   
+    <nav class="md-nav" aria-label="What is in a backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manifestjson" class="md-nav__link">
+    manifest.json
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -831,9 +858,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#backup-destination" class="md-nav__link">
-    Backup destination
+  <a href="#configuration" class="md-nav__link">
+    Configuration
   </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-side-encryption-is-an-explicit-choice" class="md-nav__link">
+    Server-side encryption is an explicit choice
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retention" class="md-nav__link">
+    Retention
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -872,12 +919,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#inspecting-archives" class="md-nav__link">
+    Inspecting archives
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting archives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#which-key-does-this-archive-need" class="md-nav__link">
+    Which key does this archive need?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#restoring" class="md-nav__link">
     Restoring
   </a>
   
     <nav class="md-nav" aria-label="Restoring">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-equivalent" class="md-nav__link">
+    Manual equivalent
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#restoring-node-managers" class="md-nav__link">
@@ -1335,108 +1409,192 @@
 
 
 <h1 id="backup-restore">Backup &amp; Restore</h1>
-<p>Chango's control-plane state — IAM, KMS, component inventory — lives in three RocksDB stores on the master. The built-in <code>BackupService</code> packs all three (plus a manifest) into a single tar archive and uploads it to an S3-compatible target on demand or on a schedule.</p>
+<p>Chango's control-plane state — KMS, IAM, component inventory — lives in three RocksDB stores on the master. The built-in <code>BackupService</code> packs all three (plus the patch library and a manifest) into a single <code>tar.gz</code> and uploads it to an S3-compatible target on demand or on a schedule. <code>chango-cli backup</code> is the operator side: list archives, check which master key one needs, and restore.</p>
 <h2 id="what-is-in-a-backup">What is in a backup</h2>
+<p>The archive stores <strong>absolute paths</strong>, so it extracts back over the same locations it came from.</p>
 <table>
 <thead>
 <tr>
 <th>Archive entry</th>
-<th>Source</th>
+<th>Default location</th>
 <th>What it contains</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>kms/</code></td>
-<td><code>/var/lib/chango/kms/</code></td>
-<td>KEKs wrapped by the cluster master DEK</td>
+<td>KMS RocksDB</td>
+<td><code>&lt;base.data.dir&gt;/master/kms</code></td>
+<td>The keystore — versioned KEKs, sealed under the master key</td>
 </tr>
 <tr>
-<td><code>iam/</code></td>
-<td><code>/var/lib/chango/iam/</code></td>
-<td>Users, groups, policies, access keys (password hashes / access secrets are stored hashed / encrypted at the field level inside RocksDB)</td>
+<td>IAM RocksDB</td>
+<td><code>&lt;base.data.dir&gt;/master/iam</code></td>
+<td>Users, groups, policies, access keys</td>
 </tr>
 <tr>
-<td><code>metadata/</code></td>
-<td><code>/var/lib/chango/metadata/</code></td>
-<td>Component inventory, per-cluster settings, gateway topology, nginx state</td>
+<td>Metadata RocksDB</td>
+<td><code>&lt;base.data.dir&gt;/metadata</code></td>
+<td>Component inventory, per-cluster settings (including managed product master keys), gateway topology, nginx state, <code>backup.s3.*</code> config, retired product keys</td>
 </tr>
 <tr>
-<td><code>data/master/patches/</code></td>
-<td><code>&lt;base.data.dir&gt;/master/patches/</code></td>
-<td>Air-gapped patch library — every patch tarball previously uploaded via <code>POST /admin/api/patch/upload</code>, plus its parsed manifest. Included only if the directory exists.</td>
+<td>Patch library</td>
+<td><code>&lt;base.data.dir&gt;/master/patches</code></td>
+<td>Every patch tarball uploaded via <code>POST /admin/api/patch/upload</code>, plus its parsed manifest. Included only if the directory exists</td>
 </tr>
 <tr>
 <td><code>manifest.json</code></td>
 <td>generated</td>
-<td><code>timestamp</code>, <code>hostname</code>, <code>chango.version</code>, archive checksum, <code>patchesIncluded</code> flag</td>
+<td>See below</td>
 </tr>
 </tbody>
 </table>
 <p>Including the patch library means a fresh-install restore can re-serve every previously-uploaded patch without the operator re-uploading from the build host. Followers catch up via PATCH_INDEX / PATCH_FETCH automatically — see <a href="../patch-system/#non-leader-catch-up-pr-5">Patch System</a>.</p>
+<h3 id="manifestjson">manifest.json</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;backupId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20260808T024859-59e9eb89&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;createdAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-08-08T02:48:59.697788815Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&quot;hostname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ip-172-31-4-142&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&quot;changoVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">&quot;kmsRocksDbPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/chango/data/master/kms&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">&quot;iamRocksDbPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/chango/data/master/iam&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">&quot;metadataRocksDbPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/chango/data/master/metadata&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">&quot;masterKeyEnv&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CHANGO_MASTER_KEY&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">&quot;masterKeyFingerprint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ea65f9199a78782a&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span><span class="nt">&quot;s3Endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://shannon-api:8081&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nt">&quot;s3Bucket&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chango-backups&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="nt">&quot;s3Region&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;us-east-1&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="nt">&quot;s3ObjectPrefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;chango-backups/&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">&quot;s3PathStyle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">&quot;patchesDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/chango/data/master/patches&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="nt">&quot;patchesIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
+</code></pre></div>
+<p>Two fields exist for reasons worth knowing:</p>
+<ul>
+<li><strong><code>masterKeyFingerprint</code></strong> — the non-secret fingerprint of the key that seals this archive. It is the only way to tell <em>which</em> key opens a given archive once a rotation has happened; without it a wrong-key restore is discovered only when the master refuses to start. See <a href="#which-key-does-this-archive-need">which key does this archive need</a>.</li>
+<li><strong>The <code>s3*</code> fields</strong> — restoring after a total loss means reaching S3 <em>before</em> the metadata store (which holds <code>backup.s3.*</code>) exists. The non-secret half of that config therefore travels inside the archive. Credentials deliberately do not.</li>
+</ul>
+<p>The RocksDB paths are recorded <strong>absolute</strong>, resolved the same way <code>tar</code> resolved them. Restore uses them to move the existing directories aside before extracting; a relative path would resolve against the restoring process's working directory, protect the wrong directory, and then extract on top of the real one.</p>
 <h2 id="what-is-not-in-a-backup">What is NOT in a backup</h2>
 <ul>
-<li><strong>The cluster root secret</strong> that derives chango's master DEK. The operator owns and stores this out-of-band; without it the backup is mathematically undecryptable. See <a href="../kms/">KMS</a>.</li>
-<li><strong>Per-component data</strong> — Iceberg files on ShannonStore, NeoRunBase tables, ItdaStream topics, Kafka logs, PostgreSQL data dirs, kiok workflow state. Each component manages its own data lifecycle. Chango's backup is the control-plane backup; the data plane is backed up via the component's own mechanism (most use the same S3 endpoint).</li>
+<li><strong>The master key.</strong> Chango never persists it — it is an environment variable held in process memory. The operator stores it out-of-band and re-supplies it at restore time. Without it the archive is mathematically undecryptable. See <a href="../kms/#root-of-trust--the-master-key">KMS</a>.</li>
+<li><strong>Per-component data</strong> — Iceberg files on ShannonStore, NeoRunBase tables, ItdaStream topics, Kafka logs, PostgreSQL data dirs, kiok workflow state. Chango's backup is the <em>control-plane</em> backup; each component backs up its own data.</li>
 <li><strong>Logs</strong> — <code>/var/log/chango</code> is operational and excluded.</li>
 </ul>
-<h2 id="backup-destination">Backup destination</h2>
-<p>The backup target is an S3-compatible endpoint. The same <code>BackupService</code> works against AWS S3, ShannonStore, MinIO, or any provider that speaks SigV4 path-style or virtual-hosted style.</p>
+<h2 id="configuration">Configuration</h2>
+<p>All keys live in the metadata store (envelope-encrypted) and are set through the admin UI or <code>POST /admin/api/backup/config</code>. They are <strong>runtime config</strong>, not <code>chango.properties</code> entries — see <a href="../config-runtime-only/">Config Runtime-Only Policy</a>.</p>
 <table>
 <thead>
 <tr>
-<th>Field</th>
+<th>Key</th>
+<th>Default</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>endpoint</code></td>
-<td><code>https://s3.&lt;region&gt;.amazonaws.com</code> or <code>http://&lt;shannonstore-api&gt;:8080</code></td>
+<td><code>backup.s3.endpoint</code></td>
+<td>—</td>
+<td><code>https://s3.&lt;region&gt;.amazonaws.com</code>, <code>http://&lt;shannonstore-api&gt;:8081</code>, a MinIO URL, …</td>
 </tr>
 <tr>
-<td><code>region</code></td>
-<td>SigV4 region — for non-AWS providers, anything (typically <code>us-east-1</code>)</td>
+<td><code>backup.s3.region</code></td>
+<td><code>us-east-1</code></td>
+<td>SigV4 region; anything for non-AWS providers</td>
 </tr>
 <tr>
-<td><code>bucket</code></td>
-<td>Pre-created</td>
+<td><code>backup.s3.bucket</code></td>
+<td>—</td>
+<td>Must already exist</td>
 </tr>
 <tr>
-<td><code>prefix</code></td>
-<td>Optional path prefix (e.g. <code>chango-backups/&lt;cluster-name&gt;/</code>)</td>
+<td><code>backup.s3.object-prefix</code></td>
+<td><code>chango-backups/</code></td>
+<td>Key prefix inside the bucket</td>
 </tr>
 <tr>
-<td><code>accessKey</code> / <code>secretKey</code></td>
-<td>Long-lived S3 credentials</td>
+<td><code>backup.s3.path-style</code></td>
+<td><code>true</code></td>
+<td><code>false</code> for virtual-hosted addressing</td>
+</tr>
+<tr>
+<td><code>backup.s3.access-key</code></td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td><code>backup.s3.secret-key</code></td>
+<td>—</td>
+<td>Returned as <code>&lt;set&gt;</code> by <code>GET</code>, never echoed back</td>
+</tr>
+<tr>
+<td><code>backup.s3.sse</code></td>
+<td><code>AES256</code></td>
+<td>Server-side encryption to request; <code>none</code> disables it</td>
+</tr>
+<tr>
+<td><code>backup.retention.days</code></td>
+<td><code>0</code></td>
+<td><code>0</code> keeps archives forever</td>
+</tr>
+<tr>
+<td><code>backup.cron</code></td>
+<td><em>(empty)</em></td>
+<td>5-field UNIX cron; empty disables scheduled runs</td>
 </tr>
 </tbody>
 </table>
-<p>S3 PUT requests are signed with SigV4 and request server-side encryption (<code>x-amz-server-side-encryption: AES256</code>). The payload body is already KMS-envelope-encrypted at the chango layer, so the SSE-S3 layer is a defence-in-depth measure rather than the primary control.</p>
+<p><code>GET /admin/api/backup/config</code> additionally returns two read-only values: <code>backup.cron.nextFireTime</code> and <code>backup.masterKeyFingerprint</code> (the key a restore of today's archives will need).</p>
+<h3 id="server-side-encryption-is-an-explicit-choice">Server-side encryption is an explicit choice</h3>
+<p>The archive is already envelope-encrypted by chango, so SSE is defence in depth rather than the primary control. It is still requested by default, because AWS S3 always supports it.</p>
+<p>Not every S3-compatible store does. <strong>MinIO without a configured KMS answers <code>501 NotImplemented</code></strong>, and the upload fails outright:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>PUT chango-backups/20260808T013432.tar.gz failed: HTTP 501 — this endpoint does not
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>implement server-side encryption (AES256). Either configure a KMS on it, or set
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>backup.s3.sse=none to upload without SSE (the archive is still KMS
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>envelope-encrypted by chango itself).
+</code></pre></div>
+<p>Chango does <strong>not</strong> silently retry without SSE. Quietly downgrading an encryption setting is exactly the kind of change that should never happen behind an operator's back, so the failure explains the trade-off and leaves the decision in config. Set <code>backup.s3.sse = none</code> for such endpoints; the <code>run</code> response echoes back which value was applied.</p>
+<h3 id="retention">Retention</h3>
+<p><code>backup.retention.days &gt; 0</code> deletes archives under the configured prefix that are older than the window. Pruning happens <strong>after</strong> a successful upload, never before, so a failed backup can never be the thing that deletes the last good archive. Objects whose <code>LastModified</code> the endpoint does not report are left alone rather than guessed at.</p>
+<div class="admonition warning">
+<p class="admonition-title">Keep product master keys at least as long as archives</p>
+<p>An archive is worthless without the key that opens it. <code>backup.retention.days</code> is therefore the floor for how long a deleted product cluster's master key stays retrievable — see <a href="../product-master-keys/#retention">Product master keys</a>.</p>
+</div>
 <h2 id="triggering-a-backup">Triggering a backup</h2>
 <h3 id="admin-ui">Admin UI</h3>
-<p>Sidebar → <strong>Backup</strong> → fill in S3 endpoint / bucket / credentials → <strong>Backup Now</strong>. The destination configuration is persisted (envelope-encrypted in the metadata RocksDB) so subsequent backups reuse the same target.</p>
+<p><strong>Settings → Backup</strong> — fill in the S3 fields, retention, SSE and cron, then <strong>Save</strong>; <strong>Run backup now</strong> triggers one immediately. The page also shows the master-key fingerprint a restore will require. Destination config is persisted envelope-encrypted in the metadata store.</p>
 <h3 id="rest-api">REST API</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Configure the destination (one-time)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOK</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s1">    &quot;endpoint&quot;: &quot;http://shannonstore:8080&quot;,</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s1">    &quot;region&quot;: &quot;us-east-1&quot;,</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s1">    &quot;bucket&quot;: &quot;chango-backups&quot;,</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s1">    &quot;prefix&quot;: &quot;prod/&quot;,</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s1">    &quot;accessKey&quot;: &quot;...&quot;,</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s1">    &quot;secretKey&quot;: &quot;...&quot;</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="s1">  }&#39;</span><span class="w"> </span><span class="nv">$BASE</span>/admin/api/backup/config
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Run a backup</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOK</span><span class="s2">&quot;</span><span class="w"> </span><span class="nv">$BASE</span>/admin/api/backup/run
+<p>Config is a <strong><code>POST</code> merge-update of flat keys</strong> — send only what you want to change:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOK</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s1">    &quot;backup.s3.endpoint&quot;: &quot;http://shannon-api:8081&quot;,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s1">    &quot;backup.s3.region&quot;: &quot;us-east-1&quot;,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s1">    &quot;backup.s3.bucket&quot;: &quot;chango-backups&quot;,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s1">    &quot;backup.s3.object-prefix&quot;: &quot;prod/&quot;,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s1">    &quot;backup.s3.path-style&quot;: &quot;true&quot;,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="s1">    &quot;backup.s3.access-key&quot;: &quot;...&quot;,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="s1">    &quot;backup.s3.secret-key&quot;: &quot;...&quot;,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="s1">    &quot;backup.s3.sse&quot;: &quot;AES256&quot;,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="s1">    &quot;backup.retention.days&quot;: &quot;30&quot;,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="s1">    &quot;backup.cron&quot;: &quot;0 2 * * *&quot;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="s1">  }&#39;</span><span class="w"> </span><span class="nv">$BASE</span>/admin/api/backup/config
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1"># → {&quot;status&quot;:&quot;ok&quot;}</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOK</span><span class="s2">&quot;</span><span class="w"> </span><span class="nv">$BASE</span>/admin/api/backup/run
 </code></pre></div>
-<p>The response includes the S3 key (<code>prod/chango-&lt;timestamp&gt;-&lt;uuid&gt;.tar.gz</code>) and the SHA-256 of the archive.</p>
+<p><code>run</code> answers with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;backupId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20260808T024859-59e9eb89&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;objectKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;prod/20260808T024859-59e9eb89.tar.gz&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;sizeBytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">101864</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">&quot;createdAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-08-08T02:48:59.7Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nt">&quot;masterKeyFingerprint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ea65f9199a78782a&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nt">&quot;serverSideEncryption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AES256&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">&quot;pruned&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>GET /admin/api/backup/config</code> and <code>POST /admin/api/backup/run</code> are leader-only; an invalid cron is rejected with <code>400</code> at save time rather than silently never firing.</p>
 <h3 id="schedule">Schedule</h3>
-<p>Set a cron expression in the destination config — the leader runs the backup on that schedule. Default is <strong>off</strong>.</p>
-<p><code>BackupService</code> arms its cron scheduler at master bootstrap (before leader election finishes), so a follower with a <code>backup.cron</code> setting in the metadata RocksDB keeps the scheduler armed even before it wins leadership. <code>runBackup()</code> itself is idempotent — every fire produces an immutable S3 object with a fresh <code>&lt;backupId&gt;</code> — so a multi-master race at most causes a duplicate S3 PUT, never corrupted state.</p>
-<p>The config UI takes a standard 5-field cron (<code>min hour dom mon dow</code>). Examples:</p>
 <table>
 <thead>
 <tr>
@@ -1459,39 +1617,95 @@
 </tr>
 </tbody>
 </table>
-<p>Leave the field empty to disable scheduled backups; the <strong>Backup Now</strong> button still works.</p>
+<p>Every master arms the scheduler — the expression lives in replicated config — but <strong>only the leader actually runs the backup</strong>. A follower's metadata store trails the leader, so its archive would be slightly stale, and with retention enabled two masters would prune concurrently. Followers keep the schedule armed, so a new leader picks up the very next window. Leave <code>backup.cron</code> empty to disable scheduled runs; <strong>Run backup now</strong> still works.</p>
+<h2 id="inspecting-archives">Inspecting archives</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>backup<span class="w"> </span>list
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>BACKUP-ID<span class="w">                                              </span>SIZE<span class="w">  </span>LAST-MODIFIED
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>20260808T024859-59e9eb89<span class="w">                             </span><span class="m">101864</span><span class="w">  </span><span class="m">2026</span>-08-08T02:48:59.6Z
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>20260808T013916-eb4600af<span class="w">                              </span><span class="m">73545</span><span class="w">  </span><span class="m">2026</span>-08-08T01:39:16.4Z
+</code></pre></div>
+<p>S3 coordinates are resolved in this order: command-line flags → <code>$CHANGO_BACKUP_S3_*</code> env vars → the running master's own config (read over the admin socket, which requires <code>$CHANGO_MASTER_KEY</code>). The last source is a convenience for <code>list</code> / <code>inspect</code>; <strong>restore cannot use it</strong>, because restore runs with the master stopped.</p>
+<h3 id="which-key-does-this-archive-need">Which key does this archive need?</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>backup<span class="w"> </span>inspect<span class="w"> </span>--backup-id<span class="w"> </span>20260808T024859-59e9eb89
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>backupId<span class="w">        </span>:<span class="w"> </span>20260808T024859-59e9eb89
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>createdAt<span class="w">       </span>:<span class="w"> </span><span class="m">2026</span>-08-08T02:48:59.697788815Z
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>changoVersion<span class="w">   </span>:<span class="w"> </span><span class="m">3</span>.0.0
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>sizeBytes<span class="w">       </span>:<span class="w"> </span><span class="m">101864</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>kms<span class="w"> </span>dir<span class="w">         </span>:<span class="w"> </span>/opt/chango/data/master/kms
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>iam<span class="w"> </span>dir<span class="w">         </span>:<span class="w"> </span>/opt/chango/data/master/iam
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>metadata<span class="w"> </span>dir<span class="w">    </span>:<span class="w"> </span>/opt/chango/data/master/metadata
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>patches<span class="w"> </span>included:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>requires<span class="w"> </span>master<span class="w"> </span>key<span class="w"> </span>fp<span class="w"> </span>:<span class="w"> </span>ea65f9199a78782a
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>this<span class="w"> </span>host<span class="w"> </span>holds<span class="w">        </span>:<span class="w"> </span>251b8c532ce30e9b
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>restorable<span class="w"> </span>here<span class="w">        </span>:<span class="w"> </span>NO
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>Supply<span class="w"> </span>that<span class="w"> </span>key<span class="w"> </span>as<span class="w"> </span><span class="nv">$CHANGO_MASTER_KEY</span><span class="w"> </span><span class="o">(</span>or<span class="w"> </span>add<span class="w"> </span>it<span class="w"> </span>to<span class="w"> </span><span class="nv">$CHANGO_MASTER_KEY_PREVIOUS</span><span class="o">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>before<span class="w"> </span>restoring.<span class="w"> </span>Without<span class="w"> </span>it<span class="w"> </span>this<span class="w"> </span>archive<span class="w"> </span>cannot<span class="w"> </span>be<span class="w"> </span>decrypted<span class="w"> </span>—
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>the<span class="w"> </span>key<span class="w"> </span>is<span class="w"> </span>deliberately<span class="w"> </span>never<span class="w"> </span>included<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>backup.
+</code></pre></div>
+<p><code>inspect</code> exits non-zero when the archive is not restorable on this host, so it can gate a restore in a script. Add the retired key to <code>$CHANGO_MASTER_KEY_PREVIOUS</code> and it flips to <code>YES</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>requires master key fp : ea65f9199a78782a
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>this host holds        : 251b8c532ce30e9b, ea65f9199a78782a
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>restorable here        : YES
+</code></pre></div>
+<p>This is what makes a master-key rotation safe for existing archives — see <a href="../kms/#rotating-the-master-key">Rotating the master key</a>.</p>
+<p>Archives written before fingerprints were recorded report <code>master key : NOT RECORDED</code> and can only be matched by their <code>createdAt</code> against your own key history.</p>
 <h2 id="restoring">Restoring</h2>
-<p>Restore is an out-of-band procedure on a fresh master node. Chango deliberately ships no systemd unit — the operator drives the master directly via <code>bin/start-master.sh</code> / <code>bin/stop-master.sh</code> with the cluster root secret in env.</p>
-<ol>
-<li><strong>Stop</strong> the running chango master (if anything is running).</li>
-<li><strong>Download</strong> the desired backup object from S3 (e.g. with <code>aws s3 cp</code> or <code>curl</code> + SigV4).</li>
-<li><strong>Untar</strong> it into the master's RocksDB parent dir:</li>
-</ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-master.sh
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-zk.sh
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/chango/<span class="o">{</span>kms,iam,metadata<span class="o">}</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>chango-&lt;timestamp&gt;-&lt;uuid&gt;.tar.gz<span class="w"> </span>-C<span class="w"> </span>/var/lib/chango/
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>chango:chango<span class="w"> </span>/var/lib/chango/
+<p>Restore replaces the master's own RocksDB directories, which cannot be swapped under a live process holding their <code>LOCK</code>s. It therefore runs from a separate process with the master <strong>stopped</strong> — which is also why it is not a REST call, and why the S3 credentials must come from flags or env rather than from the metadata store that is being restored.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;the<span class="w"> </span>key<span class="w"> </span>that<span class="w"> </span>archive<span class="w"> </span>needs&gt;<span class="w">      </span><span class="c1"># check with `backup inspect`</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-master.sh
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>env<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/openlogic-openjdk-17.0.7+7-linux-x64<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CHANGO_MASTER_KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nv">CHANGO_BACKUP_S3_ENDPOINT</span><span class="o">=</span>http://shannon-api:8081<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nv">CHANGO_BACKUP_S3_BUCKET</span><span class="o">=</span>chango-backups<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="nv">CHANGO_BACKUP_S3_ACCESS_KEY</span><span class="o">=</span>...<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="nv">CHANGO_BACKUP_S3_SECRET_KEY</span><span class="o">=</span>...<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>backup<span class="w"> </span>restore<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">      </span>--backup-id<span class="w"> </span>20260808T024859-59e9eb89<span class="w"> </span>--chown<span class="w"> </span>chango:chango<span class="w"> </span>--yes
 </code></pre></div>
+<p>What <code>restore</code> does, in order:</p>
 <ol>
-<li><strong>Supply the cluster root secret</strong> on the new master node (same secret as the source cluster — without it the restored RocksDB is undecryptable).</li>
-<li><strong>Start</strong> ZooKeeper and the chango master with <code>CHANGO_MASTER_KEY</code> supplied from your secret manager:</li>
+<li><strong>Refuses if a master is answering</strong> the admin socket, naming <code>stop-master.sh</code>.</li>
+<li><strong>Verifies the master key</strong> against the manifest fingerprint <em>before</em> touching any directory. A wrong key stops here with nothing changed.</li>
+<li><strong>Moves the existing directories aside</strong> to <code>&lt;dir&gt;.before-restore-&lt;epochMillis&gt;</code>. Extracting over them would leave stale SST files behind and corrupt the RocksDB.</li>
+<li><strong>Extracts</strong> the archive (<code>tar -xzf … -C /</code>), excluding the manifest entry — it is already parsed in memory, and it would otherwise land at <code>/</code>.</li>
+<li><strong>Rolls the directories back</strong> if extraction fails, so a failed restore never leaves the master with no KMS/IAM/metadata. If the rollback itself fails, it prints where the preserved copies are.</li>
+<li><strong><code>chown -R</code></strong> to the user given by <code>--chown</code> (tar restores as the invoking user).</li>
+<li><strong>Opens the restored keystore</strong> and reports <code>verified: restored keystore opens with the supplied master key</code>. This is the check that turns "the restore looked fine but the master will not start" into an error at restore time.</li>
 </ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>secret<span class="w"> </span>manager&gt;
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-zk.sh
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sleep<span class="w"> </span><span class="m">3</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-master.sh
+<p>Then start the master, re-passing the same <code>-D</code> arguments the cluster was first started with — chango does not persist them:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-master.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span>-Dchango.zk.serverList<span class="o">=</span>host1:2181,host2:2181,host3:2181<span class="w"> </span>-Dchango.zk.rootPath<span class="o">=</span>/chango
 </code></pre></div>
-<p>The master opens the restored RocksDB, decrypts KEKs with the master DEK derived from the supplied root secret, and resumes leader election. Component instances stored in the metadata RocksDB are visible again immediately.</p>
+<div class="admonition warning">
+<p class="admonition-title">Multi-master: restore one node only</p>
+<p>Restore the node you want to be authoritative, then clear the <strong>other</strong> masters' KMS / IAM / metadata directories before starting them — they re-sync from the leader. Restoring several nodes independently gives you several divergent copies of the same cluster.</p>
+</div>
+<h3 id="manual-equivalent">Manual equivalent</h3>
+<p>If you cannot use the CLI (for example, an archive whose manifest predates absolute paths), the same steps by hand:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>/opt/chango/bin/stop-master.sh
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>mv<span class="w"> </span>/opt/chango/data/master/kms<span class="o">{</span>,.old<span class="o">}</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>/opt/chango/data/master/iam<span class="o">{</span>,.old<span class="o">}</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>/opt/chango/data/metadata<span class="o">{</span>,.old<span class="o">}</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>&lt;archive&gt;.tar.gz<span class="w"> </span>-C<span class="w"> </span>/<span class="w"> </span>--exclude<span class="o">=</span><span class="s1">&#39;chango-backup-manifest-*.json&#39;</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>chango:chango<span class="w"> </span>/opt/chango/data
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;key<span class="w"> </span><span class="k">for</span><span class="w"> </span>that<span class="w"> </span>archive&gt;
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/start-master.sh<span class="w"> </span>-Dchango.zk.serverList<span class="o">=</span>…<span class="w"> </span>-Dchango.zk.rootPath<span class="o">=</span>/chango
+</code></pre></div>
+<p>Chango ships no systemd unit — the operator drives the master through <code>bin/start-master.sh</code> / <code>bin/stop-master.sh</code> with the master key in the environment. Ansible deliberately creates neither a unit nor a sysconfig file.</p>
 <h3 id="restoring-node-managers">Restoring node managers</h3>
-<p>NMs do not need to be restored — they have no authoritative state. After the master is back, NMs that are still alive against the same ZooKeeper re-register automatically. NMs that were lost can be reinstalled via <a href="../../installation/automated/#adding-a-node-manager-later-add-nodemanageryml"><code>ansible add-nodemanager.yml</code></a> (or the manual recipe in <a href="../../operations/cluster-operations/#add-another-node-manager">Add another node manager</a>) — once registered, the leader re-attaches any component instances that were bound to that nodeId.</p>
+<p>NMs hold no authoritative state. Once the master is back, NMs still alive against the same ZooKeeper re-register automatically. Lost NMs can be reinstalled with <a href="../../installation/automated/#adding-a-node-manager-later-add-nodemanageryml"><code>add-nodemanager.yml</code></a> or the <a href="../../operations/cluster-operations/#add-another-node-manager">manual recipe</a>; the leader re-attaches component instances bound to that nodeId.</p>
 <h3 id="component-data">Component data</h3>
-<p>Restoring the chango master gives you back the component <strong>inventory</strong> — which instance lives on which NM, with which configuration. It does not bring back component data (Iceberg files, NeoRunBase tables, …) — those are backed up via their own component-specific paths and restored separately. After the inventory is restored and the components are visible in the admin UI, start each component cluster again; the component process reads its own data from its still-present data dir.</p>
+<p>Restoring the master gives back the component <strong>inventory</strong> — which instance lives on which NM with which configuration — not component data. After the inventory is back and the clusters are visible in the admin UI, start each cluster again; the component process reads its own data from its still-present data dir. If a product's data dir was lost too, note that its master key is what decrypts it: see <a href="../product-master-keys/">Product master keys</a>.</p>
 <h2 id="backup-hygiene">Backup hygiene</h2>
 <ul>
-<li>Treat each backup tarball as cluster-confidential. Even though chango-side envelope encryption is intact, the tarball contains everything an attacker needs to impersonate your control plane if they ever learn the root secret.</li>
-<li>Keep at least one offline copy. The cluster root secret and the backup tarball stored on the same S3 bucket gives an attacker both halves on a single compromise.</li>
-<li>Test restore. A backup you have never restored from is a backup you do not have.</li>
+<li>Treat every archive as cluster-confidential. Chango-side encryption is intact, but the archive is everything an attacker needs to impersonate your control plane if they ever learn the master key.</li>
+<li><strong>Never store the master key in the same bucket as the archives.</strong> One compromise would otherwise hand over both halves.</li>
+<li>Keep retired master keys as long as the archives sealed under them. <code>backup inspect</code> tells you which fingerprint each archive needs.</li>
+<li>Test a restore. A backup you have never restored from is a backup you do not have — and <code>restore</code> now verifies the keystore actually opens, so a test restore gives a real answer.</li>
 </ul>
 
 

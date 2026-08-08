@@ -803,6 +803,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../features/product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../features/port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1386,8 +1400,12 @@
 <td>Each managed component instance</td>
 </tr>
 <tr>
+<td><code>&lt;install_dir&gt;/data</code></td>
+<td>RocksDB stores on the master — <code>master/kms</code>, <code>master/iam</code>, <code>metadata</code></td>
+</tr>
+<tr>
 <td><code>/var/lib/chango</code></td>
-<td>RocksDB stores (KMS, IAM, metadata) on the master</td>
+<td>Bundled ZooKeeper's data dir</td>
 </tr>
 <tr>
 <td><code>/var/log/chango</code></td>

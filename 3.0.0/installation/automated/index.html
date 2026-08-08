@@ -885,6 +885,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../features/product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../features/port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1644,7 +1658,7 @@
 <a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># 2. From the controller, wipe the directories cluster-wide:</span>
 <a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.yml<span class="w"> </span>uninstall.yml
 </code></pre></div>
-<p>This removes <code>chango_install_dir</code> (<code>/opt/chango</code>), <code>chango_data_dir</code> (<code>/var/lib/chango</code>), and <code>chango_log_dir</code> (<code>/var/log/chango</code>) on every host. The JDKs under <code>/opt</code> and the <code>chango</code> OS user are left in place — remove them by hand if you want a full teardown.</p>
+<p>This removes <code>chango_install_dir</code> (<code>/opt/chango</code> — which contains chango's own RocksDB stores under <code>data/</code>), <code>chango_data_dir</code> (<code>/var/lib/chango</code>, the bundled ZooKeeper's data dir), and <code>chango_log_dir</code> (<code>/var/log/chango</code>) on every host. The JDKs under <code>/opt</code> and the <code>chango</code> OS user are left in place — remove them by hand if you want a full teardown.</p>
 <h2 id="next">Next</h2>
 <ul>
 <li><a href="../getting-started/">Getting Started</a> — first login + first managed component.</li>

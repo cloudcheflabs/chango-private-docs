@@ -816,6 +816,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1364,7 +1378,7 @@
 <h2 id="node-identifiers">Node identifiers</h2>
 <p>Default identifiers are derived from the host and the role:</p>
 <ul>
-<li>Master: <code>master-&lt;sanitized-hostname&gt;-&lt;adminPort&gt;</code> — the admin port is what makes a second master on the same host distinct (currently a deploy-layer limitation — single master per host is what the bundled systemd unit supports today).</li>
+<li>Master: <code>master-&lt;sanitized-hostname&gt;-&lt;adminPort&gt;</code> — the admin port is what makes a second master on the same host distinct (a deploy-layer convention: the ansible inventory places one master per host, and each master needs a distinct admin port).</li>
 <li>Node manager: <code>nm-&lt;sanitized-hostname&gt;-&lt;internalPort&gt;</code> — the internal port is in the id for stable backwards compatibility with component records; since only one NM per host is allowed at runtime, the port is effectively constant.</li>
 </ul>
 <p>Both are overridable via <code>chango.master.nodeId</code> / <code>chango.nodemanager.nodeId</code> in <code>chango.properties</code> for environments that need explicit naming.</p>

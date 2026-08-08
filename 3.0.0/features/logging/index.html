@@ -713,6 +713,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../product-master-keys/" class="md-nav__link">
+        Product Master Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../port-allocator/" class="md-nav__link">
         Port Allocator
       </a>
@@ -1356,7 +1370,7 @@
 <h2 id="what-is-not-in-chango-logs">What is <em>not</em> in chango logs</h2>
 <ul>
 <li><strong>Component data-plane logs</strong> that the component does not write to the install dir. Trino's query history is in Trino's metastore. Spark application logs from a finished job live in the configured event log directory (typically on S3 / ShannonStore).</li>
-<li><strong>System logs</strong> (<code>journalctl</code>, <code>dmesg</code>). The chango master + NM services do log to journald via their systemd units; chango does not re-shove those into the admin UI. Use <code>journalctl -u chango-master</code> directly when you need them.</li>
+<li><strong>System logs</strong> (<code>dmesg</code>, the OS journal). Chango ships <strong>no</strong> systemd units — the master and NM are started by <code>bin/start-master.sh</code> / <code>bin/start-node-manager.sh</code>, which redirect stdout/stderr to <code>&lt;chango.log.path&gt;/master.out</code> and <code>nodemanager.out</code>. <code>journalctl -u chango-master</code> returns nothing; read those <code>.out</code> files (and <code>chango.log</code>) instead.</li>
 </ul>
 <h2 id="log-level">Log level</h2>
 <p>The default level is <code>INFO</code>. To raise (or quiet) a specific logger, edit <code>conf/logback.xml</code>:</p>
