@@ -751,6 +751,26 @@
     Configuration
   </a>
   
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-the-cli-finds-the-socket" class="md-nav__link">
+    How the CLI finds the socket
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-master-key-is-needed" class="md-nav__link">
+    When the master key is needed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1451,23 +1471,60 @@ the property placeholder was not expanded — fall back to the explicit
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>bin/chango-cli.sh<span class="w"> </span>iam:reset-password<span class="w"> </span>--user<span class="w"> </span>some-user<span class="w"> </span>--new-password<span class="w"> </span><span class="s1">&#39;NewPass123&#39;</span>
 </code></pre></div>
 <h2 id="configuration">Configuration</h2>
-<p>The recovery socket is enabled by default. To disable it (for example, in a
-hardened production deployment), set:</p>
+<p>These are the shipped defaults in <code>conf/chango.properties</code> — the recovery socket
+is <strong>on</strong> out of the box:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># conf/chango.properties</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="na">chango.admin.socket.enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="na">chango.admin.socket.enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="na">chango.admin.socket.path</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">${chango.base.data.dir}/master/admin.sock</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="na">chango.iam.audit.dir</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s">${chango.base.data.dir}/master/iam-audit</span>
 </code></pre></div>
-<p>The CLI resolves the socket path in this order:</p>
+<p>To remove the local recovery path entirely (for example in a hardened
+production deployment), set the one key:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="na">chango.admin.socket.enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+</code></pre></div>
+<h3 id="how-the-cli-finds-the-socket">How the CLI finds the socket</h3>
+<p>Re-deriving the socket path from <code>conf/chango.properties</code> is not reliable on its
+own: <code>chango.base.data.dir</code> can be overridden with <code>-D</code> at launch or edited after
+startup, and the file records nothing about which value the live process used. So
+the master <strong>publishes the absolute path it actually bound to</strong> into
+<code>&lt;chango.home&gt;/bin/master.socket</code> when the socket comes up, and deletes that file
+on shutdown. <code>bin/chango-cli.sh</code> prefers it.</p>
+<p>Resolution order, highest priority first:</p>
 <ol>
-<li><code>--socket /path/to/admin.sock</code> command-line flag</li>
-<li><code>CHANGO_ADMIN_SOCKET</code> environment variable (must be an absolute path)</li>
-<li><code>chango.admin.socket.path</code> in <code>conf/chango.properties</code></li>
-<li><code>&lt;chango.base.data.dir&gt;/master/admin.sock</code> (the default that matches the master)</li>
+<li><code>--socket /path/to/admin.sock</code> — read by the Java CLI, always wins.</li>
+<li><code>$CHANGO_ADMIN_SOCKET</code> — if exported in the caller's shell. Must be absolute.</li>
+<li><code>&lt;chango.home&gt;/bin/master.socket</code> — the path published by the running master.
+   Used only when the file exists <em>and</em> the path inside it is a live socket.</li>
+<li><code>chango.admin.socket.path</code> from <code>conf/chango.properties</code>, with both
+   <code>${chango.base.data.dir}</code> and <code>${chango.home}</code> expanded. A value still holding
+   a <code>${...}</code> placeholder is rejected rather than used literally.</li>
+<li><code>&lt;chango.base.data.dir&gt;/master/admin.sock</code>, then <code>&lt;package&gt;/data/master/admin.sock</code>.</li>
 </ol>
-<p>Use the explicit override (1 or 2) whenever the CLI is launched from a
-directory other than the master's working directory — relative paths in
-<code>chango.properties</code> do not resolve under a different <code>cwd</code>.</p>
+<p>Step 3 is what makes a relocated data dir work without extra flags: start the
+master with <code>-Dchango.base.data.dir=/var/lib/chango/data</code> and the socket moves to
+<code>/var/lib/chango/data/master/admin.sock</code> while <code>chango.properties</code> still reads
+<code>./data</code> — only the marker knows where the live master bound.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cat<span class="w"> </span>/opt/chango/bin/master.socket
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># /var/lib/chango/data/master/admin.sock</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>bin/chango-cli.sh<span class="w"> </span>ping
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># pong</span>
+</code></pre></div>
+<p>Unlike ontul/kiok/mium/itdastream/neorunbase/shannonstore, chango has <strong>no</strong>
+<code>admin.socket.marker.file</code> key — the marker name is fixed at <code>master.socket</code>.</p>
+<p>It is also no longer necessary to pass <code>--socket</code> just because the CLI is invoked
+from another directory: the marker holds an absolute path, so <code>cwd</code> does not
+matter. Use <code>--socket</code> only when the master is stopped (no marker) or you are
+reaching a socket the marker does not describe.</p>
+<h3 id="when-the-master-key-is-needed">When the master key is needed</h3>
+<p><code>ping</code> and <code>iam:reset-password</code> do <strong>not</strong> need <code>CHANGO_MASTER_KEY</code> — the running
+master holds the unsealed key and does the work.</p>
+<p>The key <strong>is</strong> required for the subcommands the master gates on it server-side
+(<code>master-key show/rotate</code>, <code>kms rewrap</code>, <code>backup s3-config</code>): the CLI sends a
+fingerprint of <code>$CHANGO_MASTER_KEY</code>, never the raw key, and the master rejects the
+request if it does not match its own active key.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span><span class="s1">&#39;…the cluster master key…&#39;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>status
+</code></pre></div>
 <h2 id="security-model">Security model</h2>
 <p><strong>1. The socket is OS-gated.</strong>
 At startup the master creates <code>&lt;chango.base.data.dir&gt;/master/admin.sock</code>
@@ -1480,7 +1537,7 @@ Every successful reset appends a JSON line to
 plaintext password is <strong>never</strong> logged — only the first 8 characters of
 its hash, the user, whether it was master-generated, and the OS user that
 invoked the CLI.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2026-05-23T16:00:46.922Z&quot;</span><span class="p">,</span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;iam.reset-password&quot;</span><span class="p">,</span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span><span class="nt">&quot;generated&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">&quot;hashFp&quot;</span><span class="p">:</span><span class="s2">&quot;OYV/Ojf/&quot;</span><span class="p">,</span><span class="nt">&quot;invokedAs&quot;</span><span class="p">:</span><span class="s2">&quot;root&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2026-05-23T16:00:46.922Z&quot;</span><span class="p">,</span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;iam.reset-password&quot;</span><span class="p">,</span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span><span class="nt">&quot;generated&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">&quot;hashFp&quot;</span><span class="p">:</span><span class="s2">&quot;OYV/Ojf/&quot;</span><span class="p">,</span><span class="nt">&quot;invokedAs&quot;</span><span class="p">:</span><span class="s2">&quot;root&quot;</span><span class="p">}</span>
 </code></pre></div>
 <p><strong>3. The new password is exposed exactly once.</strong>
 For master-generated passwords, the plaintext is returned only on the

@@ -1351,9 +1351,17 @@
 <h2 id="reading-a-key-back">Reading a key back</h2>
 <p>The only path is the master's local Unix domain socket (mode 600), and it requires <strong>two</strong> factors:</p>
 <ol>
-<li><strong>OS-level access</strong> — you must be able to connect to <code>&lt;base.data.dir&gt;/master/admin.sock</code>, i.e. run as the master's own filesystem identity.</li>
-<li><strong>Proof of chango's master key</strong> — the CLI sends the <em>fingerprint</em> of <code>$CHANGO_MASTER_KEY</code> (never the raw key) and the master matches it against its own.</li>
+<li><strong>OS-level access</strong> — you must be able to connect to the master's admin socket
+   (<code>&lt;base.data.dir&gt;/master/admin.sock</code> by default), i.e. run as the master's own
+   filesystem identity. You do not have to know that path: the running master
+   publishes the one it actually bound to into <code>&lt;chango.home&gt;/bin/master.socket</code>
+   and the CLI reads it from there, so a relocated data dir needs no extra flags.
+   See <a href="../admin-password-recovery/#how-the-cli-finds-the-socket">Admin Password Recovery</a>
+   for the full resolution order.</li>
+<li><strong>Proof of chango's master key</strong> — the CLI sends the <em>fingerprint</em> of <code>$CHANGO_MASTER_KEY</code> (never the raw key) and the master matches it against its own. Export it before running any <code>master-key</code> subcommand; without it the master rejects the request.</li>
 </ol>
+<p>Note <code>sudo -E</code>: it preserves <code>CHANGO_MASTER_KEY</code> across the user switch. Plain
+<code>sudo -u chango</code> drops the variable and the command fails on factor 2.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">CHANGO_MASTER_KEY</span><span class="o">=</span>&lt;from<span class="w"> </span>your<span class="w"> </span>secret<span class="w"> </span>store&gt;
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>chango<span class="w"> </span>-E<span class="w"> </span>/opt/chango/bin/chango-cli.sh<span class="w"> </span>master-key<span class="w"> </span>list
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>CLUSTER-ID<span class="w">                   </span>PRODUCT<span class="w">        </span>STATUS<span class="w">     </span>VERSION<span class="w">    </span>MASTER-KEY
